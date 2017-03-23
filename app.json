@@ -1,0 +1,15 @@
+{
+  "name": "fullstack-dms-staging",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
