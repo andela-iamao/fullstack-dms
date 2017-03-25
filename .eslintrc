@@ -28,6 +28,7 @@
             "MethodDefinition": true,
             "ClassDeclaration": true
         }
-    }]
+    }],
+    "import/no-dynamic-require": 0
   }
 }
