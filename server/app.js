@@ -17,4 +17,7 @@ app.get('*', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of nothingness.',
 }));
 
+
+require('./routes')(app);
+
 module.exports = app;
