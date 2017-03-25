@@ -28,6 +28,8 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
+    "codeclimate-test-reporter": "^0.4.1",
+    "eslint": "^3.18.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^1.5.5",
