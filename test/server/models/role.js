@@ -9,6 +9,9 @@ describe('Role model', () => {
     return Role.sequelize.sync({ force: true });
   });
 
+  // clear DB after each test
+  afterEach(() => Role.sequelize.sync({ force: true }));
+
   describe('Create Role', () => {
     it('creates a Role instance', () =>
      expect(role).to.exist);

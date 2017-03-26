@@ -16,6 +16,9 @@ describe('Document model', () => {
     return Document.sequelize.sync({ force: true });
   });
 
+  // clear DB after each test
+  afterEach(() => Document.sequelize.sync({ force: true }));
+
   describe('Create Document', () => {
     it('creates a Document instance', () =>
      expect(document).to.exist);

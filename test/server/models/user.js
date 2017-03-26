@@ -20,6 +20,9 @@ describe('User model', () => {
     return User.sequelize.sync({ force: true });
   });
 
+  // clear DB after each test
+  afterEach(() => User.sequelize.sync({ force: true }));
+
   describe('Create User', () => {
     it('creates a User instance', () =>
      expect(user).to.exist);
