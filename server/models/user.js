@@ -29,9 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         User.belongsTo(models.Role, {
           onDelete: 'CASCADE',
-          foreignKey: { allowNull: false }
+          foreignKey: 'roleId'
         });
-        User.hasMany(models.Document, { foreignKey: 'OwnerId' });
+        User.hasMany(models.Document, {
+          foreignKey: 'ownerId',
+          as: 'documents'
+        });
       }
     }
   });

@@ -10,14 +10,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    OwnerId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate(models) {
         Document.belongsTo(models.User, {
-          as: 'Owner',
+          as: 'owner',
           onDelete: 'CASCADE',
-          foreignKey: { allowNull: false }
+          foreignKey: 'ownerId'
+        });
+
+        Document.belongsTo(models.Type, {
+          as: 'type',
+          onDelete: 'CASCADE',
+          foreignKey: 'typeId'
         });
       }
     }
