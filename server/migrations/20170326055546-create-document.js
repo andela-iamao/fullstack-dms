@@ -15,6 +15,24 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
+      ownerId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'ownerId',
+        },
+      },
+      typeId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Types',
+          key: 'id',
+          as: 'typeId',
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
