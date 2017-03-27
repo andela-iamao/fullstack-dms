@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-
+require('dotenv').load();
 // Set up the express app
 const app = express();
 

@@ -7,10 +7,9 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "DB_USER",
+    "username": "postgres",
     "password": null,
     "database": "DB_NAME",
-    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
