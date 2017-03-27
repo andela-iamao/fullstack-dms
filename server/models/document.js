@@ -10,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT
     },
+    access: {
+      defaultValue: 'public',
+      type: DataTypes.STRING,
+      validate: {
+        isIn: [['private', 'public', 'role']]
+      }
+    },
   }, {
     classMethods: {
       associate(models) {

@@ -3,7 +3,8 @@ const Document = require('../../../server/models').Document;
 
 const params = {
   title: 'Document 1',
-  content: 'This is a new document'
+  content: 'This is a new document',
+  access: 'public'
 };
 
 const notNullAttrs = ['title', 'content'];
@@ -26,12 +27,14 @@ describe('Document model', () => {
     it('has both title and content', () => {
       expect(document.title).to.equal(params.title);
       expect(document.content).to.equal(params.content);
+      expect(document.access).to.equal(params.access);
     });
 
     it('saves document with valid attributes', () =>
       document.save().then((newDoc) => {
         expect(newDoc.title).to.equal(document.title);
         expect(newDoc.content).to.equal(document.content);
+        expect(newDoc.access).to.equal(document.access);
       }));
   });
 
