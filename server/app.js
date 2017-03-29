@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import webpack from 'webpack';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 import webpackConfig from '../webpack.conf';
@@ -13,7 +14,13 @@ dotenv.load();
 // Set up the express app
 const app = express();
 
-app.use(webpackMiddleware(webpack(webpackConfig)));
+const compiler = webpack(webpackConfig);
+app.use(webpackMiddleware(compiler, {
+  hot: true,
+  publicPath: webpackConfig.output.publicPath,
+  noInfo: true
+}));
+app.use(webpackHotMiddleware(compiler));
 
 // Log requests to the console.
 app.use(logger('dev'));
