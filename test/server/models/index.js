@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const models = require('../../../server/models');
+import { expect } from 'chai';
+import models from '../../../server/models';
 
 describe('Models', () => {
   it('creates User model', () => expect(models.User).to.exist);

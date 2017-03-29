@@ -1,6 +1,7 @@
-const expect = require('chai').expect;
-const User = require('../../../server/models').User;
-const helper = require('../../test-helper');
+import { expect } from 'chai';
+import { User } from '../../../server/models';
+
+import helper from '../../test-helper';
 
 const userParams = helper.firstUser;
 

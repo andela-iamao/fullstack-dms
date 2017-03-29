@@ -1,9 +1,10 @@
+import faker from 'faker';
+
 if (process.env.NODE_ENV !== 'test') {
   process.exit(1);
 }
-const faker = require('faker');
 
-module.exports = {
+export default {
   firstUser: {
     name: faker.name.findName(),
     email: faker.internet.email(),
