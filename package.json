@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/bin/www",
-    "cover": "./node_modules/.bin/istanbul cover",
-    "test": "NODE_ENV=test istanbul cover _mocha -- -R spec test/**/*.js"
+    "test": "NODE_ENV=test istanbul cover _mocha -- -R spec test/**/*.js",
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate"
   },
   "repository": {
     "type": "git",
