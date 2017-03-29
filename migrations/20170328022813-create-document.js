@@ -1,34 +1,35 @@
-module.exports = {
+export default {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Documents', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      title: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      email: {
+      content: {
         allowNull: false,
-        unique: true,
+        type: Sequelize.TEXT
+      },
+      access: {
+        defaultValue: 'public',
         type: Sequelize.STRING,
         validate: {
-          isEmail: true
+          isIn: [['private', 'public', 'admin']]
         }
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      role: {
-        defaultValue: 'regular',
-        type: Sequelize.STRING,
-        validate: {
-          isIn: [['admin', 'regular']]
-        }
+      ownerId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'ownerId',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +42,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Documents');
   }
 };
