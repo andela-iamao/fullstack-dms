@@ -1,12 +1,15 @@
 /* eslint "require-jsdoc": 0 */
 import React from 'react';
-import Document from './document';
+import NavigationBar from './NavigationBar';
 
 
 class App extends React.Component {
   render() {
     return (
-      <Document />
+      <div className="container">
+        <NavigationBar />
+        {this.props.children}
+      </div>
     );
   }
 }

@@ -1,6 +1,14 @@
 import React from 'react';
 
-export default () => (
-  <h1>Hi there, <br />
-    This is going to be a document management system</h1>
-  );
+class Document extends React.Component { 
+  render() {
+    return (
+      <div className="jumbotron">
+        <div>Hi there, <br />
+        We are going to have a list of Documents here </div>
+      </div>
+    );
+  }
+};
+
+export default Document;
