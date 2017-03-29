@@ -1,6 +1,6 @@
-import { expect } from 'chai';
-import db from '../../../server/models';
-import helper from '../../test-helper';
+const expect = require('chai').expect;
+const db = require('../../../server/models');
+const helper = require('../../test-helper');
 
 const documentParams = helper.publicDocument;
 const userParams = helper.firstUser;

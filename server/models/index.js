@@ -1,18 +1,16 @@
-import fs from 'fs';
-import path from 'path';
-import Sequelize from 'sequelize';
-import dotenv from 'dotenv';
-import config from '../../config/config.json';
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
 
-dotenv.load();
+require('dotenv').load();
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-const configEnv = config[env];
+const config = require('../../config/config.json')[env];
 
 const db = {};
 
-const sequelize = new Sequelize(process.env[configEnv.use_env_variable], configEnv);
+const sequelize = new Sequelize(process.env[config.use_env_variable], config);
 
 fs
   .readdirSync(__dirname)
@@ -35,4 +33,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-export default db;
+module.exports = db;
