@@ -4,8 +4,9 @@
   "description": "A fullstack document management application",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "istanbul cover _mocha -- -R spec test/**/*.js"
+    "start": "node server/bin/www",
+    "test": "NODE_ENV=test istanbul cover _mocha -- -R spec test/**/*.js",
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,19 @@
   },
   "homepage": "https://github.com/andela-aawa/fullstack-dms#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "faker": "^4.1.0",
+    "istanbul": "^0.4.5",
+    "morgan": "^1.8.1",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "codeclimate-test-reporter": "^0.4.1",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^9.0.1",
