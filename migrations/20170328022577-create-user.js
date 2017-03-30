@@ -7,8 +7,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      username: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       email: {
@@ -19,16 +20,9 @@ module.exports = {
           isEmail: true
         }
       },
-      password: {
+      password_digest: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      role: {
-        defaultValue: 'regular',
-        type: Sequelize.STRING,
-        validate: {
-          isIn: [['admin', 'regular']]
-        }
       },
       createdAt: {
         allowNull: false,

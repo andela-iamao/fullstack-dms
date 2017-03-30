@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    name: {
+    username: {
       allowNull: false,
+      unique: true,
       type: DataTypes.STRING
     },
     email: {
@@ -12,24 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    password: {
+    password_digest: {
       allowNull: false,
       type: DataTypes.STRING
-    },
-    role: {
-      defaultValue: 'regular',
-      type: DataTypes.STRING,
-      validate: {
-        isIn: [['admin', 'regular']]
-      }
     }
   }, {
     classMethods: {
       associate(models) {
-        User.hasMany(models.Document, {
-          foreignKey: 'ownerId',
-          as: 'documents'
-        });
       }
     }
   });
