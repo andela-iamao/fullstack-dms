@@ -9,7 +9,7 @@ class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      username: '',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -45,7 +45,7 @@ class SignupForm extends React.Component {
         () => {
           this.props.addFlashMessage({
             type: 'success',
-            text: 'You signed up successfully. Welcom'
+            text: 'You signed up successfully. Welcome'
           });
           this.context.router.push('/');
         },
@@ -64,11 +64,11 @@ class SignupForm extends React.Component {
         <h1>Join our community!</h1>
 
         <TextFieldGroup
-          error={errors.name}
-          label="Name"
+          error={errors.username}
+          label="Username"
           onChange={this.onChange}
-          value={this.state.name}
-          field="name"
+          value={this.state.username}
+          field="username"
         />
 
        <TextFieldGroup
