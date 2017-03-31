@@ -11,6 +11,8 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.conf';
 
 import users from './routes/users';
+import auth from './routes/auth';
+
 
 dotenv.load();
 
@@ -18,7 +20,10 @@ dotenv.load();
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use('/api/users', users);
+app.use('/api/auth', auth);
+
 
 const compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler, {
