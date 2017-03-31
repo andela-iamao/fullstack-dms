@@ -41,5 +41,14 @@ router.post('/', (req, res) => {
   });
 });
 
+router.get('/:identifier', (req, res) => {
+  db.User.findOne({
+    attributes: [ 'username', 'email' ],
+    where: { $or: [ { email: req.params.identifier }, { username: req.params.identifier } ] }
+  }).then(user => {
+    res.json({ user })
+  });
+});
+
 
 export default router;
