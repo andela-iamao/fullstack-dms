@@ -1,5 +1,7 @@
+/* eslint react/prefer-stateless-function: 0*/
+
 import React from 'react';
-import LoginForm from './LoginForm'
+import LoginForm from './LoginForm';
 
 class LoginPage extends React.Component {
   render() {
@@ -9,7 +11,7 @@ class LoginPage extends React.Component {
           <LoginForm />
         </div>
       </div>
-    )
+    );
   }
 }
 

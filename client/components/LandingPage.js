@@ -1,6 +1,8 @@
+/* eslint react/prefer-stateless-function: 0*/
+
 import React from 'react';
 
-class Document extends React.Component { 
+class Document extends React.Component {
   render() {
     return (
       <div className="jumbotron">
@@ -9,6 +11,6 @@ class Document extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Document;

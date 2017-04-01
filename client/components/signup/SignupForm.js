@@ -17,7 +17,7 @@ class SignupForm extends React.Component {
       errors: {},
       isLoading: false,
       invalid: false
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -26,35 +26,6 @@ class SignupForm extends React.Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-  }
-
-  checkUserExists(e) {
-    const field = e.target.name;
-    const val = e.target.value;
-    if (val !== '') {
-      this.props.userExists(val).then(res => {
-        let errors = this.state.errors;
-        let invalid;
-        if (res.data.user) {
-          errors[field] = 'There is a user with such ' + field;
-          invalid = true;
-        } else {
-          errors[field] = '';
-          invalid = false;
-        }
-        this.setState({ errors, invalid })
-      })
-    }
-  }
-
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) {
-      this.setState({ errors });
-    }
-
-    return isValid;
   }
 
   onSubmit(e) {
@@ -72,6 +43,35 @@ class SignupForm extends React.Component {
         },
         (err) => this.setState({ errors: err.response.data, isLoading: false })
       );
+    }
+  }
+
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
+  checkUserExists(e) {
+    const field = e.target.name;
+    const val = e.target.value;
+    if (val !== '') {
+      this.props.userExists(val).then(res => {
+        const errors = this.state.errors;
+        let invalid;
+        if (res.data.user) {
+          errors[field] = `There is a user with such ${field}`;
+          invalid = true;
+        } else {
+          errors[field] = '';
+          invalid = false;
+        }
+        this.setState({ errors, invalid });
+      });
     }
   }
 
@@ -93,7 +93,7 @@ class SignupForm extends React.Component {
           field="username"
         />
 
-       <TextFieldGroup
+        <TextFieldGroup
           error={errors.email}
           label="Email"
           onChange={this.onChange}
@@ -102,7 +102,7 @@ class SignupForm extends React.Component {
           field="email"
         />
 
-         <TextFieldGroup
+        <TextFieldGroup
           error={errors.password}
           label="Password"
           onChange={this.onChange}
@@ -120,7 +120,7 @@ class SignupForm extends React.Component {
           type="password"
         />
 
-        <div className={classnames("form-group", { 'has-error': errors.role })}>
+        <div className={classnames('form-group', { 'has-error': errors.role })}>
           <label className="control-label">Role</label>
           <select
             className="form-control"
@@ -135,8 +135,11 @@ class SignupForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-primary btn-lg">
-            Sign up
+          <button
+            disabled={this.state.isLoading || this.state.invalid}
+            className="btn btn-primary btn-lg"
+          >
+              Sign up
           </button>
         </div>
       </form>
@@ -148,9 +151,9 @@ SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired,
   userExists: React.PropTypes.func.isRequired
-}
+};
 
 SignupForm.contextTypes = {
   router: React.PropTypes.object.isRequired
-}
+};
 export default SignupForm;

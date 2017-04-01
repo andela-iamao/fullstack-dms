@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 
 class NavigationBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+
   logout(e) {
     e.preventDefault();
     this.props.logout();
@@ -14,7 +20,7 @@ class NavigationBar extends React.Component {
 
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
-        <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
+        <li><a href="#" onClick={this.logout}>Logout</a></li>
       </ul>
     );
 
@@ -33,7 +39,7 @@ class NavigationBar extends React.Component {
           </div>
 
           <div className="collapse navbar-collapse">
-            { isAuthenticated ? userLinks : guestLinks }
+            {isAuthenticated ? userLinks : guestLinks}
           </div>
         </div>
       </nav>
@@ -44,7 +50,7 @@ class NavigationBar extends React.Component {
 NavigationBar.propTypes = {
   auth: React.PropTypes.object.isRequired,
   logout: React.PropTypes.func.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {

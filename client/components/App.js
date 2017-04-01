@@ -1,3 +1,4 @@
+/* eslint react/prefer-stateless-function: 0 */
 /* eslint "require-jsdoc": 0 */
 import React from 'react';
 import NavigationBar from './NavigationBar';
@@ -14,5 +15,9 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  children: React.PropTypes.object.isRequired,
+};
 
 export default App;
