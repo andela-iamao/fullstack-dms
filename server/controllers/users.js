@@ -1,10 +1,7 @@
-import express from 'express';
 import commonValidations from '../shared/validations/signup';
 import bcrypt from 'bcrypt';
 import db from '../models';
 import isEmpty from 'lodash/isEmpty';
-
-let router = express.Router();
 
 function validateInput(data, otherValidations) {
   let { errors } = otherValidations(data);
@@ -26,8 +23,11 @@ function validateInput(data, otherValidations) {
     };
   });
 }
-router.post('/', (req, res) => {
-  validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
+
+export default {
+
+  create(req, res) {
+    validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
     if (isValid) {
       const { username, email, password } = req.body;
       const password_digest = bcrypt.hashSync(password, 10);
@@ -39,16 +39,26 @@ router.post('/', (req, res) => {
       res.status(400).json(errors);
     }
   });
-});
+  },
 
-router.get('/:identifier', (req, res) => {
-  db.User.findOne({
-    attributes: [ 'username', 'email' ],
-    where: { $or: [ { email: req.params.identifier }, { username: req.params.identifier } ] }
-  }).then(user => {
-    res.json({ user })
-  });
-});
+  list(req, res) {
 
+  },
 
-export default router;
+  retrieve(req, res) {
+    db.User.findOne({
+      attributes: [ 'username', 'email' ],
+      where: { $or: [ { email: req.params.identifier }, { username: req.params.identifier } ] }
+    }).then(user => {
+      res.json({ user })
+    });
+  },
+
+  update(req, res) {
+    
+  },
+
+  destroy(req, res) {
+
+  }
+}
