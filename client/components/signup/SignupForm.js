@@ -28,7 +28,7 @@ class SignupForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  checkUserExists(e){
+  checkUserExists(e) {
     const field = e.target.name;
     const val = e.target.value;
     if (val !== '') {
@@ -66,11 +66,11 @@ class SignupForm extends React.Component {
         () => {
           this.props.addFlashMessage({
             type: 'success',
-            text: 'You signed up successfully. Welcome'
+            text: 'You signed up successfully. Welcome!'
           });
           this.context.router.push('/');
         },
-        ({ data }) => this.setState({ errors: data, isLoading: false })
+        (err) => this.setState({ errors: err.response.data, isLoading: false })
       );
     }
   }

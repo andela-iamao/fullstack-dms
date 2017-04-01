@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/andela-aawa/fullstack-dms#readme",
   "dependencies": {
-    "axios": "^0.12.0",
+    "axios": "0.12.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.17.1",
     "classnames": "^2.2.5",
