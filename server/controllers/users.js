@@ -33,8 +33,8 @@ export default {
         const passwordDigest = bcrypt.hashSync(password, 10);
 
         db.User.create({ username, email, passwordDigest })
-      .then(user => res.json({ success: true }))
-      .catch(err => res.status(500).json({ error: err }));
+          .then(user => res.json({ success: true }))
+          .catch(err => res.status(500).json({ error: err }));
       } else {
         res.status(400).json(errors);
       }
