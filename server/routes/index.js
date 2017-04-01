@@ -1,8 +1,7 @@
 import usersController from '../controllers/users';
-import auth from '../controllers/auth'
+import auth from '../controllers/auth';
 
 export default (app) => {
-
   // Users API Endpoint
   app.post('/api/users', usersController.create);
   app.get('/api/users', usersController.list);
@@ -12,4 +11,4 @@ export default (app) => {
 
   // Authentication Endpoint
   app.post('/api/auth', auth.login);
-}
+};

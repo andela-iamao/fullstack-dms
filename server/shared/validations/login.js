@@ -1,8 +1,8 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
-export default function validateInput(data) {
-  let errors = {};
+const validateInput = (data) => {
+  const errors = {};
 
   if (Validator.isNull(data.identifier)) {
     errors.identifier = 'This field is required';
@@ -16,4 +16,5 @@ export default function validateInput(data) {
     errors,
     isValid: isEmpty(errors)
   };
-}
+};
+export default validateInput;

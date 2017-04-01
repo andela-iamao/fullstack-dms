@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 import db from '../models';
 import isEmpty from 'lodash/isEmpty';
 
-function validateInput(data, otherValidations) {
-  let { errors } = otherValidations(data);
+const validateInput = (data, otherValidations) => {
+  const { errors } = otherValidations(data);
   return db.User.findOne({
     where: { email: data.email },
     orWhere: { username: data.username }
@@ -22,23 +22,23 @@ function validateInput(data, otherValidations) {
       isValid: isEmpty(errors)
     };
   });
-}
+};
 
 export default {
 
   create(req, res) {
     validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
-    if (isValid) {
-      const { username, email, password } = req.body;
-      const password_digest = bcrypt.hashSync(password, 10);
-      
-      db.User.create({username,email,password_digest})
-      .then(user => res.json({ success:true }))
+      if (isValid) {
+        const { username, email, password } = req.body;
+        const passwordDigest = bcrypt.hashSync(password, 10);
+
+        db.User.create({ username, email, passwordDigest })
+      .then(user => res.json({ success: true }))
       .catch(err => res.status(500).json({ error: err }));
-    } else {
-      res.status(400).json(errors);
-    }
-  });
+      } else {
+        res.status(400).json(errors);
+      }
+    });
   },
 
   list(req, res) {
@@ -47,18 +47,18 @@ export default {
 
   retrieve(req, res) {
     db.User.findOne({
-      attributes: [ 'username', 'email' ],
-      where: { $or: [ { email: req.params.identifier }, { username: req.params.identifier } ] }
+      attributes: ['username', 'email'],
+      where: { $or: [{ email: req.params.identifier }, { username: req.params.identifier }] }
     }).then(user => {
-      res.json({ user })
+      res.json({ user });
     });
   },
 
   update(req, res) {
-    
+
   },
 
   destroy(req, res) {
 
   }
-}
+};
