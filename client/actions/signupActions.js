@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 export function userSignupRequest(userData) {
-  return dispatch => {
+  return (dispatch) => {
     axios.post('/api/users', userData);
   };
 }
 
 export function userExists(identifier) {
-  return dispatch => {
+  return (dispatch) => {
     axios.get(`/api/users/${identifier}`);
   };
 }

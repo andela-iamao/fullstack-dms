@@ -13,7 +13,7 @@ const TextFieldGroup =
       name={field}
       className="form-control"
     />
-  {error && <span className="help-block">{error}</span>}
+    {error && <span className="help-block">{error}</span>}
   </div>
 );
 

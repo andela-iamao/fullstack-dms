@@ -16,9 +16,9 @@ class FlashMessage extends React.Component {
     return (
       <div
         className={classnames('alert',
-        { 'alert-success': type === 'success',
-          'alert-danger': type === 'error'
-        })}
+          { 'alert-success': type === 'success',
+            'alert-danger': type === 'error'
+          })}
       >
         <button onClick={this.onClick} className="close"><span>&times;</span></button>
         {text}
@@ -28,7 +28,7 @@ class FlashMessage extends React.Component {
 }
 
 FlashMessage.propTypes = {
-  message: React.PropTypes.object.isRequired,
+  message: React.PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   deleteFlashMessage: React.PropTypes.func.isRequired
 };
 

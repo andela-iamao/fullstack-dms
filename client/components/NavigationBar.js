@@ -48,7 +48,7 @@ class NavigationBar extends React.Component {
 }
 
 NavigationBar.propTypes = {
-  auth: React.PropTypes.object.isRequired,
+  auth: React.PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   logout: React.PropTypes.func.isRequired
 };
 

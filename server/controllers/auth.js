@@ -1,7 +1,7 @@
-import db from '../models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../config';
+import db from '../models';
 
 
 export default {
@@ -12,7 +12,7 @@ export default {
       where: {
         $or: [{ username: identifier }, { email: identifier }]
       }
-    }).then(user => {
+    }).then((user) => {
       if (user) {
         if (bcrypt.compareSync(password, user.passwordDigest)) {
           const token = jwt.sign({

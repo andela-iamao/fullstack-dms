@@ -17,7 +17,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: React.PropTypes.object.isRequired,
+  children: React.PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default App;

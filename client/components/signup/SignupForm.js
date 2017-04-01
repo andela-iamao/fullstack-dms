@@ -1,7 +1,7 @@
 import React from 'react';
-import roles from '../../data/roles';
 import map from 'lodash/map';
 import classnames from 'classnames';
+import roles from '../../data/roles';
 import validateInput from '../../../server/shared/validations/signup';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -41,7 +41,7 @@ class SignupForm extends React.Component {
           });
           this.context.router.push('/');
         },
-        (err) => this.setState({ errors: err.response.data, isLoading: false })
+        err => this.setState({ errors: err.response.data, isLoading: false })
       );
     }
   }
@@ -60,7 +60,7 @@ class SignupForm extends React.Component {
     const field = e.target.name;
     const val = e.target.value;
     if (val !== '') {
-      this.props.userExists(val).then(res => {
+      this.props.userExists(val).then((res) => {
         const errors = this.state.errors;
         let invalid;
         if (res.data.user) {
@@ -121,7 +121,7 @@ class SignupForm extends React.Component {
         />
 
         <div className={classnames('form-group', { 'has-error': errors.role })}>
-          <label className="control-label">Role</label>
+          <label htmlFor="role" className="control-label">Role</label>
           <select
             className="form-control"
             name="role"

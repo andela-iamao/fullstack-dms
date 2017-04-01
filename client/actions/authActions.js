@@ -11,7 +11,7 @@ export function setCurrentUser(user) {
 }
 
 export function logout() {
-  return dispatch => {
+  return (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
@@ -21,7 +21,7 @@ export function logout() {
 export function login(data) {
   return dispatch =>
      axios.post('/api/auth', data)
-      .then(res => {
+      .then((res) => {
         const token = res.data.token;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);

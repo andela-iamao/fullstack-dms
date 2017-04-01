@@ -1,8 +1,8 @@
 /* eslint react/prefer-stateless-function: 0*/
 
 import React from 'react';
-import FlashMessage from './FlashMessage';
 import { connect } from 'react-redux';
+import FlashMessage from './FlashMessage';
 import { deleteFlashMessage } from '../../actions/flashMessages';
 
 class FlashMessagesList extends React.Component {
@@ -20,7 +20,7 @@ class FlashMessagesList extends React.Component {
 }
 
 FlashMessagesList.propTypes = {
-  messages: React.PropTypes.array.isRequired,
+  messages: React.PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   deleteFlashMessage: React.PropTypes.func.isRequired
 };
 
