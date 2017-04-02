@@ -17,7 +17,7 @@ export default (req, res, next) => {
       } else {
         db.User.findOne({
           where: { id: decoded.id },
-          attributes: ['email', 'id', 'username']
+          attributes: ['id', 'email', 'username']
         })
         .then((user) => {
           if (!user) {
