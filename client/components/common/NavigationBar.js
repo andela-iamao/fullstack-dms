@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 import { connect } from 'react-redux';
-import { logout } from '../actions/authActions';
+import { logout } from '../../actions/authActions';
 
 class NavigationBar extends React.Component {
 
@@ -19,28 +19,26 @@ class NavigationBar extends React.Component {
     const { isAuthenticated } = this.props.auth;
 
     const userLinks = (
-      <ul className="nav navbar-nav navbar-right">
+      <ul className="right hide-on-med-and-down">
         <li><a href="#" onClick={this.logout}>Logout</a></li>
+        <li><Link to="/new-document">Create Document</Link></li>
       </ul>
     );
 
     const guestLinks = (
-      <ul className="nav navbar-nav navbar-right">
+      <ul className="right hide-on-med-and-down">
         <li><Link to="/signup">Sign up</Link></li>
         <li><Link to="/login">Login</Link></li>
+        <li><Link to="/new-document">Create Document</Link></li>
       </ul>
     );
 
     return (
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <Link to="/" className="navbar-brand">DMS</Link>
-          </div>
+      <nav>
+        <div className="nav-wrapper">
+          <IndexLink to="/" class="brand-logo">DMS</IndexLink>
 
-          <div className="collapse navbar-collapse">
             {isAuthenticated ? userLinks : guestLinks}
-          </div>
         </div>
       </nav>
     );

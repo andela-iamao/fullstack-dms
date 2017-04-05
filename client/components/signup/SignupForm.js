@@ -1,7 +1,6 @@
 import React from 'react';
 import map from 'lodash/map';
 import classnames from 'classnames';
-import roles from '../../data/roles';
 import validateInput from '../../../server/shared/validations/signup';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -13,7 +12,6 @@ class SignupForm extends React.Component {
       email: '',
       password: '',
       passwordConfirmation: '',
-      role: '',
       errors: {},
       isLoading: false,
       invalid: false
@@ -21,7 +19,6 @@ class SignupForm extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.checkUserExists = this.checkUserExists.bind(this);
   }
 
   onChange(e) {
@@ -56,39 +53,16 @@ class SignupForm extends React.Component {
     return isValid;
   }
 
-  checkUserExists(e) {
-    const field = e.target.name;
-    const val = e.target.value;
-    if (val !== '') {
-      this.props.userExists(val).then((res) => {
-        const errors = this.state.errors;
-        let invalid;
-        if (res.data.user) {
-          errors[field] = `There is a user with such ${field}`;
-          invalid = true;
-        } else {
-          errors[field] = '';
-          invalid = false;
-        }
-        this.setState({ errors, invalid });
-      });
-    }
-  }
-
   render() {
     const { errors } = this.state;
-    const options = map(roles, (val, key) =>
-      <option key={val} value={val}>{key}</option>
-    );
     return (
       <form onSubmit={this.onSubmit}>
-        <h1>Join our community!</h1>
+        <h2>Sign Up!</h2>
 
         <TextFieldGroup
           error={errors.username}
           label="Username"
           onChange={this.onChange}
-          checkUserExists={this.checkUserExists}
           value={this.state.username}
           field="username"
         />
@@ -97,7 +71,6 @@ class SignupForm extends React.Component {
           error={errors.email}
           label="Email"
           onChange={this.onChange}
-          checkUserExists={this.checkUserExists}
           value={this.state.email}
           field="email"
         />
@@ -120,24 +93,10 @@ class SignupForm extends React.Component {
           type="password"
         />
 
-        <div className={classnames('form-group', { 'has-error': errors.role })}>
-          <label htmlFor="role" className="control-label">Role</label>
-          <select
-            className="form-control"
-            name="role"
-            onChange={this.onChange}
-            value={this.state.role}
-          >
-            <option value="" disabled>Choose Your Role</option>
-            {options}
-          </select>
-          {errors.role && <span className="help-block">{errors.role}</span>}
-        </div>
-
-        <div className="form-group">
+        <div className="input-field">
           <button
             disabled={this.state.isLoading || this.state.invalid}
-            className="btn btn-primary btn-lg"
+            className="btn waves-effect waves-light"
           >
               Sign up
           </button>
@@ -150,7 +109,6 @@ class SignupForm extends React.Component {
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired,
-  userExists: React.PropTypes.func.isRequired
 };
 
 SignupForm.contextTypes = {

@@ -23,9 +23,6 @@ const validateInput = (data) => {
   if (!Validator.equals(data.password, data.passwordConfirmation)) {
     errors.passwordConfirmation = 'Passwords must match';
   }
-  if (Validator.isNull(data.role)) {
-    errors.role = 'This field is required';
-  }
 
   return {
     errors,

@@ -1,22 +1,22 @@
 import React from 'react';
 import classnames from 'classnames';
 
-const TextFieldGroup =
+const TextAreaGroup =
 ({ field, value, label, error, type, onChange }) => (
-  <div className={classnames('form-group', { 'has-error': error })}>
-    <label className="control-label">{label}</label>
-    <input
+  <div className={classnames('input-field', { 'has-error': error })}>
+    <label >{label}</label>
+    <textarea
       onChange={onChange}
       value={value}
       type={type}
       name={field}
-      className="form-control"
+      className="input-field"
     />
     {error && <span className="help-block">{error}</span>}
   </div>
 );
 
-TextFieldGroup.propTypes = {
+TextAreaGroup.propTypes = {
   field: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
@@ -25,8 +25,8 @@ TextFieldGroup.propTypes = {
   onChange: React.PropTypes.func.isRequired,
 };
 
-TextFieldGroup.defaultProps = {
+TextAreaGroup.defaultProps = {
   type: 'text'
 };
 
-export default TextFieldGroup;
+export default TextAreaGroup;

@@ -3,7 +3,7 @@
 import React from 'react';
 import DocumentForm from './DocumentForm';
 
-class NewDocumentForm extends React.Component {
+class NewDocumentPage extends React.Component {
   render() {
     return (
       <div>
@@ -13,4 +13,4 @@ class NewDocumentForm extends React.Component {
   }
 }
 
-export default NewDocumentForm;
+export default NewDocumentPage;

@@ -1,7 +1,7 @@
 /* eslint react/prefer-stateless-function: 0 */
 /* eslint "require-jsdoc": 0 */
 import React from 'react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from './common/NavigationBar';
 import FlashMessagesList from './flash/FlashMessagesList';
 
 class App extends React.Component {

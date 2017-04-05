@@ -5,7 +5,7 @@ import React from 'react';
 class Document extends React.Component {
   render() {
     return (
-      <div className="jumbotron">
+      <div>
         <div>Hi there, <br />
         We are going to have a list of Documents here </div>
       </div>
