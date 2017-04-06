@@ -7,10 +7,23 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       allowNull: false,
       type: DataTypes.TEXT
-    }
+    },
+    access: {
+      defaultValue: 'public',
+      type: DataTypes.STRING,
+      validate: {
+        isIn: [['private', 'public', 'role']]
+      }
+    },
+    OwnerId: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate(models) {
+        Document.belongsTo(models.User, {
+          as: 'Owner',
+          onDelete: 'CASCADE',
+          foreignKey: { allowNull: false }
+        });
       }
     }
   });

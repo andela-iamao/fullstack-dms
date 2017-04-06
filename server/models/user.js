@@ -16,10 +16,20 @@ module.exports = (sequelize, DataTypes) => {
     passwordDigest: {
       allowNull: false,
       type: DataTypes.STRING
+    },
+    RoleId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
     }
   }, {
     classMethods: {
       associate(models) {
+        User.belongsTo(models.Role, {
+          onDelete: 'CASCADE',
+          foreignKey: { allowNull: false }
+        });
+
+        User.hasMany(models.Document, { foreignKey: 'OwnerId' });
       }
     }
   });

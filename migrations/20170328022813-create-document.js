@@ -15,6 +15,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
+      OwnerId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'OwnerId'
+        }
+      },
+      access: {
+        defaultValue: 'public',
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
