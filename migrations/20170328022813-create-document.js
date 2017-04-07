@@ -17,12 +17,7 @@ module.exports = {
       },
       OwnerId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'OwnerId'
-        }
+        onDelete: 'CASCADE'
       },
       access: {
         defaultValue: 'public',

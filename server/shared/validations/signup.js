@@ -14,6 +14,12 @@ const validateInput = (data) => {
   if (!Validator.isEmail(data.email)) {
     errors.email = 'Email is invalid';
   }
+  if (Validator.isNull(data.firstName)) {
+    errors.firstName = 'This field is required';
+  }
+  if (Validator.isNull(data.lastName)) {
+    errors.lastName = 'This field is required';
+  }
   if (Validator.isNull(data.password)) {
     errors.password = 'This field is required';
   }
@@ -23,7 +29,9 @@ const validateInput = (data) => {
   if (!Validator.equals(data.password, data.passwordConfirmation)) {
     errors.passwordConfirmation = 'Passwords must match';
   }
-
+  if (Validator.isNull(data.RoleId)) {
+    errors.RoleId = 'This field is required';
+  }
   return {
     errors,
     isValid: isEmpty(errors)

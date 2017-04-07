@@ -1,95 +1,176 @@
 import bcrypt from 'bcrypt';
 import isEmpty from 'lodash/isEmpty';
-import commonValidations from '../shared/validations/signup';
 import db from '../models';
+import jwt from 'jsonwebtoken';
+import config from '../config';
 
-const validateInput = (data, otherValidations) => {
-  const { errors } = otherValidations(data);
-  return db.User
-    .findOne({
-      where: { $or: [
-        { email: data.email }, { username: data.username }
-      ] },
-    })
-    .then((user) => {
-      if (user) {
-        if (user.username === data.username) {
-          errors.username = 'There is user with such username';
-        }
-        if (user.email === data.email) {
-          errors.email = 'There is user with such email';
-        }
-      }
-      return {
-        errors,
-        isValid: isEmpty(errors)
-      };
-    });
+const permittedAttributes = (user) => {
+  const attributes = {
+    id: user.id,
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    RoleId: user.RoleId,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  };
+  return attributes;
 };
 
 export default {
 
+  /**
+   * Create a user
+   * Route: POST: /users
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
   create(req, res) {
-    validateInput(req.body, commonValidations)
-    .then(({ errors, isValid }) => {
-      if (isValid) {
-        const { username, email, password } = req.body;
-        const passwordDigest = bcrypt.hashSync(password, 10);
+    const { username, firstName, lastName, email, password, RoleId } = req.body;
+    const passwordDigest = bcrypt.hashSync(password, 10);
 
-        db.User.create({ username, email, passwordDigest })
-        .then(user => res.json({ success: true }))
-        .catch(err => res.status(500).json({ error: err }));
-      } else {
-        res.status(400).json(errors);
-      }
-    });
+    db.User.findOne({ where: { email } })
+      .then((existingUser) => {
+        if (existingUser) {
+          return res.status(409)
+            .send({ message: `User with email ${req.body.email} already exists`
+          });
+        }
+        db.User.create({
+          username,
+          firstName,
+          lastName,
+          email,
+          passwordDigest,
+          RoleId
+        }).then((user) => {
+          const token = jwt.sign({
+            UserId: user.id,
+            RoleId: user.RoleId
+          }, config.jwtSecret, { expiresIn: 86400 });
+          user = permittedAttributes(user);
+          res.status(201).send({ token, expiresIn: 86400, user });
+        })
+        .catch((err) => {
+          res.status(400).send({ error: err });
+        });
+      });
   },
 
+  /**
+   * Get all users
+   * Route: GET: /users
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   list(req, res) {
     db.User.findAll({
-      attributes: ['id', 'username', 'email'],
-    }).then(users => res.json({ users }))
-    .catch(err => res.status(400).json({ error: err }));
-  },
-
-  retrieve(req, res) {
-    db.User.findOne({
-      attributes: ['id', 'username', 'email'],
-      where: { id: req.params.id }
-    }).then((user) => {
-      res.json({ user });
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'email',
+        'RoleId',
+        'createdAt',
+        'updatedAt'
+      ]
+    }).then((users) => {
+      res.send(users);
     });
   },
 
+  /**
+   * Get a particular user
+   * Route: GET: /users/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
+  retrieve(req, res) {
+    db.User.findById(req.params.id)
+      .then((user) => {
+        if (!user) {
+          return res.status(404)
+            .send({ message: `User with id: ${req.params.id} not found` });
+        }
+        user = permittedAttributes(user);
+        res.send(user);
+      });
+  },
+
+  /**
+   * Update a particular user
+   * Route: PUT: /users/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
   update(req, res) {
     db.User.findById(req.params.id)
       .then((user) => {
         if (!user) {
-          res.status(400).json({ message: 'User Not Found!' });
+          return res.status(404)
+            .send({ message: `User with id: ${req.params.id} not found` });
         }
-
-        const { errors, isValid } = commonValidations(req.body);
-        if (isValid) {
-          const { username, email, password } = req.body;
-          const passwordDigest = bcrypt.hashSync(password, 10);
-
-          user.update({ username, email, passwordDigest })
-            .then(updatedUser => res.json({ success: true }))
-            .catch(err => res.status(500).json({ error: err }));
-        } else {
-          res.status(400).json(errors);
-        }
-      }).catch(err => res.status(500).json({ error: err }));
+        user.update(req.body)
+          .then((updatedUser) => {
+            updatedUser = permittedAttributes(updatedUser);
+            res.send(updatedUser);
+          });
+      });
   },
 
+  /**
+   * Delete a particular user
+   * Route: DELETE: /users/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
   destroy(req, res) {
-    db.User.findById(req.params.id).then((user) => {
-      if (!user) {
-        res.status(400).json({ message: 'User Not Found' });
+    db.User.findById(req.params.id)
+      .then((user) => {
+        if (!user) {
+          return res.status(404)
+            .send({ message: `User with id: ${req.params.id} not found` });
+        }
+        user.destroy()
+          .then(() => res.send({ message: 'User deleted successfully.' }));
+      });
+  },
+
+  /**
+   * Login user
+   * Route: POST: /users/login
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
+  login(req, res) {
+    const { identifier, password } = req.body;
+
+    db.User.findOne({
+      where: {
+        $or: [{ username: identifier }, { email: identifier }]
       }
-      user.destroy().then(
-        () => res.status(204).json())
-        .catch(err => res.status(500).json({ error: err }));
+    })
+    .then((user) => {
+      if (bcrypt.compareSync(password, user.passwordDigest)) {
+        const token = jwt.sign({
+          UserId: user.id,
+          RoleId: user.RoleId
+        }, config.jwtSecret, { expiresIn: 86400 });
+
+        res.send({ token, expiresIn: 86400 });
+      } else {
+        res.status(401)
+          .send({ message: 'Failed to authenticate.' });
+      }
     });
-  }
+  },
 };
+
