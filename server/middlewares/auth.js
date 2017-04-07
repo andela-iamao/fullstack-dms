@@ -18,7 +18,7 @@ export default {
     });
   },
 
-  verifyAdmin(req, res, next) {
+  permitAdmin(req, res, next) {
     db.Role.findById(req.decoded.RoleId)
       .then((role) => {
         if (role.title === 'admin') {
