@@ -4,42 +4,57 @@ if (process.env.NODE_ENV !== 'test') {
 const faker = require('faker');
 
 module.exports = {
+  adminRole: {
+    title: 'admin'
+  },
+
+  regularRole: {
+    title: 'regular'
+  },
+
+  role: {
+    title: 'author'
+  },
+
   firstUser: {
-    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    password: faker.internet.password(),
-    access: 'admin'
+    passwordDigest: faker.internet.password()
   },
 
   secondUser: {
-    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    passwordDigest: faker.internet.password()
   },
 
   thirdUser: {
-    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    passwordDigest: faker.internet.password()
   },
 
   publicDocument: {
     title: faker.company.catchPhrase(),
-    content: faker.lorem.paragraph(),
-    ownerId: 1
+    content: faker.lorem.paragraph()
   },
 
   privateDocument: {
     title: faker.company.catchPhrase(),
     content: faker.lorem.paragraph(),
-    access: 'private',
-    ownerId: 2
+    access: 'private'
   },
 
-  adminDocument: {
+  roleDocument: {
     title: faker.company.catchPhrase(),
     content: faker.lorem.paragraph(),
-    access: 'admin'
+    access: 'role'
   },
 
   documentArray() {
@@ -49,7 +64,7 @@ module.exports = {
       documentAttributes.push({
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
-        ownerId: 1
+        OwnerId: 1
       });
     }
 
