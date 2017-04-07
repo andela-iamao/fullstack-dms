@@ -1,5 +1,4 @@
 import usersController from '../controllers/users';
-import login from '../controllers/login';
 import documentsController from '../controllers/documents';
 import authenticate from '../middlewares/authenticate';
 
@@ -15,7 +14,7 @@ export default (app) => {
   app.post('/login', usersController.login);
 
   // Documents API Endpoints
-  app.post('/documents', authenticate, documentsController.create);
+  app.post('/documents', documentsController.create);
   app.get('/documents', usersController.list);
   app.get('/documents/:id', usersController.retrieve);
   app.put('/documents/:id', usersController.update);

@@ -3,65 +3,185 @@ import db from '../models';
 
 export default {
 
+  /**
+   * Create a document
+   * Route: POST: /documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   create(req, res) {
-    db.Document.create({
-      title: req.body.title,
-      content: req.body.content
-    }).then(document => res.status(200).json({ document }))
-    .catch(error => res.status(400).json({ error }));
+    db.Document.create(req.body)
+      .then((document) => {
+        res.status(201).send(document);
+      })
+      .catch((err) => {
+        res.status(400).send(err.errors);
+      });
   },
 
+  /**
+   * Get all documents
+   * Route: GET: /documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   list(req, res) {
-    db.Document.findAll()
-      .then(documents => res.status(200).json({ documents }))
-      .catch(error => res.status(400).json({ error }));
+    const query = {
+      where: {
+        $or: [
+          { access: 'public' },
+          { OwnerId: req.decoded.UserId }
+        ]
+      },
+      limit: req.query.limit || null,
+      offset: req.query.offset || null,
+      order: [['createdAt', 'DESC']]
+    };
+
+    db.Document.findAll(query).then((documents) => {
+      res.send(documents);
+    });
   },
 
+  /**
+   * Get a particular document
+   * Route: GET: /documents/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Response} response object or void
+   */
   retrieve(req, res) {
-    db.Document.findById(req.params.documentId)
-      .then(document => {
+    db.Document.findById(req.params.id)
+      .then((document) => {
         if (!document) {
-          res.status(400).json({
-            message: 'Document Not Found'
-          });
+          return res.status(404)
+            .send({ message: `Document with id: ${req.params.id} not found` });
         }
-        res.status(200).json(document);
-      })
-      .catch(error => res.status(400).json({ error }));
+
+        if ((document.access === 'public') ||
+          (document.OwnerId === req.decoded.UserId)) {
+          return res.send(document);
+        }
+
+        db.User.findById(document.OwnerId)
+          .then((owner) => {
+            if (owner.RoleId === req.decoded.RoleId) {
+              return res.send(document);
+            }
+
+            res.status(403)
+              .send({ message: 'You cannot access this document.' });
+          });
+      });
   },
 
+  /**
+   * Update a particular document
+   * Route: PUT: /documents/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
   update(req, res) {
-    db.Document.findById(req.params.documentId)
-      .then(document => {
+    db.Document.findById(req.params.id)
+      .then((document) => {
         if (!document) {
-          res.status(404).send({
-            message: 'Document Not Found',
-          });
+          return res.status(404)
+            .send({ message: `Document with id: ${req.params.id} not found` });
         }
-        Document.update({
-          title: req.body.title || document.title,
-          content: req.body.content || document.content
-        })
-        .then(() => res.status(200).json(Document))
-        .catch((error) => res.status(400).json(error));
-      })
-      .catch((error) => res.status(400).json(error));
+
+        document.update(req.body)
+          .then((updatedDocument) => {
+            res.send(updatedDocument);
+          });
+      });
   },
 
+  /**
+   * Delete a particular document
+   * Route: DELETE: /documents/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
   destroy(req, res) {
-    db.Document
-      .findById(req.params.documentId)
-        .then(document => {
-          if (!document) {
-            res.status(400).send({
-              message: 'Document Not Found',
-            });
-          }
-          Document
-          .destroy()
-          .then(() => res.status(204).send({ message: 'Document deleted successfully.' }))
-          .catch(error => res.status(400).send(error));
-        })
-        .catch(error => res.status(400).send(error));
+    db.Document.findById(req.params.id)
+      .then((document) => {
+        if (!document) {
+          return res.status(404)
+            .send({ message: `Document with id: ${req.params.id} not found` });
+        }
+
+        document.destroy()
+          .then(() => res.send({ message: 'Document deleted successfully.' }));
+      });
+  },
+
+  /**
+   * Get all documents that belongs to a user
+   * Route: GET: /users/:id/documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
+  userDocuments(req, res) {
+    db.Document.findAll({ where: { OwnerId: req.params.id } })
+      .then((documents) => {
+        res.send(documents);
+      });
+  },
+
+  /**
+   * Get all documents that belongs to a user
+   * Route: GET: /search?query={}&published={}&role=1
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
+  search(req, res) {
+    const queryString = req.query.query;
+    const role = Math.abs(req.query.role, 10);
+    const publishedDate = req.query.publishedDate;
+    const order = publishedDate && /^ASC$/i.test(publishedDate)
+            ? publishedDate : 'DESC';
+
+    const query = {
+      where: {
+        $and: [{ $or: [
+          { access: 'public' },
+          { OwnerId: req.decoded.UserId }
+        ] }],
+      },
+      limit: req.query.limit || null,
+      offset: req.query.offset || null,
+      order: [['createdAt', order]]
+    };
+
+    if (queryString) {
+      query.where.$and.push({ $or: [
+        { title: { $like: `%${queryString}%` } },
+        { content: { $like: `%${queryString}%` } }
+      ] });
+    }
+
+    if (role) {
+      query.include = [{
+        model: db.User,
+        as: 'Owner',
+        attributes: [],
+        include: [{
+          model: db.Role,
+          attributes: [],
+          where: { id: role }
+        }]
+      }];
+    }
+
+    db.Document.findAll(query)
+      .then((documents) => {
+        res.send(documents);
+      });
   }
 };
