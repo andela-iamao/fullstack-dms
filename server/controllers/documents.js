@@ -1,4 +1,3 @@
-import authenticate from '../middlewares/authenticate';
 import db from '../models';
 
 export default {
