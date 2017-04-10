@@ -17,11 +17,21 @@ module.exports = {
       },
       OwnerId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'OwnerId'
+        }
       },
       RoleId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Roles',
+          key: 'id',
+          as: 'RoleId'
+        }
       },
       access: {
         defaultValue: 'public',
