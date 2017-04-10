@@ -9,6 +9,7 @@ export default (app) => {
   app.get('/users/:id', auth.verifyToken, usersController.retrieve);
   app.put('/users/:id', auth.verifyToken, usersController.update);
   app.delete('/users/:id', auth.verifyToken, usersController.destroy);
+  app.get('/users/:id/documents', auth.verifyToken, usersController.userDocuments);
 
   // Authentication Endpoint
   app.post('/users/login', usersController.login);

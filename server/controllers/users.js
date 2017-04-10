@@ -173,5 +173,19 @@ export default {
       }
     });
   },
+
+  /**
+   * Get all documents that belongs to a user
+   * Route: GET: /users/:id/documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
+  userDocuments(req, res) {
+    db.Document.findAll({ where: { OwnerId: req.params.id } })
+      .then((documents) => {
+        res.send(documents);
+      });
+  },
 };
 

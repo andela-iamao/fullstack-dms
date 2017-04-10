@@ -12,7 +12,8 @@ export default {
   create(req, res) {
     const { title, content, access } = req.body;
     const OwnerId = req.decoded.UserId;
-    db.Document.create({ title, content, access, OwnerId })
+    const RoleId = req.decoded.RoleId;
+    db.Document.create({ title, content, access, OwnerId, RoleId })
       .then((document) => {
         res.status(201).send(document);
       })
@@ -33,7 +34,8 @@ export default {
       where: {
         $or: [
           { access: 'public' },
-          { OwnerId: req.decoded.UserId }
+          { OwnerId: req.decoded.UserId },
+          { RoleId: req.decoded.RoleId }
         ]
       },
       limit: req.query.limit || null,
@@ -62,19 +64,13 @@ export default {
         }
 
         if ((document.access === 'public') ||
-          (document.OwnerId === req.decoded.UserId)) {
+          (document.OwnerId === req.decoded.UserId) ||
+          (document.RoleId === req.decoded.RoleId)) {
           return res.send(document);
         }
 
-        db.User.findById(document.OwnerId)
-          .then((owner) => {
-            if (owner.RoleId === req.decoded.RoleId) {
-              return res.send(document);
-            }
-
-            res.status(403)
-              .send({ message: 'You cannot access this document.' });
-          });
+        res.status(403)
+          .send({ message: 'You cannot access this document.' });
       });
   },
 
@@ -126,20 +122,6 @@ export default {
           return res.status(403).send(
             { message: 'You don\'t have permission to delete this document' });
         }
-      });
-  },
-
-  /**
-   * Get all documents that belongs to a user
-   * Route: GET: /users/:id/documents
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} no returns
-   */
-  userDocuments(req, res) {
-    db.Document.findAll({ where: { OwnerId: req.params.id } })
-      .then((documents) => {
-        res.send(documents);
       });
   },
 
