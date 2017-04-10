@@ -91,10 +91,15 @@ export default {
             .send({ message: `Document with id: ${req.params.id} not found` });
         }
 
-        document.update(req.body)
-          .then((updatedDocument) => {
-            res.send(updatedDocument);
-          });
+        if (document.OwnerId === req.decoded.UserId) {
+          document.update(req.body)
+            .then((updatedDocument) => {
+              res.send(updatedDocument);
+            });
+        } else {
+          return res.status(403).send(
+            { message: 'You don\'t have permission to update this document' });
+        }
       });
   },
 
@@ -112,9 +117,13 @@ export default {
           return res.status(404)
             .send({ message: `Document with id: ${req.params.id} not found` });
         }
-
-        document.destroy()
-          .then(() => res.send({ message: 'Document deleted successfully.' }));
+        if (document.OwnerId === req.decoded.UserId) {
+          document.destroy()
+            .then(() => res.send({ message: 'Document deleted successfully.' }));
+        } else {
+          return res.status(403).send(
+            { message: 'You don\'t have permission to delete this document' });
+        }
       });
   },
 
@@ -134,17 +143,13 @@ export default {
 
   /**
    * Get all documents that belongs to a user
-   * Route: GET: /search?query={}&published={}&role=1
+   * Route: GET: /search?query={doctitle}
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} no returns
    */
   search(req, res) {
     const queryString = req.query.query;
-    const role = Math.abs(req.query.role, 10);
-    const publishedDate = req.query.publishedDate;
-    const order = publishedDate && /^ASC$/i.test(publishedDate)
-            ? publishedDate : 'DESC';
 
     const query = {
       where: {
@@ -155,7 +160,7 @@ export default {
       },
       limit: req.query.limit || null,
       offset: req.query.offset || null,
-      order: [['createdAt', order]]
+      order: [['createdAt', 'DESC']]
     };
 
     if (queryString) {
@@ -163,19 +168,6 @@ export default {
         { title: { $like: `%${queryString}%` } },
         { content: { $like: `%${queryString}%` } }
       ] });
-    }
-
-    if (role) {
-      query.include = [{
-        model: db.User,
-        as: 'Owner',
-        attributes: [],
-        include: [{
-          model: db.Role,
-          attributes: [],
-          where: { id: role }
-        }]
-      }];
     }
 
     db.Document.findAll(query)

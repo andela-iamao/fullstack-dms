@@ -3,11 +3,11 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import HomePage from './components/home/HomePage';
-import SignupPage from './components/signup/SignupPage';
+import SignupPage from './components/users/SignupForm';
 import LoginPage from './components/login/LoginPage';
-import DocumentForm from './components/documents/DocumentForm';
-import DocumentsPage from './components/documents/DocumentsPage';
-import DocumentShowPage from './components/documents/DocumentShowPage';
+// import DocumentForm from './components/documents/DocumentForm';
+// import DocumentsPage from './components/documents/DocumentsPage';
+// import DocumentShowPage from './components/documents/DocumentShowPage';
 import requireAuth from './utils/requireAuth';
 
 export default (
@@ -15,8 +15,8 @@ export default (
     <IndexRoute component={HomePage} />
     <Route path="signup" component={SignupPage} />
     <Route path="login" component={LoginPage} />
-    <Route path="new-document" component={requireAuth(DocumentForm)} />
+    {/*<Route path="new-document" component={requireAuth(DocumentForm)} />
     <Route path="documents" component={DocumentsPage} />
-    <Route path="showdocument" component={DocumentShowPage} />
+    <Route path="showdocument" component={DocumentShowPage} />*/}
   </Route>
 );
