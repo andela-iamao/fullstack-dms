@@ -12,12 +12,6 @@ module.exports = {
         title: 'regular',
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        id: 3,
-        title: 'role',
-        createdAt: new Date(),
-        updatedAt: new Date()
       }
     ], {});
   },

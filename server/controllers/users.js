@@ -28,7 +28,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   create(req, res) {
-    const { username, firstName, lastName, email, password, RoleId } = req.body;
+    const { username, firstName, lastName, email, password } = req.body;
     const passwordDigest = bcrypt.hashSync(password, 10);
 
     db.User.findOne({ where: { email } })
@@ -38,6 +38,7 @@ export default {
             .send({ message: `User with email ${req.body.email} already exists`
           });
         }
+        const RoleId = 2;
         db.User.create({
           username,
           firstName,

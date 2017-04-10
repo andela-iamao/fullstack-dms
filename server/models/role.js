@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate(models) {
         Role.hasMany(models.User);
+        Role.hasMany(models.Document);
       }
     }
   });

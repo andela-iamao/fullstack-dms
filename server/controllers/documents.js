@@ -10,7 +10,9 @@ export default {
    * @returns {void} no returns
    */
   create(req, res) {
-    db.Document.create(req.body)
+    const { title, content, access } = req.body;
+    const OwnerId = req.decoded.UserId;
+    db.Document.create({ title, content, access, OwnerId })
       .then((document) => {
         res.status(201).send(document);
       })

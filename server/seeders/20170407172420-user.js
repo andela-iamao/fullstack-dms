@@ -1,4 +1,5 @@
 const faker = require('faker');
+const bcrypt = require('bcrypt');
 
 module.exports = {
   up(queryInterface) {
@@ -9,7 +10,7 @@ module.exports = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        passwordDigest: faker.internet.password(),
+        passwordDigest: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
         RoleId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -19,8 +20,8 @@ module.exports = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        passwordDigest: faker.internet.password(),
-        RoleId: 2,
+        passwordDigest: bcrypt.hashSync('awa123', bcrypt.genSaltSync(8)),
+        RoleId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }

@@ -19,6 +19,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE'
       },
+      RoleId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE'
+      },
       access: {
         defaultValue: 'public',
         type: Sequelize.STRING

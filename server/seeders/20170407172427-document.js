@@ -16,7 +16,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'public',
-        OwnerId: 1,
+        OwnerId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -24,7 +24,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'public',
-        OwnerId: 2,
+        OwnerId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -32,7 +32,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'private',
-        OwnerId: 2,
+        OwnerId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -56,7 +56,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'private',
-        OwnerId: 1,
+        OwnerId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -64,7 +64,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'public',
-        OwnerId: 1,
+        OwnerId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -88,7 +88,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'private',
-        OwnerId: 1,
+        OwnerId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -96,7 +96,7 @@ module.exports = {
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
         access: 'role',
-        OwnerId: 2,
+        OwnerId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }
