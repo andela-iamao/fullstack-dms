@@ -19,7 +19,7 @@ class LandingPage extends React.Component {
           <div className="row">
             <div className="col s12">
               <div className="center-align">
-                <a className="btn btn-large create-list-link hero-btn" href="/auth">
+                <a className="btn btn-large create-list-link hero-btn" href="/signup">
                   Get Started
                 </a>
               </div>

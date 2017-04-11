@@ -1,13 +1,16 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavigationBar from './common/NavigationBar';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="container">
-        <NavigationBar />
-        {this.props.children}
-      </div>
+      <MuiThemeProvider>
+        <div className="container">
+          <NavigationBar />
+          {this.props.children}
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

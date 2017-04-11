@@ -34,7 +34,7 @@ body {
 #hero {
   background-position: center center;
   background-size: cover;
-  background-image: url("../images/coffee.jpg");
+  /*background-image: url("../images/coffee.jpg");*/
   height: 100vh;
 }
 h2 {
