@@ -1,29 +1,15 @@
-/* eslint react/prefer-stateless-function: 0 */
-/* eslint no-shadow: 0 */
-
 import React from 'react';
-import { connect } from 'react-redux';
 import SignupForm from './SignupForm';
-import { userSignupRequest, userExists } from '../../actions/signupActions';
-// import { addFlashMessage } from '../../actions/flashMessages';
 
 class SignupPage extends React.Component {
   render() {
-    const { userSignupRequest } = this.props;
     return (
-      <div>
-        <div>
-          <SignupForm
-            userSignupRequest={userSignupRequest}
-          />
+      <div className="row">
+        <div className="col m4 offset-m4">
+          <SignupForm />
         </div>
       </div>
-    );
+      );
   }
 }
-
-SignupPage.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired,
-};
-export default connect(null, { userSignupRequest })(SignupPage);
+export default SignupPage;

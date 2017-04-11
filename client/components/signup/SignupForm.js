@@ -1,20 +1,18 @@
 import React from 'react';
-import map from 'lodash/map';
-import classnames from 'classnames';
 import validateInput from '../../../server/shared/validations/signup';
-import TextFieldGroup from '../common/TextFieldGroup';
+import TextField from 'material-ui/TextField';
+
 
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       passwordConfirmation: '',
-      errors: {},
-      isLoading: false,
-      invalid: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,94 +22,42 @@ class SignupForm extends React.Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-
+  
   onSubmit(e) {
     e.preventDefault();
-
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignupRequest(this.state).then(
-        () => {
-          this.props.addFlashMessage({
-            type: 'success',
-            text: 'You signed up successfully. Welcome!'
-          });
-          this.context.router.push('/');
-        },
-        err => this.setState({ errors: err.response.data, isLoading: false })
-      );
-    }
-  }
-
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) {
-      this.setState({ errors });
-    }
-
-    return isValid;
+    console.log(this.state);
   }
 
   render() {
-    const { errors } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
-        <h2>Sign Up!</h2>
-
-        <TextFieldGroup
-          error={errors.username}
-          label="Username"
-          onChange={this.onChange}
-          value={this.state.username}
-          field="username"
-        />
-
-        <TextFieldGroup
-          error={errors.email}
-          label="Email"
-          onChange={this.onChange}
-          value={this.state.email}
-          field="email"
-        />
-
-        <TextFieldGroup
-          error={errors.password}
-          label="Password"
-          onChange={this.onChange}
-          value={this.state.password}
-          field="password"
-          type="password"
-        />
-
-        <TextFieldGroup
-          error={errors.passwordConfirmation}
-          label="Password Confirmation"
-          onChange={this.onChange}
-          value={this.state.passwordConfirmation}
-          field="passwordConfirmation"
-          type="password"
-        />
-
-        <div className="input-field">
-          <button
-            disabled={this.state.isLoading || this.state.invalid}
-            className="btn waves-effect waves-light"
-          >
-              Sign up
-          </button>
-        </div>
-      </form>
+      <div>
+        <TextField
+          hintText="UserName"
+          errorText="This field is required"
+        /><br />
+        <TextField
+          hintText="First Name"
+          errorText="The error text can be as long as you want, it will wrap."
+        /><br />
+        <TextField
+          hintText="Last Name"
+          errorText="This field is required"
+        /><br />
+        <TextField
+          hintText="Email"
+          errorText="This field is required."
+        /><br />
+        <TextField
+          hintText="Password"
+          errorText="This field is required"
+        /><br />
+        <TextField
+          hintText="Password Confirmation"
+          errorText="This field is required."
+        /><br />
+      </div>
     );
   }
 }
 
-SignupForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired,
-};
-
-SignupForm.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 export default SignupForm;
