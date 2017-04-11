@@ -4,7 +4,7 @@ import auth from '../middlewares/auth';
 
 export default (app) => {
   // Users API Endpoint
-  app.post('/users', usersController.create);
+  app.post('/users', auth.verifyToken, usersController.create);
   app.get('/users', auth.verifyToken, auth.permitAdmin, usersController.list);
   app.get('/users/:id', auth.verifyToken, usersController.retrieve);
   app.put('/users/:id', auth.verifyToken, usersController.update);

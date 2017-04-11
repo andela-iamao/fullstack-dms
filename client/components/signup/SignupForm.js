@@ -1,7 +1,6 @@
 import React from 'react';
 import validateInput from '../../../server/shared/validations/signup';
 import TextField from 'material-ui/TextField';
-import { RaisedButton } from 'material-ui';
 
 
 class SignupForm extends React.Component {
@@ -26,42 +25,68 @@ class SignupForm extends React.Component {
   
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.props.userSignupRequest(this.state);
+    // console.log(this.state);
   }
 
   render() {
     return (
-      <div>
-        <TextField
-          hintText="UserName"
-          errorText="This field is required"
-        /><br />
-        <TextField
-          hintText="First Name"
-          errorText="The error text can be as long as you want, it will wrap."
-        /><br />
-        <TextField
-          hintText="Last Name"
-          errorText="This field is required"
-        /><br />
-        <TextField
-          hintText="Email"
-          errorText="This field is required."
-        /><br />
-        <TextField
-          hintText="Password"
-          errorText="This field is required"
-        /><br />
-        <TextField
-          hintText="Password Confirmation"
-          errorText="This field is required."
-        /><br />
-        <br />
-        <br />
-        <RaisedButton label="Primary" primary={true} />
+      <div className="row">
+        <form className="col s12" onSubmit={this.onSubmit}>
+          <TextField
+            hintText="UserName"
+            errorText="This field is required"
+            onChange={this.onChange}
+            value={this.state.username}
+            name="username"
+          /><br />
+          <TextField
+            hintText="First Name"
+            errorText="The error text can be as long as you want, it will wrap."
+            onChange={this.onChange}
+            value={this.state.firstName}
+            name="firstName"
+          /><br />
+          <TextField
+            hintText="Last Name"
+            errorText="This field is required"
+            onChange={this.onChange}
+            value={this.state.lastName}
+            name="lastName"
+          /><br />
+          <TextField
+            hintText="Email"
+            errorText="This field is required."
+            onChange={this.onChange}
+            value={this.state.email}
+            name="email"
+          /><br />
+          <TextField
+            hintText="Password"
+            errorText="This field is required"
+            onChange={this.onChange}
+            value={this.state.password}
+            name="password"
+          /><br />
+          <TextField
+            hintText="Password Confirmation"
+            errorText="This field is required."
+            onChange={this.onChange}
+            value={this.state.passwordConfirmation}
+            name="passwordConfirmation"
+          /><br />
+          <br />
+          <br />
+          <button className="btn waves-effect waves-light blue" name="action" type="submit">Sign up
+          </button>
+        </form>
       </div>
     );
   }
 }
+
+SignupForm.propTypes = {
+  userSignupRequest: React.PropTypes.func.isRequired,
+};
 
 export default SignupForm;
