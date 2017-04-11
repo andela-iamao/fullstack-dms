@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 export default () => {
   return (
-    <nav className="transparent black-text" role="navigation">
+    <nav className="black-text" role="navigation">
       <div className="nav-wrapper container">
         <Link href="/" className="brand-logo">DMS</Link>
         {/*<Link href="#" data-activates="mobile-demo" className="button-collapse">
