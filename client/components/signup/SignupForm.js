@@ -13,7 +13,6 @@ class SignupForm extends React.Component {
       password: '',
       passwordConfirmation: '',
       errors: {},
-      isLoading: false,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -36,10 +35,12 @@ class SignupForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true })
+      this.setState({ errors: {} });
       this.props.userSignupRequest(this.state).then(
-        () => {},
-        ({ data }) => this.setState({ errors: data, isLoading: false})
+        () => {
+          this.context.router.push('/');
+        },
+        ({ data }) => this.setState({ errors: data })
       );
     }
   }
@@ -100,7 +101,7 @@ class SignupForm extends React.Component {
           /><br />
           <br />
           <br />
-          <button disabled={this.state.isLoading} className="btn waves-effect waves-light blue" name="action" type="submit">Sign up
+          <button className="btn waves-effect waves-light blue" name="action" type="submit">Sign up
           </button>
         </form>
       </div>
@@ -110,6 +111,10 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
+};
+
+SignupForm.contextTypes = {
+  router: React.PropTypes.object.isRequired,
 };
 
 export default SignupForm;
