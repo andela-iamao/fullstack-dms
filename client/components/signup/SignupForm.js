@@ -1,6 +1,7 @@
 import React from 'react';
 import validateInput from '../../../server/shared/validations/signup';
 import TextField from 'material-ui/TextField';
+import { RaisedButton } from 'material-ui';
 
 
 class SignupForm extends React.Component {
@@ -55,6 +56,9 @@ class SignupForm extends React.Component {
           hintText="Password Confirmation"
           errorText="This field is required."
         /><br />
+        <br />
+        <br />
+        <RaisedButton label="Primary" primary={true} />
       </div>
     );
   }
