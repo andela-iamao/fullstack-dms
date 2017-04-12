@@ -10,7 +10,7 @@ class SignupPage extends React.Component {
       <div>
         <SignupForm userSignupRequest={userSignupRequest} />
       </div>
-      );
+    );
   }
 }
 

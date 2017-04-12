@@ -80,6 +80,7 @@ class SignupForm extends React.Component {
             errorText={errors.email}
             onChange={this.onChange}
             value={this.state.email}
+            type="email"
             name="email"
             fullWidth
           /><br />
@@ -88,6 +89,7 @@ class SignupForm extends React.Component {
             errorText={errors.password}
             onChange={this.onChange}
             value={this.state.password}
+            type="password"
             name="password"
             fullWidth
           /><br />
@@ -96,6 +98,7 @@ class SignupForm extends React.Component {
             errorText={errors.passwordConfirmation}
             onChange={this.onChange}
             value={this.state.passwordConfirmation}
+            type="password"
             name="passwordConfirmation"
             fullWidth
           /><br />

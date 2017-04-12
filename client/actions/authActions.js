@@ -6,7 +6,7 @@ import { SET_CURRENT_USER } from './types';
 export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
-    user
+    user,
   };
 }
 
@@ -20,7 +20,7 @@ export function logout() {
 
 export function login(data) {
   return dispatch =>
-     axios.post('/api/auth', data)
+     axios.post('/users/login', data)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem('jwtToken', token);

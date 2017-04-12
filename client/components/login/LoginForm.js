@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/login';
 import { login } from '../../actions/authActions';
+import TextField from 'material-ui/TextField';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -11,26 +11,10 @@ class LoginForm extends React.Component {
       identifier: '',
       password: '',
       errors: {},
-      isLoading: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.login(this.state).then(
-        res => this.context.router.push('/'),
-        err => this.setState({ errors: err.response.data.errors, isLoading: false })
-      );
-    }
-  }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
   }
 
   isValid() {
@@ -41,45 +25,65 @@ class LoginForm extends React.Component {
     return isValid;
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {} });
+      this.props.login(this.state).then(
+        () => {
+          this.context.router.push('/');
+        },
+        
+        ({ data }) => this.setState({ errors: data })
+      );
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
-    const { errors, identifier, password, isLoading } = this.state;
+    const { errors, identifier, password } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <h1>Login</h1>
-
-        {errors.form && <div className="alert alert-danger">{errors.form}</div>}
-
-        <TextFieldGroup
-          field="identifier"
-          label="Username / Email"
-          value={identifier}
-          error={errors.identifier}
-          onChange={this.onChange}
-        />
-
-        <TextFieldGroup
-          field="password"
-          label="Password"
-          value={password}
-          error={errors.password}
-          onChange={this.onChange}
-          type="password"
-        />
-        <div className="form-group">
-          <button className="btn btn-primary btn-lg" disabled={isLoading}>Login</button>
-        </div>
-      </form>
+      <div className="row">
+        <form onSubmit={this.onSubmit}>
+          <h1>Login</h1>
+          {errors.form && <div style={{color: "#F44336"}}>{errors.form}</div>}
+          <TextField
+              hintText="Username or Email"
+              errorText={errors.identifier}
+              onChange={this.onChange}
+              value={this.state.identifier}
+              name="identifier"
+              fullWidth
+            /><br />
+          <TextField
+              hintText="Password"
+              errorText={errors.password}
+              onChange={this.onChange}
+              value={this.state.password}
+              type="password"
+              name="password"
+              fullWidth
+            /><br />
+          <br />
+          <br />
+          <button className="btn waves-effect waves-light blue" name="action" type="submit">Login
+          </button>
+        </form>
+      </div>
     );
   }
 }
 
 LoginForm.propTypes = {
-  login: React.PropTypes.func.isRequired
+  login: React.PropTypes.func.isRequired,
 };
 
 LoginForm.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: React.PropTypes.object.isRequired,
 };
 
 export default connect(null, { login })(LoginForm);

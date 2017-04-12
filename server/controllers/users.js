@@ -31,32 +31,41 @@ export default {
     const { username, firstName, lastName, email, password } = req.body;
     const passwordDigest = bcrypt.hashSync(password, 10);
 
-    db.User.findOne({ where: { email } })
+    db.User.findOne(
+      { where: {
+        $or: [{ username }, { email }]
+      } })
       .then((existingUser) => {
+        const errors = {};
         if (existingUser) {
-          return res.status(409)
-            .send({ message: `User with email ${req.body.email} already exists`
+          if (existingUser.username === username) {
+            errors.username = 'There is user with such username';
+          }
+          if (existingUser.email === email) {
+            errors.email = 'There is user with such email';
+          }
+          res.status(400).send(errors);
+        } else {
+          const RoleId = 2;
+          db.User.create({
+            username,
+            firstName,
+            lastName,
+            email,
+            passwordDigest,
+            RoleId
+          }).then((user) => {
+            const token = jwt.sign({
+              UserId: user.id,
+              RoleId: user.RoleId
+            }, config.jwtSecret, { expiresIn: 86400 });
+            user = permittedAttributes(user);
+            res.send({ token, expiresIn: 86400, user });
+          })
+          .catch((err) => {
+            res.status(500).send({ error: err });
           });
         }
-        const RoleId = 2;
-        db.User.create({
-          username,
-          firstName,
-          lastName,
-          email,
-          passwordDigest,
-          RoleId
-        }).then((user) => {
-          const token = jwt.sign({
-            UserId: user.id,
-            RoleId: user.RoleId
-          }, config.jwtSecret, { expiresIn: 86400 });
-          user = permittedAttributes(user);
-          res.status(201).send({ token, expiresIn: 86400, user });
-        })
-        .catch((err) => {
-          res.status(400).send({ error: err });
-        });
       });
   },
 
@@ -160,16 +169,24 @@ export default {
       }
     })
     .then((user) => {
-      if (bcrypt.compareSync(password, user.passwordDigest)) {
-        const token = jwt.sign({
-          UserId: user.id,
-          RoleId: user.RoleId
-        }, config.jwtSecret, { expiresIn: 86400 });
+      const errors = {};
+      if (user) {
+        if (bcrypt.compareSync(password, user.passwordDigest)) {
+          const token = jwt.sign({
+            UserId: user.id,
+            RoleId: user.RoleId
+          }, config.jwtSecret, { expiresIn: 86400 });
 
-        res.send({ token, expiresIn: 86400 });
+          res.send({ token, expiresIn: 86400 });
+        } else {
+          errors.form = 'Invalid Credentials';
+          res.status(401)
+            .send(errors);
+        }
       } else {
+        errors.form = 'Invalid Credentials';
         res.status(401)
-          .send({ message: 'Failed to authenticate.' });
+            .send(errors);
       }
     });
   },
