@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { TextField, SelectField, MenuItem } from 'material-ui';
 import validateInput from '../../../server/shared/validations/createdocument';
-import { saveDocument } from '../../actions/documentActions'
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import { saveDocument } from '../../actions/documentActions';
 
 class DocumentCreateForm extends React.Component {
   constructor(props) {
@@ -20,6 +18,15 @@ class DocumentCreateForm extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
+
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) this.setState({ errors });
+
+    return isValid;
+  }
+
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
@@ -37,62 +44,71 @@ class DocumentCreateForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) this.setState({ errors });
-
-    return isValid;
-  }
-
-  componentDidMount() {
-    const element = ReactDOM.findDOMNode(this.refs.dropdown)
-
-    $(element).ready(function() {
-      $('select').material_select();
-    });
-  }
-
   render() {
     const { errors } = this.state;
 
     return (
-      <div className="row">
+      <div className="container">
+        <h2>Create a Document </h2>
         <form onSubmit={this.onSubmit}>
-          <h1>Create Document</h1>
-          <TextField
-              floatingLabelText="Document Title"
-              errorText={errors.title}
-              onChange={this.onChange}
-              value={this.state.title}
-              name="title"
-              fullWidth
-            /><br />
-          <TextField
-              floatingLabelText="Document Content"
-              errorText={errors.content}
-              onChange={this.onChange}
-              value={this.state.content}
-              name="content"
-              multiLine
-              fullWidth
-            /><br />
-          <div>
-            <select
-              className="input-field"
-              name="access" 
-              onChange={this.onChange}
-              value={this.state.access}
-              ref="dropdown"
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="role">Role</option>
-            </select>
-          </div>
-          <br />
-          <br />
-          <button className="btn waves-effect waves-light blue" name="action" type="submit">Save Document
+          <div className="row">
+
+            <div className="input-field">
+              <input
+               name="title" 
+               type="text" 
+               className="validate"
+               onChange={this.onChange}
+               value={this.state.title}
+               ></input>
+              <label htmlFor="title">Document Title</label>
+            </div>
+
+            <div className="input-field">
+              <textarea 
+                name="content" 
+                className="materialize-textarea validate"
+                onChange={this.onChange}
+                value={this.state.content}
+                ></textarea>
+              <label htmlFor="content">Document Content</label>
+            </div>
+
+            <div className="input-field">
+              <p>Select Access </p>
+              <p>
+                <input 
+                  name="access" 
+                  type="radio"
+                  onChange={this.onChange}
+                  value="public"
+                  id="access1"
+                />
+                <label htmlFor="access1">Public</label>
+              </p>
+              <p>
+                <input 
+                  name="access" 
+                  type="radio"
+                  onChange={this.onChange}
+                  value="private"
+                  id="access2"
+                />
+                <label htmlFor="access2">Private</label>
+              </p>
+              <p>
+                <input 
+                  name="access" 
+                  type="radio" 
+                  onChange={this.onChange}
+                  value="role"
+                  id="access3"
+                />
+                <label htmlFor="access3">Role</label>
+              </p>
+            </div>
+          </div><br />
+          <button className="btn waves-effect waves-light blue" type="submit">Save Document
           </button>
         </form>
       </div>
