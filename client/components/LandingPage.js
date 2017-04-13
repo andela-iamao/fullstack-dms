@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/styles.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import DocumentsPage from './documents/DocumentsPage';
 
 class LandingPage extends React.Component {
   render() {
@@ -29,6 +30,7 @@ class LandingPage extends React.Component {
               </div>
             </div>
           </div>}
+        {isAuthenticated && <DocumentsPage />}
       </div>
     );
   }

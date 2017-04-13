@@ -8,7 +8,7 @@ export default function (ComposedComponent) {
       if (!this.props.isAuthenticated) {
         this.props.addFlashMessage({
           type: 'error',
-          text: 'You need to login to access this page'
+          text: 'You need to login to access this page',
         });
         this.context.router.push('/login');
       }
@@ -29,16 +29,16 @@ export default function (ComposedComponent) {
 
   Authenticate.propTypes = {
     isAuthenticated: React.PropTypes.bool.isRequired,
-    addFlashMessage: React.PropTypes.func.isRequired
+    addFlashMessage: React.PropTypes.func.isRequired,
   };
 
   Authenticate.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
   };
 
   function mapStateToProps(state) {
     return {
-      isAuthenticated: state.auth.isAuthenticated
+      isAuthenticated: state.auth.isAuthenticated,
     };
   }
 

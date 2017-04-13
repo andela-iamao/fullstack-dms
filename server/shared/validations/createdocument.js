@@ -1,7 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 
 // Client side validation
-function validate(values) {
+export default function validate(values) {
   const errors = {};
 
   if (!values.title || values.title.trim() === '') {
@@ -10,7 +10,9 @@ function validate(values) {
   if (!values.content || values.content.trim() === '') {
     errors.content = 'Enter some content';
   }
-
+  if (!values.access) {
+    errors.access = 'Select Document access';
+  }
   return {
     errors,
     isValid: isEmpty(errors)

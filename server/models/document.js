@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         Document.belongsTo(models.User, {
           onDelete: 'CASCADE',
-          foreignKey: { allowNull: false }
+          foreignKey: 'OwnerId'
         });
         Document.belongsTo(models.Role, {
           onDelete: 'CASCADE',
-          foreignKey: { allowNull: false }
+          foreignKey: 'RoleId'
         });
       }
     }
