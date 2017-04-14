@@ -48,8 +48,12 @@ export function documentDeleted(documentId) {
 export function saveDocument(data) {
   return (dispatch) => {
     return axios.post('/documents', data)
-      .then(res => res.data)
-      .then(data => dispatch(addDocument(data.document)));
+       .then(response => {
+        dispatch(addDocument(response.data));
+      })
+      .catch(error => {
+        throw(error);
+      });
   };
 }
 

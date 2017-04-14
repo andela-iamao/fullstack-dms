@@ -4,14 +4,14 @@ import { Link } from 'react-router';
 export default function DocumentCard({ document, deleteDocument }) {
   return (
     <div className="row">
-      <div className="col s12 m6">
+      <div className="col s12">
         <div className="card blue-grey darken-1">
           <div className="card-content white-text">
             <span className="card-title">{document.title}</span>
             <p>{document.content}</p>
           </div>
           <div className="card-action">
-            <a href="#"><Link to={`/document/${document.id}`}>Edit</Link></a>
+            <Link to={`/document/${document.id}`}>Edit</Link>
             <a href="#" onClick={() => deleteDocument(document.id)}>Delete</a>
           </div>
         </div>

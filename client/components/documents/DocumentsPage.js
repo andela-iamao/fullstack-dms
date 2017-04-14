@@ -13,7 +13,7 @@ class DocumentsPage extends React.Component {
     return (
       <div>
         <h1>Documents List</h1>
-        <Link className="btn create-list-link hero-btn" to="/new-document">
+        <Link className="btn create-list-link hero-btn" to={'document'}>
           Add Document
         </Link>
         <DocumentsList documents={this.props.documents} deleteDocument={this.props.deleteDocument} />
