@@ -1,123 +1,79 @@
 import React from 'react';
-import validateInput from '../../../server/shared/validations/signup';
-import TextField from 'material-ui/TextField';
+import { Row, Input, Button } from 'react-materialize';
 
-class SignupForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      errors: {},
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-  
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if(!isValid) {
-      this.setState({ errors });
-    }
-    return isValid;
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {} });
-      this.props.userSignupRequest(this.state).then(
-        () => {
-          this.context.router.push('/');
-        },
-        ({ data }) => this.setState({ errors: data })
-      );
-    }
-  }
-
-  render() {
-    const { errors } = this.state;
+const SignupForm = ({ onChange, userProps, onSubmit, errors }) => {
     return (
-      <div className="row">
+      <form onSubmit={onSubmit}>
         <h4>Register</h4>
-        <form className="col m12 l12" onSubmit={this.onSubmit}>
-          <TextField
-            hintText="UserName"
-            errorText={errors.username}
-            onChange={this.onChange}
-            value={this.state.username}
+        <Row>
+          <Input
+            s={6}
+            validate
+            placeholder="UserName"
+            error={errors.username}
+            onChange={onChange}
+            value={userProps.username}
             name="username"
-            fullWidth
-          /><br />
-          <TextField
-            hintText="First Name"
-            errorText={errors.firstName}
-            onChange={this.onChange}
-            value={this.state.firstName}
+          />
+          <Input
+            s={6}
+            validate
+            placeholder="First Name"
+            error={errors.firstName}
+            onChange={onChange}
+            value={userProps.firstName}
             name="firstName"
-            fullWidth
-          /><br />
-          <TextField
-            hintText="Last Name"
-            errorText={errors.lastName}
-            onChange={this.onChange}
-            value={this.state.lastName}
+          />
+          <Input
+            s={6}
+            validate
+            placeholder="Last Name"
+            error={errors.lastName}
+            onChange={onChange}
+            value={userProps.lastName}
             name="lastName"
-            fullWidth
-          /><br />
-          <TextField
-            hintText="Email"
-            errorText={errors.email}
-            onChange={this.onChange}
-            value={this.state.email}
+          />
+          <Input
+            s={6}
+            validate
+            placeholder="Email"
+            error={errors.email}
+            onChange={onChange}
+            value={userProps.email}
             type="email"
             name="email"
-            fullWidth
-          /><br />
-          <TextField
-            hintText="Password"
-            errorText={errors.password}
-            onChange={this.onChange}
-            value={this.state.password}
+          />
+          <Input
+            s={6}
+            validate
+            placeholder="Password"
+            error={errors.password}
+            onChange={onChange}
+            value={userProps.password}
             type="password"
             name="password"
-            fullWidth
-          /><br />
-          <TextField
-            hintText="Password Confirmation"
-            errorText={errors.passwordConfirmation}
-            onChange={this.onChange}
-            value={this.state.passwordConfirmation}
+          />
+          <Input
+            s={6}
+            validate
+            placeholder="Password Confirmation"
+            error={errors.passwordConfirmation}
+            onChange={onChange}
+            value={userProps.passwordConfirmation}
             type="password"
             name="passwordConfirmation"
-            fullWidth
-          /><br />
-          <br />
-          <br />
-          <button className="btn waves-effect waves-light blue" name="action" type="submit">Sign up
-          </button>
-        </form>
-      </div>
+          />
+          <Input value="signup" className="btn waves-effect waves-light" name="action" type="submit" />
+        </Row>
+      </form>
     );
-  }
-}
+  };
 
 SignupForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired,
-};
-
-SignupForm.contextTypes = {
-  router: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  userProps: React.PropTypes.object.isRequired,
+  onSubmit: React.PropTypes.func.isRequired,
+  errors: React.PropTypes.object.isRequired,
 };
 
 export default SignupForm;

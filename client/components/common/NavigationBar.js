@@ -17,11 +17,14 @@ class NavigationBar extends React.Component {
         <div className="nav-wrapper">
           <Link to="/" className="brand-logo">DMS</Link>
           <ul className="right hide-on-med-and-down" id="mobile-demo">
-            {user.RoleId === 1 && <li><Link to="/users"><span>Users</span></Link></li>}
-            <li><Link to="/">{isAuthenticated ? <span>Documents</span> : <span>Home</span>}</Link></li>
+            <li><Link to="/">
+              {isAuthenticated ?
+                <span>Documents</span> : <span>Home</span>}</Link></li>
+            {user.RoleId === 1
+                && <li><Link to="/users"><span>Users</span></Link></li>}
             <li>
-              {!isAuthenticated && <Link to="/login">Login</Link>
-              }
+              {!isAuthenticated
+                && <Link to="/login">Login</Link>}
             </li>
             <li>
               {isAuthenticated
