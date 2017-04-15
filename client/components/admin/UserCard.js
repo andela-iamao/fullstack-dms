@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
+import '../../styles/styles.css';
+
 
 export default function UserCard({ user, deleteUser }) {
   return (
@@ -8,23 +10,28 @@ export default function UserCard({ user, deleteUser }) {
         <div className="card blue-grey darken-1">
           <div className="card-content white-text">
             <span className="card-title">{user.firstName}, {user.lastName}</span>
-            <dl>
-              <dt>ID</dt>
-              <dd>{user.id}</dd>
-
-              <dt>UserName</dt>
-              <dd>{user.username}</dd>
-
-              <dt>Email</dt>
-              <dd>{user.email}</dd>
-
-              <dt>Role</dt>
-              <dd>{user.Role.title}</dd>
-
-              <dt>Date Registered</dt>
-              <dd>{user.createdAt}</dd>
-
-            </dl>
+            <table>
+              <tr>
+                <td className="title">ID: </td>
+                <td className="text">{user.id}</td>
+              </tr>
+              <tr>
+                <td className="title">UserName: </td>
+                <td className="text">{user.username}</td>
+              </tr>
+              <tr>
+                <td className="title">Email:</td>
+                <td className="text">{user.email}</td>
+              </tr>
+              <tr>
+                <td className="title">Role: </td>
+                <td className="text">{user.Role.title}</td>
+              </tr>     
+              <tr>
+                <td className="title">Signup Date:</td>
+                <td className="text">{user.createdAt}</td>
+              </tr>
+            </table>
           </div>
           <div className="card-action">
             <Link to={`/user/${user.id}`}>Edit</Link>

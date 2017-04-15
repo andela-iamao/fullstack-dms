@@ -4,18 +4,18 @@ import { Row, Input, Button } from 'react-materialize';
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
+      <h1>Login</h1>
       <Row>
-        <h1>Login</h1>
         {errors.form && <div style={{color: "#F44336"}}>{errors.form}</div>}
         <Input
-          s={6}
+          s={12}
           placeholder="Username or Email"
           onChange={onChange}
           value={loginProps.identifier}
           name="identifier"
           />
         <Input
-          s={6}
+          s={12}
           placeholder="Password"
           onChange={onChange}
           value={loginProps.password}
