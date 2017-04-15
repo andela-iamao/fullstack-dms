@@ -11,17 +11,16 @@ class NavigationBar extends React.Component {
     this.context.router.push('/');
   }
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
     return (
       <nav className="black-text" role="navigation">
         <div className="nav-wrapper">
           <Link to="/" className="brand-logo">DMS</Link>
           <ul className="right hide-on-med-and-down" id="mobile-demo">
-            <li><Link to="/">{isAuthenticated ? <span>Documents</span> : <span>Home</span> }</Link></li>
+            {user.RoleId === 1 && <li><Link to="/users"><span>Users</span></Link></li>}
+            <li><Link to="/">{isAuthenticated ? <span>Documents</span> : <span>Home</span>}</Link></li>
             <li>
-              {isAuthenticated
-                ? <Link href="/profile" >Profile</Link>
-                : <Link to="/login">Login</Link>
+              {!isAuthenticated && <Link to="/login">Login</Link>
               }
             </li>
             <li>

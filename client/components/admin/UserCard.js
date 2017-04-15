@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default function UserCard({ user, deleteUser }) {
   return (
     <div className="row">
-      <div className="col s12">
+      <div className="col s12 m6">
         <div className="card blue-grey darken-1">
           <div className="card-content white-text">
             <span className="card-title">{user.firstName}, {user.lastName}</span>
@@ -18,8 +18,8 @@ export default function UserCard({ user, deleteUser }) {
               <dt>Email</dt>
               <dd>{user.email}</dd>
 
-              <dt>RoleId</dt>
-              <dd>{user.role}</dd>
+              <dt>Role</dt>
+              <dd>{user.Role.title}</dd>
 
               <dt>Date Registered</dt>
               <dd>{user.createdAt}</dd>
@@ -28,8 +28,7 @@ export default function UserCard({ user, deleteUser }) {
           </div>
           <div className="card-action">
             <Link to={`/user/${user.id}`}>Edit</Link>
-            <Link to="UserDetailsPage">View Details</Link>
-            <a href="#" onClick={() => deleteUser(document.id)}>Delete</a>
+            <a href="#" onClick={() => deleteUser(user.id)}>Delete</a>
           </div>
         </div>
       </div>

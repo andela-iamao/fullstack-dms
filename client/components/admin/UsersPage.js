@@ -13,10 +13,9 @@ class UsersPage extends React.Component {
     return (
       <div>
         <h1>Users List</h1>
-        <Link className="btn create-list-link hero-btn" to={'user'}>
-          Add User
-        </Link>
-        <UsersList users={this.props.users} deleteUser={this.props.deleteUser} />
+        <UsersList 
+          users={this.props.users} 
+          deleteUser={this.props.deleteUser} />
       </div>
     );
   }
@@ -30,7 +29,7 @@ UsersPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    users: state.users,
+    users: state.admin,
   };
 }
 

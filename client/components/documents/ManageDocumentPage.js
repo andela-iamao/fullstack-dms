@@ -60,7 +60,7 @@ class ManageDocumentPage extends React.Component {
     this.setState({saving: true});
     this.props.actions.saveDocument(this.state.document)
       .then(() => {
-        this.redirect()
+        this.redirect();
       })
       .catch(error => {
         toastr.error(error);
@@ -111,7 +111,7 @@ function getDocumentById(documents, id) {
 function mapStateToProps(state, ownProps) {
   const documentId = ownProps.params.id; // from the path `/document/:id`
 
-  let document = {title: '', content: '', access: ''};
+  let document = {id: '', title: '', content: '', access: ''};
 
   if (documentId && state.documents.length > 0) {
     document = getDocumentById(state.documents, documentId);

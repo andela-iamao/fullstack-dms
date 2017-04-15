@@ -87,7 +87,11 @@ export default {
         'RoleId',
         'createdAt',
         'updatedAt'
-      ]
+      ],
+      include: [{
+        model: db.Role,
+        as: 'Role',
+      }]
     }).then((users) => {
       res.send(users);
     });
