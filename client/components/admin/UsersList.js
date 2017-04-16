@@ -1,21 +1,27 @@
 import React from 'react';
-import UserCard from './UserCard';
+import UserRow from './UserRow';
 
 export default function UsersList({ users, deleteUser }) {
-  const emptyMessage = (
-    <p>There are no users yet in the system.</p>
-  );
-
-  const usersList = (
-    <div>
-      {users.map(user => <UserCard user={user} key={user.id} deleteUser={deleteUser} />)}
-    </div>
-  );
-
+  const userRows = users.map(user => <UserRow user={user} key={user.id} deleteUser={deleteUser} />)
   return (
-    <div>
-      {users.length === 0 ? emptyMessage : usersList}
-    </div>
+    <table className="striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>UserName</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Date Joined</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {userRows}
+      </tbody>
+    </table>
   );
 }
 

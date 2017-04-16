@@ -1,16 +1,6 @@
 import axios from 'axios';
 import { SET_DOCUMENTS, ADD_DOCUMENT, DOCUMENT_FETCHED, DOCUMENT_UPDATED, DOCUMENT_DELETED } from './types';
 
-function handleResponse(response) {
-  if (response.ok) {
-    return response.json();
-  } else {
-    let error = new Error(response.statusText);
-    error.response = response;
-    throw error;
-  }
-}
-
 export function setDocuments(documents) {
   return {
     type: SET_DOCUMENTS,

@@ -127,19 +127,19 @@ export default {
 
   /**
    * Get all documents that belongs to a user
-   * Route: GET: /search?query={doctitle}
+   * Route: GET: /search/documents?q={queryString}
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} no returns
    */
   search(req, res) {
-    const queryString = req.query.query;
-
+    const queryString = req.query.q;
     const query = {
       where: {
         $and: [{ $or: [
           { access: 'public' },
-          { OwnerId: req.decoded.UserId }
+          { OwnerId: req.decoded.UserId },
+          { RoleId: req.decoded.RoleId }
         ] }],
       },
       limit: req.query.limit || null,
@@ -157,6 +157,8 @@ export default {
     db.Document.findAll(query)
       .then((documents) => {
         res.send(documents);
+      }).catch((err) => {
+        res.status(400).send(err);
       });
   }
 };

@@ -8,14 +8,14 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
       <Row>
         {errors.form && <div style={{color: "#F44336"}}>{errors.form}</div>}
         <Input
-          s={12}
+          s={6}
           placeholder="Username or Email"
           onChange={onChange}
           value={loginProps.identifier}
           name="identifier"
           />
         <Input
-          s={12}
+          s={6}
           placeholder="Password"
           onChange={onChange}
           value={loginProps.password}
@@ -26,7 +26,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
       </Row>
     </form>
     );
-}
+};
 
 LoginForm.propTypes = {
   errors: React.PropTypes.object.isRequired,

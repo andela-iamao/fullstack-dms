@@ -19,6 +19,6 @@ export default (app) => {
   app.get('/documents', auth.verifyToken, documentsController.list);
   app.get('/documents/:id', auth.verifyToken, documentsController.retrieve);
   app.put('/documents/:id', auth.verifyToken, documentsController.update);
-  app.get('/documents/search', auth.verifyToken, documentsController.search);
+  app.get('/search/documents/?q={queryString}', auth.verifyToken, documentsController.search);
   app.delete('/documents/:id', auth.verifyToken, documentsController.destroy);
 };
