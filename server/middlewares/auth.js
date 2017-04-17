@@ -4,8 +4,7 @@ import db from '../models';
 
 export default {
   verifyToken(req, res, next) {
-    const token = req.headers.authorization.split(' ')[1] || req.headers['x-access-token'];
-
+    const token = req.headers.authorization || req.headers['x-access-token'];
     if (!token) {
       return res.status(401).send({ message: 'Unauthorized Access' });
     }

@@ -5,7 +5,7 @@ import { TextField, SelectField, MenuItem } from 'material-ui';
 import validateInput from '../../../server/shared/validations/createdocument';
 import DocumentForm from './DocumentForm';
 import toastr from 'toastr';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import * as documentActions from '../../actions/documentActions';
 
 
@@ -64,7 +64,6 @@ class ManageDocumentPage extends React.Component {
       })
       .catch(error => {
         toastr.error(error);
-        console.log(error);
         this.setState({saving: false});
       });
   }

@@ -1,4 +1,4 @@
-import db from '../models';
+import { Role } from '../models';
 
 export default {
 
@@ -10,7 +10,7 @@ export default {
    * @returns {void} no returns
    */
   create(req, res) {
-    db.Role.create(req.body)
+    Role.create(req.body)
       .then((role) => {
         res.status(201).send(role);
       })
@@ -27,7 +27,7 @@ export default {
    * @returns {void} no returns
    */
   list(req, res) {
-    db.Role.findAll().then((roles) => {
+    Role.findAll().then((roles) => {
       res.send(roles);
     });
   },
@@ -40,7 +40,7 @@ export default {
    * @returns {void|Response} response object or void
    */
   retrieve(req, res) {
-    db.Role.findById(req.params.id)
+    Role.findById(req.params.id)
       .then((role) => {
         if (!role) {
           return res.status(404)
@@ -59,7 +59,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   update(req, res) {
-    db.Role.findById(req.params.id)
+    Role.findById(req.params.id)
       .then((role) => {
         if (!role) {
           return res.status(404)
@@ -81,7 +81,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   destroy(req, res) {
-    db.Role.findById(req.params.id)
+    Role.findById(req.params.id)
       .then((role) => {
         if (!role) {
           return res.status(404)

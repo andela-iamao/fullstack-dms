@@ -6,7 +6,7 @@ const helper = require('../test-helper');
 const userParams = helper.firstUser;
 const roleParams = helper.adminRole;
 
-const notNullAttrs = ['firstName', 'lastName', 'email', 'passwordDigest', 'RoleId'];
+const notNullAttrs = ['firstName', 'lastName', 'email', 'password', 'RoleId'];
 const uniqueAttrs = ['username', 'email'];
 
 let user;
@@ -42,7 +42,6 @@ describe('User model', () => {
         expect(newUser.firstName).to.equal(user.firstName);
         expect(newUser.lastName).to.equal(user.lastName);
         expect(newUser.email).to.equal(user.email);
-        expect(newUser.passwordDigest).to.equal(user.passwordDigest);
         expect(newUser.RoleId).to.equal(user.RoleId);
       })
     );

@@ -22,13 +22,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 routes(app);
 
-const compiler = webpack(webpackConfig);
-app.use(webpackMiddleware(compiler, {
-  hot: true,
-  publicPath: webpackConfig.output.publicPath,
-  noInfo: true
-}));
-app.use(webpackHotMiddleware(compiler));
+if (process.env.NODE_ENV !== 'test') {
+  const compiler = webpack(webpackConfig);
+  app.use(webpackMiddleware(compiler, {
+    hot: true,
+    publicPath: webpackConfig.output.publicPath,
+    noInfo: true
+  }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // Log requests to the console.
 app.use(logger('dev'));

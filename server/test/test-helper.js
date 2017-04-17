@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'test') {
   process.exit(1);
 }
 const faker = require('faker');
-const bcrypt = require('bcrypt');
 
 module.exports = {
   adminRole: {
@@ -22,8 +21,7 @@ module.exports = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    passwordDigest: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
-    RoleId: 1
+    password: faker.internet.password()
   },
 
   secondUser: {
@@ -31,8 +29,7 @@ module.exports = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    passwordDigest: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
-    RoleId: 2
+    password: faker.internet.password()
   },
 
   thirdUser: {
@@ -40,8 +37,7 @@ module.exports = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    passwordDigest: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
-    RoleId: 2
+    password: faker.internet.password()
   },
 
   publicDocument: {

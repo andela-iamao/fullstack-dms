@@ -1,4 +1,4 @@
-import db from '../models';
+import { User, Document } from '../models';
 
 export default {
 
@@ -13,7 +13,7 @@ export default {
     const { title, content, access } = req.body;
     const OwnerId = req.decoded.UserId;
     const RoleId = req.decoded.RoleId;
-    db.Document.create({ title, content, access, OwnerId, RoleId })
+    Document.create({ title, content, access, OwnerId, RoleId })
       .then((document) => {
         res.status(201).send(document);
       })
@@ -35,7 +35,6 @@ export default {
         $or: [
           { access: 'public' },
           { OwnerId: req.decoded.UserId },
-          { RoleId: req.decoded.RoleId }
         ]
       },
       limit: req.query.limit || null,
@@ -43,7 +42,7 @@ export default {
       order: [['createdAt', 'DESC']]
     };
 
-    db.Document.findAll(query).then((documents) => {
+    Document.findAll(query).then((documents) => {
       res.send(documents);
     });
   },
@@ -56,7 +55,7 @@ export default {
    * @returns {void|Response} response object or void
    */
   retrieve(req, res) {
-    db.Document.findById(req.params.id)
+    Document.findById(req.params.id)
       .then((document) => {
         if (!document) {
           return res.status(404)
@@ -64,13 +63,19 @@ export default {
         }
 
         if ((document.access === 'public') ||
-          (document.OwnerId === req.decoded.UserId) ||
-          (document.RoleId === req.decoded.RoleId)) {
+          (document.OwnerId === req.decoded.UserId)) {
           return res.send(document);
         }
 
-        res.status(403)
-          .send({ message: 'You cannot access this document.' });
+        User.findById(document.OwnerId)
+          .then((owner) => {
+            if (owner.RoleId === req.decoded.RoleId) {
+              return res.send(document);
+            }
+
+            res.status(403)
+              .send({ message: 'You cannot access this document.' });
+          });
       });
   },
 
@@ -82,22 +87,17 @@ export default {
    * @returns {Response|void} response object or void
    */
   update(req, res) {
-    db.Document.findById(req.params.id)
+    Document.findById(req.params.id)
       .then((document) => {
         if (!document) {
           return res.status(404)
             .send({ message: `Document with id: ${req.params.id} not found` });
         }
 
-        if (document.OwnerId === req.decoded.UserId) {
-          document.update(req.body)
-            .then((updatedDocument) => {
-              res.send(updatedDocument);
-            });
-        } else {
-          return res.status(403).send(
-            { message: 'You don\'t have permission to update this document' });
-        }
+        document.update(req.body)
+          .then((updatedDocument) => {
+            res.send(updatedDocument);
+          });
       });
   },
 
@@ -109,52 +109,54 @@ export default {
    * @returns {Response|void} response object or void
    */
   destroy(req, res) {
-    db.Document.findById(req.params.id)
+    Document.findById(req.params.id)
       .then((document) => {
         if (!document) {
           return res.status(404)
             .send({ message: `Document with id: ${req.params.id} not found` });
         }
-        if (document.OwnerId === req.decoded.UserId) {
-          document.destroy()
-            .then(() => res.send({ message: 'Document deleted successfully.' }));
-        } else {
-          return res.status(403).send(
-            { message: 'You don\'t have permission to delete this document' });
-        }
+        document.destroy()
+          .then(() => res.send({ message: 'Document deleted successfully.' }));
       });
   },
 
   /**
    * Get all documents that belongs to a user
-   * Route: GET: /search/documents?q={queryString}
+   * Route: GET: /users/:id/documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
+  userDocuments(req, res) {
+    Document.findAll({ where: { OwnerId: req.params.id } })
+      .then((documents) => {
+        res.send(documents);
+      });
+  },
+
+  /**
+   * Search for documents by title
+   * Route: GET: /search/documents?q={title}
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} no returns
    */
   search(req, res) {
-    const queryString = req.query.q;
     const query = {
       where: {
         $and: [{ $or: [
           { access: 'public' },
           { OwnerId: req.decoded.UserId },
-          { RoleId: req.decoded.RoleId }
-        ] }],
+        ],
+         title: { $iLike: `%${req.query.q}%` },
+       }],
       },
       limit: req.query.limit || null,
       offset: req.query.offset || null,
       order: [['createdAt', 'DESC']]
     };
 
-    if (queryString) {
-      query.where.$and.push({ $or: [
-        { title: { $like: `%${queryString}%` } },
-        { content: { $like: `%${queryString}%` } }
-      ] });
-    }
-
-    db.Document.findAll(query)
+    Document.findAll(query)
       .then((documents) => {
         res.send(documents);
       }).catch((err) => {

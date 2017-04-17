@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import isEmpty from 'lodash/isEmpty';
-import db from '../models';
+import { User, Role } from '../models';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 
@@ -31,7 +31,7 @@ export default {
     const { username, firstName, lastName, email, password } = req.body;
     const passwordDigest = bcrypt.hashSync(password, 10);
 
-    db.User.findOne(
+    User.findOne(
       { where: {
         $or: [{ username }, { email }]
       } })
@@ -47,12 +47,12 @@ export default {
           res.status(400).send(errors);
         } else {
           const RoleId = 2;
-          db.User.create({
+          User.create({
             username,
             firstName,
             lastName,
             email,
-            passwordDigest,
+            password: passwordDigest,
             RoleId
           }).then((user) => {
             const token = jwt.sign({
@@ -77,7 +77,7 @@ export default {
    * @returns {void} no returns
    */
   list(req, res) {
-    db.User.findAll({
+    User.findAll({
       attributes: [
         'id',
         'username',
@@ -89,7 +89,7 @@ export default {
         'updatedAt'
       ],
       include: [{
-        model: db.Role,
+        model: Role,
         as: 'Role',
       }]
     }).then((users) => {
@@ -105,7 +105,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   retrieve(req, res) {
-    db.User.findById(req.params.id)
+    User.findById(req.params.id)
       .then((user) => {
         if (!user) {
           return res.status(404)
@@ -124,7 +124,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   update(req, res) {
-    db.User.findById(req.params.id)
+    User.findById(req.params.id)
       .then((user) => {
         if (!user) {
           return res.status(404)
@@ -146,7 +146,7 @@ export default {
    * @returns {Response|void} response object or void
    */
   destroy(req, res) {
-    db.User.findById(req.params.id)
+    User.findById(req.params.id)
       .then((user) => {
         if (!user) {
           return res.status(404)
@@ -167,7 +167,7 @@ export default {
   login(req, res) {
     const { identifier, password } = req.body;
 
-    db.User.findOne({
+    User.findOne({
       where: {
         $or: [{ username: identifier }, { email: identifier }]
       }
@@ -175,7 +175,7 @@ export default {
     .then((user) => {
       const errors = {};
       if (user) {
-        if (bcrypt.compareSync(password, user.passwordDigest)) {
+        if (bcrypt.compareSync(password, user.password)) {
           const token = jwt.sign({
             UserId: user.id,
             RoleId: user.RoleId
@@ -196,17 +196,43 @@ export default {
   },
 
   /**
-   * Get all documents that belongs to a user
-   * Route: GET: /users/:id/documents
+   * Search for a user
+   * Route: GET: /search/users?q={queryParam}
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} no returns
    */
-  userDocuments(req, res) {
-    db.Document.findAll({ where: { OwnerId: req.params.id } })
-      .then((documents) => {
-        res.send(documents);
+  search(req, res) {
+    User.findAll({
+      where: {
+        $or: [{
+          username: {
+            $iLike: `%${req.query.q}%`
+          }
+        }, {
+          firstName: {
+            $iLike: `%${req.query.q}%`
+          }
+        }, {
+          lastName: {
+            $iLike: `%${req.query.q}%`
+          }
+        },
+        {
+          email: {
+            $iLike: `%${req.query.q}%`
+          }
+        }]
+      }
+    }).then((users) => {
+      if (!users) {
+        return res.status(404)
+            .send({ message: 'No user found' });
+      }
+      res.status(200).send(users);
+    })
+      .catch((err) => {
+        res.status(400).send(err);
       });
-  },
+  }
 };
-

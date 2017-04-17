@@ -10,7 +10,7 @@ module.exports = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        passwordDigest: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
+        password: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
         RoleId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -20,8 +20,8 @@ module.exports = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        passwordDigest: bcrypt.hashSync('awa123', bcrypt.genSaltSync(8)),
-        RoleId: 1,
+        password: bcrypt.hashSync('awa123', bcrypt.genSaltSync(8)),
+        RoleId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }
