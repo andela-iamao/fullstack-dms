@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const User = require('../../../server/models').User;
-const Role = require('../../../server/models').Role;
-const helper = require('../../test-helper');
+const User = require('../../models').User;
+const Role = require('../../models').Role;
+const helper = require('../test-helper');
 
 const userParams = helper.firstUser;
-const roleParams = helper.regularRole;
+const roleParams = helper.adminRole;
 
 const notNullAttrs = ['firstName', 'lastName', 'email', 'passwordDigest', 'RoleId'];
 const uniqueAttrs = ['username', 'email'];
@@ -31,7 +31,7 @@ describe('User model', () => {
     it('creates a User instance', () =>
       expect(user).to.exist);
 
-    it('has both first and last name', () => {
+    it('has both first name and last name', () => {
       expect(user.firstName).to.equal(userParams.firstName);
       expect(user.lastName).to.equal(userParams.lastName);
     });
@@ -72,10 +72,8 @@ describe('User model', () => {
       uniqueAttrs.forEach((attr) => {
         it(`fails for non unique ${attr}`, () =>
           user.save()
-            .then((newUser) => {
-              userParams.RoleId = newUser.RoleId;
-              return User.build(userParams).save();
-            })
+            .then(newUser => User.build(userParams).save()
+            )
             .then(newUser2 => expect(newUser2).to.not.exist)
             .catch(err =>
               expect(/UniqueConstraintError/.test(err.name)).to.be.true));

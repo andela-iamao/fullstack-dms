@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
-const Role = require('../../../server/models').Role;
-const helper = require('../../test-helper');
+const Role = require('../../models').Role;
+const helper = require('../test-helper');
 
 const roleParams = helper.role;
 

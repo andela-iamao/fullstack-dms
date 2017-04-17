@@ -1,14 +1,14 @@
 const expect = require('chai').expect;
-const Role = require('../../../server/models').Role;
-const User = require('../../../server/models').User;
-const Document = require('../../../server/models').Document;
+const Role = require('../../models').Role;
+const User = require('../../models').User;
+const Document = require('../../models').Document;
 
-const helper = require('../../test-helper');
+const helper = require('../test-helper');
 
 const documentParams = helper.publicDocument;
 const userParams = helper.firstUser;
 
-const notNullAttrs = ['title', 'content', 'OwnerId'];
+const notNullAttrs = ['title', 'content'];
 
 let document;
 
@@ -21,6 +21,7 @@ describe('Document model', () => {
       })
       .then((owner) => {
         documentParams.OwnerId = owner.id;
+        documentParams.RoleId = owner.RoleId;
       })
   );
 
