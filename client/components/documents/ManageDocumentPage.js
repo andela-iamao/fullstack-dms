@@ -39,6 +39,7 @@ class ManageDocumentPage extends React.Component {
   saveDocument(event) {
     event.preventDefault();
     this.setState({saving: true});
+    console.log("document ID", this.state.document.id)
     if (this.state.document.id) {
       this.props.actions.updateDocument(this.state.document)
         .then(() => {
@@ -51,6 +52,7 @@ class ManageDocumentPage extends React.Component {
     } else {
       this.props.actions.saveDocument(this.state.document)
       .then(() => {
+        console.log("Created")
         this.redirect();
       })
       .catch(error => {
@@ -100,6 +102,7 @@ function getDocumentById(documents, id) {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log("imma state with id", state)
   const documentId = ownProps.params.id; // from the path `/document/:id`
 
   let document;

@@ -97,6 +97,8 @@ export default {
         document.update(req.body)
           .then((updatedDocument) => {
             res.send(updatedDocument);
+          }).catch((err) => {
+            res.status(400).send(err);
           });
       });
   },

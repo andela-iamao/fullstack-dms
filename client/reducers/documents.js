@@ -1,13 +1,13 @@
-import { SET_DOCUMENTS, ADD_DOCUMENT, DOCUMENT_FETCHED, DOCUMENT_UPDATED, DOCUMENT_DELETED } from '../actions/types';
+import * as types from '../actions/types';
 
 export default function documents(state = [], action = {}) {
   switch(action.type) {
-    case ADD_DOCUMENT:
+    case types.ADD_DOCUMENT:
       return [
         ...state,
         action.document,
       ];
-    case DOCUMENT_FETCHED:
+    case types.DOCUMENT_FETCHED:
       {
         const index = state.findIndex(item => item.id === action.document.id);
         if (index > -1) {
@@ -22,15 +22,18 @@ export default function documents(state = [], action = {}) {
           ];
         }
       }
-    case DOCUMENT_UPDATED:
+    case types.DOCUMENT_UPDATED:
       return state.map(item => {
         if (item.id === action.document.id) return action.document;
         return item;
       });
-    case DOCUMENT_DELETED:
+    case types.DOCUMENT_DELETED:
       return state.filter(item => item.id !== action.documentId)
-    case SET_DOCUMENTS:
+    case types.SET_DOCUMENTS:
       return action.documents;
+    case types.CLEAR_DOCUMENTS:
+      return action.documents;
+
     default: return state;
   }
 }

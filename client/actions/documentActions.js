@@ -65,8 +65,10 @@ export function fetchDocument(id) {
 
 export function updateDocument(data) {
   return (dispatch) => {
-    return axios.put(`/documents/${data.id}`)
-      .then(res => dispatch(documentUpdated(res.data)));
+    return axios.put(`/documents/${data.id}`, data)
+      .then(res => {
+        dispatch(fetchDocuments());
+      });
   };
 }
 export function deleteDocument(id) {
