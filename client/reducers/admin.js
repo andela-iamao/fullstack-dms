@@ -3,25 +3,15 @@ import { SET_USERS, USER_FETCHED, USER_UPDATED, USER_DELETED } from '../actions/
 export default function users(state = [], action = {}) {
   switch(action.type) {
     case USER_FETCHED:
-      {
-        const index = state.findIndex(item => item.id === action.user.id);
-        if (index > -1) {
-          return state.map(item => {
-            if (item.id === action.user.id) return action.user;
-            return item;
-          });
-        } else {
-          return [
-            ...state,
-            action.user,
-          ];
-        }
-      }
+      return [
+        ...state.filter(user => user.id !== action.user.id),
+        Object.assign({}, action.user),
+      ];
     case USER_UPDATED:
-      return state.map(item => {
-        if (item.id === action.user.id) return action.user;
-        return item;
-      });
+      return [
+        ...state.filter(user => user.id !== action.user.id),
+        Object.assign({}, action.user),
+      ];
     case USER_DELETED:
       return state.filter(item => item.id !== action.userId)
     case SET_USERS:
