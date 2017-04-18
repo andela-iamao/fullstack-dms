@@ -12,7 +12,6 @@ export function searchDocuments(queryString) {
   return (dispatch) => {
     return axios.get(`/search/documents?q=${queryString}`)
       .then(res => {
-        console.log('Search Results', res.data);
         dispatch(documentsSearched(res.data))});
   };
 }

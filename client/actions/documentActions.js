@@ -1,36 +1,36 @@
 import axios from 'axios';
-import { SET_DOCUMENTS, ADD_DOCUMENT, DOCUMENT_FETCHED, DOCUMENT_UPDATED, DOCUMENT_DELETED } from './types';
+import * as types from './types';
 
 export function setDocuments(documents) {
   return {
-    type: SET_DOCUMENTS,
+    type: types.SET_DOCUMENTS,
     documents,
   };
 }
 export function addDocument(document) {
   return {
-    type: ADD_DOCUMENT,
+    type: types.ADD_DOCUMENT,
     document,
   };
 }
 
 export function documentFetched(document) {
   return {
-    type: DOCUMENT_FETCHED,
+    type: types.DOCUMENT_FETCHED,
     document,
   };
 }
 
 export function documentUpdated(document) {
   return {
-    type: DOCUMENT_UPDATED,
+    type: types.DOCUMENT_UPDATED,
     document,
   };
 }
 
 export function documentDeleted(documentId) {
   return {
-    type: DOCUMENT_DELETED,
+    type: types.DOCUMENT_DELETED,
     documentId,
   };
 }
