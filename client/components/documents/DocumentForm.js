@@ -31,6 +31,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           type="select"
           onChange={onChange}
           value={document.access}
+          name="access"
           error={errors.access}
         >
           <option value="public">Public</option>

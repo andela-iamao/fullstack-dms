@@ -10,8 +10,9 @@ export function documentsSearched(documentSearchResult) {
 
 export function searchDocuments(queryString) {
   return (dispatch) => {
-    return axios.get(`/search/documents/?q=${queryString}`)
-      .then(res => res.data)
-      .then(data => dispatch(documentsSearched(data)));
+    return axios.get(`/search/documents?q=${queryString}`)
+      .then(res => {
+        console.log('Search Results', res.data);
+        dispatch(documentsSearched(res.data))});
   };
 }

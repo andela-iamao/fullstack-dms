@@ -36,29 +36,20 @@ class ManageDocumentPage extends React.Component {
     return this.setState({document: document});
   }
 
-  documentFormIsValid() {
-    let formIsValid = true;
-    let errors = {};
-    if (this.state.document.title.length < 5) {
-      errors.title = 'Title must be at least 5 characters.';
-      formIsValid = false;
-    }
-    if (this.state.document.content.access < 5) {
-      errors.title = 'Document Content must be at least 5 characters.';
-      formIsValid = false;
-    }
-    this.setState({errors: errors});
-    return formIsValid;
-  }
-
-
   saveDocument(event) {
     event.preventDefault();
-    if (!this.documentFormIsValid()) {
-      return;
-    }
     this.setState({saving: true});
-    this.props.actions.saveDocument(this.state.document)
+    if (this.state.document.id) {
+      this.props.actions.updateDocument(this.state.document)
+        .then(() => {
+          this.redirect();
+        })
+        .catch(error => {
+          toastr.error(error);
+          this.setState({saving: false});
+      });
+    } else {
+      this.props.actions.saveDocument(this.state.document)
       .then(() => {
         this.redirect();
       })
@@ -66,6 +57,7 @@ class ManageDocumentPage extends React.Component {
         toastr.error(error);
         this.setState({saving: false});
       });
+    }
   }
 
   redirect() {
@@ -110,7 +102,7 @@ function getDocumentById(documents, id) {
 function mapStateToProps(state, ownProps) {
   const documentId = ownProps.params.id; // from the path `/document/:id`
 
-  let document = {id: '', title: '', content: '', access: ''};
+  let document;
 
   if (documentId && state.documents.length > 0) {
     document = getDocumentById(state.documents, documentId);
