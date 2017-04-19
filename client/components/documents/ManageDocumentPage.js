@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import toastr from 'toastr';
-import { TextField, SelectField, MenuItem } from 'material-ui';
 import { bindActionCreators } from 'redux';
 import validateInput from '../../../server/shared/validations/createdocument';
 import DocumentForm from './DocumentForm';
