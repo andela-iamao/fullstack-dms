@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
@@ -38,6 +40,25 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         User.hasMany(models.Document, { foreignKey: 'OwnerId' });
+      }
+    },
+    instanceMethods: {
+        /**
+         * Compares plain text password against hashed password
+         * @method
+         * @param {String} password
+         * @returns {Boolean} Validity of passowrd
+         */
+      verifyPassword(password) {
+        return bcrypt.compareSync(password, this.password);
+      }
+    },
+    hooks: {
+      beforeCreate: (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+      },
+      beforeUpdate: (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
       }
     }
   });

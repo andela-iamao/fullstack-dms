@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config';
-import db from '../models';
+import { Role } from '../models';
 
 export default {
   verifyToken(req, res, next) {
@@ -19,7 +19,7 @@ export default {
   },
 
   permitAdmin(req, res, next) {
-    db.Role.findById(req.decoded.RoleId)
+    Role.findById(req.decoded.RoleId)
       .then((role) => {
         if (role.title === 'admin') {
           next();

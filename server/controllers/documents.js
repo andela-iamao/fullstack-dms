@@ -144,19 +144,25 @@ export default {
    * @returns {void} no returns
    */
   search(req, res) {
+    const queryString = req.query.q;
     const query = {
       where: {
         $and: [{ $or: [
           { access: 'public' },
           { OwnerId: req.decoded.UserId },
         ],
-         title: { $iLike: `%${req.query.q}%` },
        }],
       },
       limit: req.query.limit || null,
       offset: req.query.offset || null,
       order: [['createdAt', 'DESC']]
     };
+
+    if (queryString) {
+      query.where.$and.push({ $or: [
+        { title: { $like: `%${queryString}%` } },
+      ] });
+    }
 
     Document.findAll(query)
       .then((documents) => {

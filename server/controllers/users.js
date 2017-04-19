@@ -29,8 +29,7 @@ export default {
    */
   create(req, res) {
     const { username, firstName, lastName, email, password } = req.body;
-    const passwordDigest = bcrypt.hashSync(password, 10);
-
+    const RoleId = req.body.RoleId && req.body.RoleId < 3 ? req.body.RoleId : 2;
     User.findOne(
       { where: {
         $or: [{ username }, { email }]
@@ -44,15 +43,14 @@ export default {
           if (existingUser.email === email) {
             errors.email = 'There is user with such email';
           }
-          res.status(400).send(errors);
+          res.status(409).send(errors);
         } else {
-          const RoleId = 2;
           User.create({
             username,
             firstName,
             lastName,
             email,
-            password: passwordDigest,
+            password,
             RoleId
           }).then((user) => {
             const token = jwt.sign({
@@ -60,10 +58,10 @@ export default {
               RoleId: user.RoleId
             }, config.jwtSecret, { expiresIn: 86400 });
             user = permittedAttributes(user);
-            res.send({ token, expiresIn: 86400, user });
+            res.status(201).send({ token, expiresIn: 86400, user });
           })
           .catch((err) => {
-            res.status(500).send({ error: err });
+            res.status(400).send({ error: err });
           });
         }
       });
@@ -193,6 +191,17 @@ export default {
             .send(errors);
       }
     });
+  },
+
+  /**
+   * Logout user
+   * Route: POST: /users/logout
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {Response|void} response object or void
+   */
+  logout(req, res) {
+    res.send({ message: 'Logout successful.' });
   },
 
   /**

@@ -21,7 +21,7 @@ describe('User API', () => {
 
   after(() => User.sequelize.sync({ force: true }));
 
-  describe('With existing user', () => {
+  describe('CONTEXT: With existing user', () => {
     beforeEach((done) => {
       request.post('/users')
         .send(userParams)
@@ -53,7 +53,7 @@ describe('User API', () => {
               .end((err, res) => {
                 request.get('/users')
                   .set({ Authorization: res.body.token })
-                  .expect(401, done);
+                  .expect(403, done);
               });
           });
       });
@@ -132,8 +132,10 @@ describe('User API', () => {
 
     describe('Login POST: /users/login', () => {
       it('should return a token on successful login', (done) => {
+        const identifier = userParams.username;
+        const password = userParams.password;
         request.post('/users/login')
-          .send(userParams)
+          .send({ identifier, password })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body.token).to.exist;
@@ -143,7 +145,7 @@ describe('User API', () => {
 
       it('should fail for invalid credentials', (done) => {
         request.post('/users/login')
-          .send({ email: 'fake@email.com', password: 'fakepass' })
+          .send({ identifier: 'fake@email.com', password: 'fakepass' })
           .end((err, res) => {
             expect(res.status).to.equal(401);
             expect(res.body.token).to.not.exist;
@@ -160,7 +162,7 @@ describe('User API', () => {
     });
   });
 
-  describe('Without existing user', () => {
+  describe('CONTEXT: Without existing user', () => {
     // clear DB after each test
     afterEach(() => User.destroy({ where: {} }));
 

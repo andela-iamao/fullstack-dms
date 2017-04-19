@@ -163,11 +163,16 @@ describe('Document API', () => {
       before(() => {
         privateDocumentParams.OwnerId = owner.id;
         privateDocumentParams.RoleId = owner.RoleId;
-
         return Document.create(privateDocumentParams)
           .then((newPrivateDocument) => {
             privateDocument = newPrivateDocument;
           });
+      });
+
+      it('should return permission denied if not owner', (done) => {
+        request.get(`/documents/${privateDocument.id}`)
+          .set({ Authorization: token })
+          .expect(403, done);
       });
 
       it('should return document for owner', (done) => {
@@ -195,8 +200,7 @@ describe('Document API', () => {
         request.post('/users')
           .send(sameRoleUserParams)
           .end((err, res) => {
-            const sameRoleUserToken = `Bearer ${res.body.token}`;
-
+            const sameRoleUserToken = res.body.token;
             request.get(`/documents/${roleDocument.id}`)
               .set({ Authorization: sameRoleUserToken })
               .expect(200, done);
@@ -263,7 +267,7 @@ describe('Document API', () => {
         const query = documentParamsArray[4].title;
         const matcher = new RegExp(query);
 
-        request.get(`/search/documents?query=${query}`)
+        request.get(`/search/documents?q=${query}`)
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

@@ -5,7 +5,7 @@ import auth from '../middlewares/auth';
 
 export default (app) => {
   // Roles API Endpoints
-  app.post('/roles', auth.verifyToken, rolesController.create);
+  app.post('/roles', auth.verifyToken, auth.permitAdmin, rolesController.create);
   app.get('/roles', auth.verifyToken, auth.permitAdmin, rolesController.list);
   app.get('/roles/:id', auth.verifyToken, auth.permitAdmin, rolesController.retrieve);
   app.put('/roles/:id', auth.verifyToken, auth.permitAdmin, rolesController.update);
@@ -18,9 +18,14 @@ export default (app) => {
   app.put('/users/:id', auth.verifyToken, usersController.update);
   app.delete('/users/:id', auth.verifyToken, usersController.destroy);
   app.get('/users/:id/documents', auth.verifyToken, documentsController.userDocuments);
+  app.get('/search/users', auth.verifyToken, usersController.search);
+
+
 
   // Authentication Endpoint
   app.post('/users/login', usersController.login);
+  app.post('/users/logout', usersController.logout);
+
 
   // Documents API Endpoints
   app.post('/documents', auth.verifyToken, documentsController.create);

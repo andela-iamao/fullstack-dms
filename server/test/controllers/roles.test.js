@@ -49,7 +49,6 @@ describe('Roles API', () => {
         request.get('/roles')
           .set({ Authorization: token })
           .end((err, res) => {
-            console.log('Token', token);
             expect(res.status).to.equal(200);
             expect(Array.isArray(res.body)).to.be.true;
             expect(res.body.length).to.not.equal(0);
@@ -119,9 +118,9 @@ describe('Roles API', () => {
   });
 
   describe('CONTEXT: without existing role', () => {
-    // afterEach(() => Role.destroy({ where: {} }));
+    afterEach(() => Role.sequelize.sync({ force: true }));
 
-    describe('Create roles POST: /roles', () => {
+    describe('Create role POST: /roles', () => {
       it('creates a new role', (done) => {
         request.post('/roles')
           .set({ Authorization: token })
@@ -131,14 +130,6 @@ describe('Roles API', () => {
             expect(res.body.title).to.equal('authors');
             done();
           });
-      });
-
-      it('fails for invalid role attributes', (done) => {
-        const invalidParams = { name: 'role' };
-        request.post('/roles')
-          .set({ Authorization: token })
-          .send(invalidParams)
-          .expect(400, done);
       });
 
       it('fails if user is not an admin', (done) => {
