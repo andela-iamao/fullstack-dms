@@ -40,16 +40,14 @@ export function fetchUsers() {
 export function fetchUser(id) {
   return (dispatch) => {
     return axios.get(`/users/${id}`)
-      .then(res => res.data)
-      .then(data => dispatch(userFetched(data.user)));
+      .then(res => dispatch(userFetched(res.data)));
   };
 }
 
 export function updateUser(user) {
   return (dispatch) => {
-    return axios.put(`/users/${user.id}`)
-      .then(res => res.data)
-      .then(data => dispatch(userUpdated(data.user)));
+    return axios.put(`/users/${user.id}`, user)
+      .then(res => dispatch(userUpdated(res.data)));
   };
 }
 export function deleteUser(id) {
