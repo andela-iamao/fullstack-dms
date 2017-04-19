@@ -151,7 +151,7 @@ export default {
           { access: 'public' },
           { OwnerId: req.decoded.UserId },
         ],
-       }],
+        }],
       },
       limit: req.query.limit || null,
       offset: req.query.offset || null,

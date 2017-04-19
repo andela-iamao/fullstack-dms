@@ -11,9 +11,9 @@ export default function UserCard({ user, deleteUser }) {
       <td>{user.lastName}</td>
       <td>{user.email}</td>
       <td>{user.Role.title}</td>
-      <td>{user.createdAt.substr(0,10)}</td>
+      <td>{user.createdAt.substr(0, 10)}</td>
       <td><Link to={`/user/${user.id}`}>Edit</Link></td>
-      <td><a href="#" onClick={() => deleteUser(document.id)}>Delete</a></td>
+      <td><a href="" onClick={() => deleteUser(document.id)}>Delete</a></td>
     </tr>
   );
 }

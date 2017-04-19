@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import isEmpty from 'lodash/isEmpty';
-import { User, Role } from '../models';
 import jwt from 'jsonwebtoken';
+import { User, Role } from '../models';
 import config from '../config';
 
 const permittedAttributes = (user) => {

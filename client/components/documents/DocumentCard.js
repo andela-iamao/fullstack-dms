@@ -12,7 +12,7 @@ export default function DocumentCard({ document, deleteDocument }) {
           </div>
           <div className="card-action">
             <Link to={`/document/${document.id}`}>Edit</Link>
-            <a href="#" onClick={() => deleteDocument(document.id)}>Delete</a>
+            <a href="" onClick={() => deleteDocument(document.id)}>Delete</a>
           </div>
         </div>
       </div>

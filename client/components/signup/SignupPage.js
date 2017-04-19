@@ -24,11 +24,11 @@ class SignupPage extends React.Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  
+
   isValid() {
     const { errors, isValid } = validateInput(this.state);
 
-    if(!isValid) {
+    if (!isValid) {
       this.setState({ errors });
     }
     return isValid;
@@ -50,7 +50,7 @@ class SignupPage extends React.Component {
   render() {
     const { errors } = this.state;
     return (
-      <SignupForm 
+      <SignupForm
         onChange={this.onChange}
         userProps={this.state}
         onSubmit={this.onSubmit}
@@ -62,7 +62,7 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
-};  
+};
 
 SignupPage.contextTypes = {
   router: React.PropTypes.object.isRequired,

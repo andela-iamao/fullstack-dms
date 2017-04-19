@@ -4,13 +4,13 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
+import jwt from 'jsonwebtoken';
 import routes from './routes';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-import jwt from 'jsonwebtoken';
 import { setCurrentUser } from './actions/authActions';
 import rootReducer from './reducers';
 
- const store = createStore(
+const store = createStore(
    rootReducer,
    compose(
      applyMiddleware(thunk),

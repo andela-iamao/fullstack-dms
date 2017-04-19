@@ -8,7 +8,9 @@ export default function DocumentsList({ documents, deleteDocument }) {
 
   const documentsList = (
     <div>
-      {documents.map(document => <DocumentCard document={document} key={document.id} deleteDocument={deleteDocument} />)}
+      {documents.map(document => <DocumentCard
+      document={document} key={document.id}
+      deleteDocument={deleteDocument} />)}
     </div>
   );
 

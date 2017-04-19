@@ -38,11 +38,11 @@ export function documentDeleted(documentId) {
 export function saveDocument(data) {
   return (dispatch) => {
     return axios.post('/documents', data)
-       .then(response => {
-        dispatch(addDocument(response.data));
-      })
-      .catch(error => {
-        throw(error);
+       .then((response) => {
+         dispatch(addDocument(response.data));
+       })
+      .catch((error) => {
+        throw (error);
       });
   };
 }
@@ -66,7 +66,7 @@ export function fetchDocument(id) {
 export function updateDocument(data) {
   return (dispatch) => {
     return axios.put(`/documents/${data.id}`, data)
-      .then(res => {
+      .then((res) => {
         dispatch(fetchDocuments());
       });
   };

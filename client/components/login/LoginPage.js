@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
         () => {
           this.context.router.push('/');
         },
-        
+
         ({ data }) => this.setState({ errors: data })
       );
     }
@@ -48,11 +48,11 @@ class LoginPage extends React.Component {
 
     return (
       <div>
-        <LoginForm 
-          errors={errors} 
-          onChange={this.onChange} 
-          loginProps={this.state} 
-          onSubmit={this.onSubmit} 
+        <LoginForm
+          errors={errors}
+          onChange={this.onChange}
+          loginProps={this.state}
+          onSubmit={this.onSubmit}
         />
       </div>
     );

@@ -2,11 +2,11 @@ import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
 
 const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
-  return (    
+  return (
     <form>
       <h5>Create/Update a Document </h5>
       <Row>
-        <Input 
+        <Input
           placeholder="Title"
           s={12}
           validate
@@ -15,7 +15,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           value={document.title}
           error={errors.title}
         />
-        <Input 
+        <Input
           placeholder="Content"
           s={12}
           validate
@@ -55,8 +55,8 @@ DocumentForm.propTypes = {
   document: React.PropTypes.object.isRequired,
   onSave: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  saving: React.PropTypes.bool,
-  errors: React.PropTypes.object,
+  saving: React.PropTypes.bool.isRequired,
+  errors: React.PropTypes.object.isRequired,
 };
 
 export default DocumentForm;

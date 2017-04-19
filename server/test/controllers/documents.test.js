@@ -1,6 +1,6 @@
-import app from '../../index';
 import supertest from 'supertest';
 import chai from 'chai';
+import app from '../../index';
 import { Role, User, Document } from '../../models';
 import helper from '../test-helper';
 

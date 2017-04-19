@@ -20,8 +20,6 @@ export default (app) => {
   app.get('/users/:id/documents', auth.verifyToken, documentsController.userDocuments);
   app.get('/search/users', auth.verifyToken, usersController.search);
 
-
-
   // Authentication Endpoint
   app.post('/users/login', usersController.login);
   app.post('/users/logout', usersController.logout);

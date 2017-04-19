@@ -6,7 +6,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
     <form onSubmit={onSubmit}>
       <h1>Login</h1>
       <Row>
-        {errors.form && <div style={{color: "#F44336"}}>{errors.form}</div>}
+        {errors.form && <div style={{ color: '#F44336' }}>{errors.form}</div>}
         <Input
           s={6}
           placeholder="Username or Email"
@@ -19,13 +19,13 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
           placeholder="Password"
           onChange={onChange}
           value={loginProps.password}
-          type="password" 
+          type="password"
           name="password"
           />
         <Input value="Login" className="btn waves-effect waves-light" name="action" type="submit" />
       </Row>
     </form>
-    );
+  );
 };
 
 LoginForm.propTypes = {

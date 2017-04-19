@@ -1,7 +1,7 @@
 import React from 'react';
-import UsersList from './UsersList';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import UsersList from './UsersList';
 import { fetchUsers, deleteUser } from '../../actions/adminActions';
 
 class UsersPage extends React.Component {
@@ -13,8 +13,8 @@ class UsersPage extends React.Component {
     return (
       <div>
         <h3>Users List</h3>
-        <UsersList 
-          users={this.props.users} 
+        <UsersList
+          users={this.props.users}
           deleteUser={this.props.deleteUser} />
       </div>
     );

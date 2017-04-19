@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/styles.css';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import '../styles/styles.css';
 import DocumentsPage from './documents/DocumentsPage';
 
 class LandingPage extends React.Component {
@@ -9,7 +9,7 @@ class LandingPage extends React.Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <div id="hero">
-        {!isAuthenticated && 
+        {!isAuthenticated &&
           <div className="container" id="hero-text-container">
             <div className="row">
               <div className="col s12 center-align">

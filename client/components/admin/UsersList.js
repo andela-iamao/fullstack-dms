@@ -2,7 +2,8 @@ import React from 'react';
 import UserRow from './UserRow';
 
 export default function UsersList({ users, deleteUser }) {
-  const userRows = users.map(user => <UserRow user={user} key={user.id} deleteUser={deleteUser} />)
+  const userRows = users.map(user =>
+    <UserRow user={user} key={user.id} deleteUser={deleteUser} />);
   return (
     <table className="striped">
       <thead>

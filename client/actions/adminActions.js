@@ -1,16 +1,6 @@
 import axios from 'axios';
 import { SET_USERS, USER_FETCHED, USER_UPDATED, USER_DELETED } from './types';
 
-function handleResponse(response) {
-  if (response.ok) {
-    return response.json();
-  } else {
-    let error = new Error(response.statusText);
-    error.response = response;
-    throw error;
-  }
-}
-
 export function setUsers(users) {
   return {
     type: SET_USERS,
@@ -55,9 +45,9 @@ export function fetchUser(id) {
   };
 }
 
-export function updateUser(data) {
+export function updateUser(user) {
   return (dispatch) => {
-    return axios.put(`/users/${data.id}`)
+    return axios.put(`/users/${user.id}`)
       .then(res => res.data)
       .then(data => dispatch(userUpdated(data.user)));
   };

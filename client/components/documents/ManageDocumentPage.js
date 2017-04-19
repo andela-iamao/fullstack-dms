@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
+import toastr from 'toastr';
 import { TextField, SelectField, MenuItem } from 'material-ui';
+import { bindActionCreators } from 'redux';
 import validateInput from '../../../server/shared/validations/createdocument';
 import DocumentForm from './DocumentForm';
-import toastr from 'toastr';
-import { bindActionCreators } from 'redux';
 import * as documentActions from '../../actions/documentActions';
-
 
 
 class ManageDocumentPage extends React.Component {
@@ -24,44 +23,44 @@ class ManageDocumentPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.document.id != nextProps.document.id) {
+    if (this.props.document.id !== nextProps.document.id) {
       // Necessary to populate form when existing document is loaded directly.
-      this.setState({document: Object.assign({}, nextProps.document)});
+      this.setState({ document: Object.assign({}, nextProps.document) });
     }
   }
   updateDocumentState(event) {
     const field = event.target.name;
-    let document = this.state.document;
+    const document = this.state.document;
     document[field] = event.target.value;
-    return this.setState({document: document});
+    return this.setState({ document });
   }
 
   saveDocument(event) {
     event.preventDefault();
-    this.setState({saving: true});
+    this.setState({ saving: true });
     if (this.state.document.id) {
       this.props.actions.updateDocument(this.state.document)
         .then(() => {
           this.redirect();
         })
-        .catch(error => {
+        .catch((error) => {
           toastr.error(error);
-          this.setState({saving: false});
-      });
+          this.setState({ saving: false });
+        });
     } else {
       this.props.actions.saveDocument(this.state.document)
       .then(() => {
         this.redirect();
       })
-      .catch(error => {
+      .catch((error) => {
         toastr.error(error);
-        this.setState({saving: false});
+        this.setState({ saving: false });
       });
     }
   }
 
   redirect() {
-    this.setState({saving: false});
+    this.setState({ saving: false });
     toastr.success('Document saved');
     this.context.router.push('/');
   }
@@ -88,13 +87,13 @@ ManageDocumentPage.propTypes = {
   actions: React.PropTypes.object.isRequired,
 };
 
-//Pull in the React Router context so router is available on this.context.router.
+ // Pull in the React Router context so router is available on this.context.router.
 ManageDocumentPage.contextTypes = {
   router: React.PropTypes.object,
 };
 
 function getDocumentById(documents, id) {
-  const document = documents.filter(document => document.id == id);
+  const document = documents.filter(item => item.id === id);
   if (document) return document[0];
   return null;
 }
@@ -109,7 +108,7 @@ function mapStateToProps(state, ownProps) {
   }
 
   return {
-    document: document,
+    document,
   };
 }
 

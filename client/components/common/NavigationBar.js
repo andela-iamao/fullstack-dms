@@ -28,7 +28,7 @@ class NavigationBar extends React.Component {
             </li>
             <li>
               {isAuthenticated
-                ? <a href="#" onClick={this.logout.bind(this)}>Logout</a>
+                ? <a href="" onClick={this.logout.bind(this)}>Logout</a>
                 : <Link to="/signup">Sign up</Link>
               }
             </li>

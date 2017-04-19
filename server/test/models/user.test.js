@@ -37,7 +37,7 @@ describe('User model', () => {
     });
 
     it('saves user with valid attributes', () =>
-      user.save().then(newUser => {
+      user.save().then((newUser) => {
         expect(newUser.username).to.equal(user.username);
         expect(newUser.firstName).to.equal(user.firstName);
         expect(newUser.lastName).to.equal(user.lastName);
