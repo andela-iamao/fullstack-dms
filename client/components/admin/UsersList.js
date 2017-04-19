@@ -1,9 +1,9 @@
 import React from 'react';
 import UserRow from './UserRow';
 
-export default function UsersList({ users, deleteUser }) {
+export default function UsersList({ users, deleteUser, auth }) {
   const userRows = users.map(user =>
-    <UserRow user={user} key={user.id} deleteUser={deleteUser} />);
+    <UserRow user={user} key={user.id} deleteUser={deleteUser} auth={auth} />);
   return (
     <table className="striped">
       <thead>
@@ -15,7 +15,6 @@ export default function UsersList({ users, deleteUser }) {
           <th>Email</th>
           <th>Role</th>
           <th>Date Joined</th>
-          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -29,4 +28,5 @@ export default function UsersList({ users, deleteUser }) {
 UsersList.propTypes = {
   users: React.PropTypes.array.isRequired,
   deleteUser: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
 };

@@ -103,7 +103,7 @@ function mapStateToProps(state, ownProps) {
   let document;
 
   if (documentId && state.documents.length > 0) {
-    document = getDocumentById(state.documents, documentId);
+    document = getDocumentById(state.documents, parseInt(documentId, 10));
   }
 
   return {

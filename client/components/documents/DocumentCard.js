@@ -8,7 +8,8 @@ export default function DocumentCard({ document, deleteDocument }) {
         <div className="card blue-grey darken-1">
           <div className="card-content white-text">
             <span className="card-title">{document.title}</span>
-            <p>{document.content}</p>
+            <p>{document.content}</p><br />
+            <p>Access Type: &nbsp; <span>{(document.access).toUpperCase()}</span></p><br />
           </div>
           <div className="card-action">
             <Link to={`/document/${document.id}`}>Edit</Link>

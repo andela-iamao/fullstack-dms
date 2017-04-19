@@ -15,7 +15,9 @@ class UsersPage extends React.Component {
         <h3>Users List</h3>
         <UsersList
           users={this.props.users}
-          deleteUser={this.props.deleteUser} />
+          deleteUser={this.props.deleteUser}
+          auth={this.props.auth}
+        />
       </div>
     );
   }
@@ -25,11 +27,13 @@ UsersPage.propTypes = {
   users: React.PropTypes.array.isRequired,
   fetchUsers: React.PropTypes.func.isRequired,
   deleteUser: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     users: state.admin,
+    auth: state.auth,
   };
 }
 
