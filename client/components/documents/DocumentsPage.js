@@ -24,7 +24,7 @@ class DocumentsPage extends React.Component {
 
   render() {
     const documentSearchResult = this.props.search;
-    const renderedDocuments = documentSearchResult.length >= 0
+    const renderedDocuments = documentSearchResult.length > 0
       ? documentSearchResult : this.props.documents;
     return (
       <div>

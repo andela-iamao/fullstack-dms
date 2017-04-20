@@ -9,6 +9,8 @@ import routes from './routes';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/authActions';
 import rootReducer from './reducers';
+import './styles/styles.css';
+import '../node_modules/toastr/build/toastr.min.css';
 
 const store = createStore(
    rootReducer,

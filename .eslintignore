@@ -1,2 +1,3 @@
 coverage/
 testSetup.js
+nightwatch.config.js

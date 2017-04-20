@@ -46,3 +46,5 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port);
+
+export default app;
