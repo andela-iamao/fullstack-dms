@@ -160,7 +160,7 @@ export default {
 
     if (queryString) {
       query.where.$and.push({ $or: [
-        { title: { $like: `%${queryString}%` } },
+        { title: { $iLike: `%${queryString}%` } },
       ] });
     }
 

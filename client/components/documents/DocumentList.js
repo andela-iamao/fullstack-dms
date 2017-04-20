@@ -3,7 +3,7 @@ import DocumentCard from './DocumentCard';
 
 export default function DocumentsList({ documents, deleteDocument }) {
   const emptyMessage = (
-    <p>There are no documents yet in your collection.</p>
+    <p>No documents Found</p>
   );
 
   const documentsList = (

@@ -4,7 +4,7 @@ import { Row, Input, Button } from 'react-materialize';
 const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
   return (
     <form>
-      <h5>Create/Update a Document </h5>
+      <h5>Create/Update a Document</h5>
       <Row>
         <Input
           placeholder="Title"
@@ -14,6 +14,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           onChange={onChange}
           value={document.title}
           error={errors.title}
+          id="title"
         />
         <Input
           placeholder="Content"
@@ -24,6 +25,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           onChange={onChange}
           value={document.content}
           error={errors.content}
+          id="content"
         />
         <Input
           s={12}
@@ -33,6 +35,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           value={document.access}
           name="access"
           error={errors.access}
+          id="access"
         >
           <option value="public">Public</option>
           <option value="private">Private</option>

@@ -24,12 +24,12 @@ class NavigationBar extends React.Component {
                 && <li><Link to="/users"><span>Users</span></Link></li>}
             <li>
               {!isAuthenticated
-                && <Link to="/login">Login</Link>}
+                && <Link id="login" to="/login">Login</Link>}
             </li>
             <li>
               {isAuthenticated
                 ? <a href="" onClick={this.logout.bind(this)}>Logout</a>
-                : <Link to="/signup">Sign up</Link>
+                : <Link id="signup" to="/signup">Sign up</Link>
               }
             </li>
           </ul>

@@ -67,7 +67,7 @@ export function updateDocument(data) {
   return (dispatch) => {
     return axios.put(`/documents/${data.id}`, data)
       .then((res) => {
-        dispatch(fetchDocuments());
+        fetchDocuments();
       });
   };
 }

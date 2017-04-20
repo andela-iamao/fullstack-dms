@@ -13,6 +13,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
           onChange={onChange}
           value={loginProps.identifier}
           name="identifier"
+          id="identifier"
           />
         <Input
           s={6}
@@ -21,8 +22,10 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
           value={loginProps.password}
           type="password"
           name="password"
+          id="password"
           />
-        <Input value="Login" className="btn waves-effect waves-light" name="action" type="submit" />
+       <Input id="loginButton" value="Login"
+          className="btn waves-effect waves-light" name="action" type="submit" />
       </Row>
     </form>
   );

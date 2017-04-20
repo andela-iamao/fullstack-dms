@@ -24,7 +24,7 @@ class DocumentsPage extends React.Component {
 
   render() {
     const documentSearchResult = this.props.search;
-    const renderedDocuments = documentSearchResult.length > 0
+    const renderedDocuments = documentSearchResult.length >= 0
       ? documentSearchResult : this.props.documents;
     return (
       <div>
@@ -33,7 +33,7 @@ class DocumentsPage extends React.Component {
           <div className="col s7 push-s4">
             <Search onChange={this.handleSearch} />
           </div>
-          <div className="col s5 pull-s7">
+          <div className="col s5 pull-s7" id="createdocument">
             <Link className="btn create-list-link hero-btn" to="document">
               Add Document
             </Link>
