@@ -8,3 +8,4 @@ reports
 selenium.jar
 selenium-debug.log
 chromedriver
+dist

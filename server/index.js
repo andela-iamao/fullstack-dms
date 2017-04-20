@@ -3,6 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
+import http from 'http';
 
 import webpack from 'webpack';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -40,4 +41,8 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-export default app;
+const port = parseInt(process.env.PORT, 10) || 3000;
+app.set('port', port);
+
+const server = http.createServer(app);
+server.listen(port);
