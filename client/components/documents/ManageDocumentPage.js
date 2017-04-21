@@ -21,6 +21,10 @@ class ManageDocumentPage extends React.Component {
     this.saveDocument = this.saveDocument.bind(this);
   }
 
+  componentDidMount() {
+    $('select').material_select();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.document.id !== nextProps.document.id) {
       // Necessary to populate form when existing document is loaded directly.

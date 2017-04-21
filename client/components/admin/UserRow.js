@@ -14,7 +14,9 @@ class UserRow extends React.Component {
 
     this.onChange = this.onChange.bind(this);
   }
-
+  componentDidMount() {
+    $('select').material_select();
+  }
   onChange(event) {
     event.preventDefault();
     const field = event.target.name;
