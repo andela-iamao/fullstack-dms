@@ -5,7 +5,9 @@ import DocumentForm from '../../components/documents/DocumentForm';
 
 function setup(saving) {
   const props = {
-    document: {}, saving, errors: {},
+    document: {},
+    saving,
+    errors: {},
     onSave: () => {},
     onChange: () => {}
   };

@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 // Log requests to the console.
 app.use(logger('dev'));
 
-//set public directory
+// Set public directory
 app.use(express.static(path.resolve(__dirname, '../client/')));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
@@ -49,7 +49,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${port}`); /* eslint-disable no-console*/
 });
 
 export default app;

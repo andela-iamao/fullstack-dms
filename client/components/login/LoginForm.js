@@ -24,7 +24,8 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
           name="password"
           id="password"
           />
-       <Input id="loginButton" value="Login"
+        <Input
+          id="loginButton" value="Login"
           className="btn waves-effect waves-light" name="action" type="submit" />
       </Row>
     </form>

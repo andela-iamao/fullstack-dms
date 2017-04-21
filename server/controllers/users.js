@@ -238,7 +238,8 @@ export default {
         return res.status(404)
             .send({ message: 'No user found' });
       }
-      res.status(200).send(users);
+      const results = users.map(user => permittedAttributes(user));
+      res.status(200).send(results);
     })
       .catch((err) => {
         res.status(400).send(err);
