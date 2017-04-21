@@ -12,19 +12,22 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'public',
       type: DataTypes.STRING,
       validate: {
-        isIn: [['private', 'public', 'admin']]
+        isIn: [['private', 'public', 'role']]
       }
     },
-    ownerId: {
-      type: DataTypes.INTEGER,
-    }
+    OwnerId: DataTypes.INTEGER,
+    RoleId: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate(models) {
         Document.belongsTo(models.User, {
-          as: 'owner',
+          as: 'Owner',
           onDelete: 'CASCADE',
-          foreignKey: { allowNull: false }
+          foreignKey: 'OwnerId'
+        });
+        Document.belongsTo(models.Role, {
+          onDelete: 'CASCADE',
+          foreignKey: 'RoleId'
         });
       }
     }

@@ -7,7 +7,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      username: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING
+      },
+      firstName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lastName: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -23,11 +32,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      role: {
-        defaultValue: 'regular',
-        type: Sequelize.STRING,
-        validate: {
-          isIn: [['admin', 'regular']]
+      RoleId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Roles',
+          key: 'id',
+          as: 'RoleId'
         }
       },
       createdAt: {
