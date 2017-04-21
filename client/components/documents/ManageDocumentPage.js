@@ -22,9 +22,10 @@ class ManageDocumentPage extends React.Component {
   }
 
   componentDidMount() {
-    $('select').material_select();
+    $(document).ready(function() {
+      $('select').material_select();
+    });
   }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.document.id !== nextProps.document.id) {
       // Necessary to populate form when existing document is loaded directly.
@@ -86,7 +87,7 @@ class ManageDocumentPage extends React.Component {
 }
 
 ManageDocumentPage.propTypes = {
-  document: React.PropTypes.object.isRequired,
+  document: React.PropTypes.object,
   actions: React.PropTypes.object.isRequired,
 };
 
