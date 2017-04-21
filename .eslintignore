@@ -1,0 +1,5 @@
+coverage/
+testSetup.js
+nightwatch.config.js
+docs
+dist

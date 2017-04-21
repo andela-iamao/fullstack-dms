@@ -1,2 +1,12 @@
 node_modules
 npm-debug.log
+coverage
+.env
+.vscode
+screenshots
+reports
+selenium.jar
+selenium-debug.log
+chromedriver
+dist
+selenium-debug.log
