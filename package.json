@@ -6,14 +6,15 @@
   "scripts": {
     "start:dev": "./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
     "build:dist": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./server/test,./client/test,./screenshots,./reports,./migrations,./coverage,docs,testSetup.js --copy-files",
-    "start": "npm run build:dist && node dist/server/index.js",
+    "start": "npm run build:dist && npm run webpack && node dist/server/index.js",
     "test:watch": "NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- server/test/**/*.test.js --compilers js:babel-core/register --timeout 30000 --watch",
     "test": "NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover _mocha -- server/test/**/*.test.js testSetup.js client/test/**/*.test.js --timeout 30000",
     "client:test": "mocha --reporter progress testSetup.js client/test/**/*.test.js",
     "coveralls": "npm test && cat ./coverage/lcov.info | coveralls",
     "db:migrate:test": "NODE_ENV=test sequelize db:migrate",
     "db:seed": "sequelize db:seed:all",
-    "e2e": "node_modules/.bin/nightwatch --config nightwatch.config.js"
+    "e2e": "node_modules/.bin/nightwatch --config nightwatch.config.js",
+    "webpack": "webpack --config ./webpack.conf.prod.js"
   },
   "repository": {
     "type": "git",
@@ -53,6 +54,7 @@
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "istanbul": "^0.4.5",
+    "jquery": "^3.2.1",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.2",
@@ -67,6 +69,7 @@
     "react-materialize": "^0.18.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.0",
+    "react-tap-event-plugin": "^2.0.1",
     "react-tinymce": "^0.5.1",
     "redux": "^3.5.2",
     "redux-form": "^6.6.2",

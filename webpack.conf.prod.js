@@ -1,20 +1,24 @@
-import path from 'path';
-import webpack from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
 
-export default {
-  devtools: 'eval-source-map',
+module.exports = {
   entry: [
-    'webpack-hot-middleware/client',
     path.join(__dirname, '/client/index.js')
   ],
   output: {
-    path: '/',
-    publicPath: '/'
+    path: './dist/client',
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
   module: {
     loaders: [
