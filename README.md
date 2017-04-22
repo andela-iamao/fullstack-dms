@@ -2,7 +2,7 @@ Fullstack-dms API
 =================
 [![Build Status](https://travis-ci.org/andela-aawa/fullstack-dms.svg?branch=staging)](https://travis-ci.org/andela-aawa/fullstack-dms)
 [![Code Climate](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/gpa.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/feed)
-[![Test Coverage](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/coverage.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/coverage)
+[![Coverage Status](https://coveralls.io/repos/github/andela-aawa/fullstack-dms/badge.svg?branch=staging)](https://coveralls.io/github/andela-aawa/fullstack-dms?branch=staging)
 [![Issue Count](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/issue_count.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/feed)
 
 DMS is an application that helps users manage their documents in an organized way. A User can be able to upload a document, edit it and share it with other users. Aside from enabling users to properly document their work with regard to category, the application permits users to work collaboratively on documents.
