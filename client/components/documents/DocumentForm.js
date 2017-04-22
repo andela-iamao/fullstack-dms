@@ -36,9 +36,8 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
             name="access"
             error={errors.access}
           >
-            <option value="0" defaultValue >Select Access</option>
+            <option value="public" defaultValue>Public</option>
             <option value="private" >Private</option>
-            <option value="public" >Public</option>
             <option value="role" >Role</option>
           </select>
         </div>
