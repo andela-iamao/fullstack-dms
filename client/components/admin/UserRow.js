@@ -14,9 +14,7 @@ class UserRow extends React.Component {
 
     this.onChange = this.onChange.bind(this);
   }
-  componentDidMount() {
-    $('select').material_select();
-  }
+
   onChange(event) {
     event.preventDefault();
     const field = event.target.name;
@@ -35,8 +33,7 @@ class UserRow extends React.Component {
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
-        <td>{auth.user.UserId !== user.id ?
-          <EditUserRole
+        <td>{auth.user.RoleId !== user.RoleId ? <EditUserRole
             value={parseInt(this.state.user.RoleId, 10)}
             onChange={this.onChange} /> :
           <span>{user.Role.title}</span>
