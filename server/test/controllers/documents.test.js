@@ -36,7 +36,6 @@ describe('Document API', () => {
           user = res.body.user;
           token = res.body.token;
           documentParams.OwnerId = user.id;
-          documentParams.RoleId = user.RoleId;
           done();
         });
     });
@@ -162,7 +161,6 @@ describe('Document API', () => {
     describe('Get Private document GET: /documents/:id', () => {
       before(() => {
         privateDocumentParams.OwnerId = owner.id;
-        privateDocumentParams.RoleId = owner.RoleId;
         return Document.create(privateDocumentParams)
           .then((newPrivateDocument) => {
             privateDocument = newPrivateDocument;
@@ -185,12 +183,17 @@ describe('Document API', () => {
     describe('Get role document GET: /documents/:id', () => {
       before(() => {
         roleDocumentParams.OwnerId = owner.id;
-        roleDocumentParams.RoleId = owner.RoleId;
 
         return Document.create(roleDocumentParams)
           .then((newRoleDocument) => {
             roleDocument = newRoleDocument;
           });
+      });
+
+      it('should return permission denied if in different role', (done) => {
+        request.get(`/documents/${roleDocument.id}`)
+          .set({ Authorization: token })
+          .expect(403, done);
       });
 
       it('should return document for owner', (done) => {

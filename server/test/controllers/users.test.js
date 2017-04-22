@@ -64,7 +64,7 @@ describe('User API', () => {
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(Array.isArray(res.body)).to.be.true;
-            expect(res.body.length).to.not.equal(0);
+            expect(res.body.length).to.equal(1);
             done();
           });
       });
@@ -90,7 +90,7 @@ describe('User API', () => {
 
     describe('Edit user PUT: /users/:id', () => {
       it('updates the user attributes', (done) => {
-        const newAttributes = { lastName: 'Newman', email: 'newman@mail.com' };
+        const newAttributes = { lastName: 'awa', email: 'awa@awa.com' };
 
         request.put(`/users/${user.id}`)
           .set({ Authorization: token })
