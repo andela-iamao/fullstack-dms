@@ -8,6 +8,11 @@ export function documentsSearched(documentSearchResult) {
   };
 }
 
+/**
+ * Dispatch action to search a document
+ * @param {any} queryString
+ * @returns {Object} function
+ */
 export function searchDocuments(queryString) {
   return (dispatch) => {
     return axios.get(`/search/documents?q=${queryString}`)

@@ -35,6 +35,13 @@ export function documentDeleted(documentId) {
   };
 }
 
+
+/**
+ * Dispatched action to create a new document
+ * @export
+ * @param {any} data
+ * @returns {object} object
+ */
 export function saveDocument(data) {
   return (dispatch) => {
     return axios.post('/documents', data)
@@ -47,6 +54,12 @@ export function saveDocument(data) {
   };
 }
 
+/**
+ * Dispatches action to fetch all documents
+ * @export
+ * @param {*} payload
+ * @returns {Array} documents
+ */
 export function fetchDocuments() {
   return (dispatch) => {
     return axios.get('/documents')
@@ -55,6 +68,13 @@ export function fetchDocuments() {
   };
 }
 
+
+/**
+ * Dispatch action to fetch a particular document
+ * @export
+ * @param {any} id
+ * @returns {object} document
+ */
 export function fetchDocument(id) {
   return (dispatch) => {
     return axios.get(`/documents/${id}`)
@@ -63,6 +83,12 @@ export function fetchDocument(id) {
   };
 }
 
+/**
+ * Dispatch action to edit a document
+ * @export
+ * @param {any} data
+ * @returns {object} document
+ */
 export function updateDocument(data) {
   return (dispatch) => {
     return axios.put(`/documents/${data.id}`, data)
@@ -71,6 +97,14 @@ export function updateDocument(data) {
       });
   };
 }
+
+
+/**
+ * Dispatch action to delete a document
+ * @export
+ * @param {any} id
+ * @returns {object} document id
+ */
 export function deleteDocument(id) {
   return (dispatch) => {
     return axios.delete(`/documents/${id}`)

@@ -11,6 +11,10 @@ export function setCurrentUser(user) {
   };
 }
 
+/**
+ * Dispatch action to logout a user
+ * @returns {Object} function
+ */
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('jwtToken');
@@ -20,6 +24,11 @@ export function logout() {
   };
 }
 
+/**
+ * Dispatch action to login a user
+ * @param {any} data
+ * @returns {Object} function
+ */
 export function login(data) {
   return dispatch =>
      axios.post('/users/login', data)

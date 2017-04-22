@@ -9,6 +9,12 @@ export function setCurrentUser(user) {
     user,
   };
 }
+
+/**
+ * Dispatch action to sign up a user
+ * @param {any} userData
+ * @returns {Object} function
+ */
 export function userSignupRequest(userData) {
   return (dispatch) => {
     return axios.post('/users', userData)
