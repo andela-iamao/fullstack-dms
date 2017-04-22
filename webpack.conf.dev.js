@@ -4,6 +4,7 @@ import webpack from 'webpack';
 export default {
   devtools: 'eval-source-map',
   entry: [
+    'babel-polyfill',
     'webpack-hot-middleware/client',
     path.join(__dirname, '/client/index.js')
   ],
