@@ -19,6 +19,7 @@ class ManageDocumentPage extends React.Component {
 
     this.updateDocumentState = this.updateDocumentState.bind(this);
     this.saveDocument = this.saveDocument.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,27 +35,22 @@ class ManageDocumentPage extends React.Component {
     return this.setState({ document });
   }
 
+  saveSuccess() { this.redirect(); }
+
+  saveFailure(error) {
+    toastr.error(error);
+    this.setState({ saving: false });
+  }
+
   saveDocument(event) {
     event.preventDefault();
     this.setState({ saving: true });
     if (this.state.document.id) {
       this.props.actions.updateDocument(this.state.document)
-        .then(() => {
-          this.redirect();
-        })
-        .catch((error) => {
-          toastr.error(error);
-          this.setState({ saving: false });
-        });
+        .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
     } else {
       this.props.actions.saveDocument(this.state.document)
-      .then(() => {
-        this.redirect();
-      })
-      .catch((error) => {
-        toastr.error(error);
-        this.setState({ saving: false });
-      });
+      .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
     }
   }
 

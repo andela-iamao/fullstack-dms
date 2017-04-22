@@ -22,7 +22,6 @@ export default function documents(state = [], action = {}) {
         ...state.filter(document => document.id !== action.document.id),
       ];
     case types.SET_DOCUMENTS:
-      return action.documents;
     case types.CLEAR_DOCUMENTS:
       return action.documents;
 
