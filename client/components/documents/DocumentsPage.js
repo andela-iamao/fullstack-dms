@@ -9,6 +9,9 @@ import Search from '../common/Search';
 class DocumentsPage extends React.Component {
   constructor() {
     super();
+    this.state = {
+      query: ''
+    };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -19,12 +22,13 @@ class DocumentsPage extends React.Component {
   handleSearch(e) {
     e.preventDefault();
     const query = e.target.value;
+    this.setState({ query });
     this.props.searchDocuments(query);
   }
 
   render() {
     const documentSearchResult = this.props.search;
-    const renderedDocuments = documentSearchResult.length > 0
+    const renderedDocuments = this.state.query.trim().length > 0
       ? documentSearchResult : this.props.documents;
     return (
       <div>
