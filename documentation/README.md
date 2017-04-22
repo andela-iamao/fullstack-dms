@@ -1,7 +1,7 @@
 # fullstack-dms
 [![Build Status](https://travis-ci.org/andela-aawa/fullstack-dms.svg?branch=staging)](https://travis-ci.org/andela-aawa/fullstack-dms)
 [![Code Climate](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/gpa.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/feed)
-[![Test Coverage](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/coverage.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/coverage)
+[![Coverage Status](https://coveralls.io/repos/github/andela-aawa/fullstack-dms/badge.svg?branch=staging)](https://coveralls.io/github/andela-aawa/fullstack-dms?branch=staging)
 [![Issue Count](https://codeclimate.com/repos/58d66e5fd315de027d00160e/badges/476cf2c94d6f0ed1a4ab/issue_count.svg)](https://codeclimate.com/repos/58d66e5fd315de027d00160e/feed)
 
 Document Management System API contains several API end points that allows users to create, edit, retrieve and delete documents. It also offers a way to ensure that only authorized users can perform certain operations.
