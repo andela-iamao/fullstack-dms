@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export default function DocumentCard({ document, deleteDocument }) {
+export default function DocumentCard({ document, deleteDocument, currentUser }) {
   return (
     <div className="row">
       <div className="col s12">
@@ -11,10 +11,10 @@ export default function DocumentCard({ document, deleteDocument }) {
             <p>{document.content}</p><br />
             <p>Access Type: &nbsp; <span>{(document.access).toUpperCase()}</span></p><br />
           </div>
-          <div className="card-action">
+          {currentUser.UserId === document.OwnerId && <div className="card-action">
             <Link to={`/document/${document.id}`}>Edit</Link>
             <a href="" onClick={() => deleteDocument(document.id)}>Delete</a>
-          </div>
+          </div>}
         </div>
       </div>
     </div>
@@ -24,4 +24,5 @@ export default function DocumentCard({ document, deleteDocument }) {
 DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
 };

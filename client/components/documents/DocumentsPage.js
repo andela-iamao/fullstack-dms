@@ -47,6 +47,7 @@ class DocumentsPage extends React.Component {
         <DocumentsList
           documents={renderedDocuments}
           deleteDocument={this.props.deleteDocument}
+          currentUser={this.props.auth.user}
         />
       </div>
     );
@@ -59,12 +60,14 @@ DocumentsPage.propTypes = {
   fetchDocuments: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
   searchDocuments: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     documents: state.documents,
     search: state.search,
+    auth: state.auth,
   };
 }
 
