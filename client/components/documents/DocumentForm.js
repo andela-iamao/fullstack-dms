@@ -27,17 +27,16 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           error={errors.content}
           id="content"
         />
-        <div className="input-field col s4">
+        <div className="input-field col s6">
           <select
             style={{ display: 'block' }}
             id="access"
             value={document.access}
             onChange={onChange}
             name="access"
-            id="access"
             error={errors.access}
           >
-            <option value="0" disabled >Select Access</option>
+            <option value="0" defaultValue >Select Access</option>
             <option value="private" >Private</option>
             <option value="public" >Public</option>
             <option value="role" >Role</option>
