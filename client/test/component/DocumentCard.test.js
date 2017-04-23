@@ -7,6 +7,7 @@ function setup() {
   const props = {
     document: { title: '', content: '', access: '' },
     deleteDocument: () => {},
+    currentUser: {}
   };
 
   return mount(<DocumentCard {...props} />);
