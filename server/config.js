@@ -1,3 +1,4 @@
+require('dotenv').config();
 export default {
-  jwtSecret: 'somesecretkeyforjsonwebtoken'
+  jwtSecret: process.env.MY_SECRET
 };
