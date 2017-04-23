@@ -5,6 +5,7 @@ import DocumentsList from './DocumentList';
 import { fetchDocuments, deleteDocument } from '../../actions/documentActions';
 import { searchDocuments } from '../../actions/searchActions';
 import Search from '../common/Search';
+import toastr from 'toastr';
 
 class DocumentsPage extends React.Component {
   constructor() {
@@ -13,10 +14,16 @@ class DocumentsPage extends React.Component {
       query: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.deleteDoc = this.deleteDoc.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchDocuments();
+  }
+
+  deleteDoc(id) {
+    this.props.deleteDocument(id)
+      .then(res => toastr.success('Document deleted successfully!'));
   }
 
   handleSearch(e) {
@@ -46,7 +53,7 @@ class DocumentsPage extends React.Component {
 
         <DocumentsList
           documents={renderedDocuments}
-          deleteDocument={this.props.deleteDocument}
+          deleteDocument={this.deleteDoc}
           currentUser={this.props.auth.user}
         />
       </div>

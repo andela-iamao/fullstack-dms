@@ -16,7 +16,7 @@ export default function DocumentsList({ documents, deleteDocument, currentUser }
   );
 
   return (
-    <div>
+    <div className="row">
       {documents.length === 0 ? emptyMessage : documentsList}
     </div>
   );

@@ -13,7 +13,7 @@ class NavigationBar extends React.Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     return (
-      <nav className="black-text container" role="navigation">
+      <nav className="black-text" role="navigation">
         <div className="nav-wrapper">
           <Link to="/" className="brand-logo">DMS</Link>
           <ul className="right hide-on-med-and-down" id="mobile-demo">
