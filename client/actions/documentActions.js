@@ -63,8 +63,7 @@ export function saveDocument(data) {
 export function fetchDocuments() {
   return (dispatch) => {
     return axios.get('/documents')
-      .then(res => res.data)
-      .then(data => dispatch(setDocuments(data)));
+      .then(res => dispatch(setDocuments(res.data)));
   };
 }
 

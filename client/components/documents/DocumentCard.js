@@ -10,10 +10,12 @@ export default function DocumentCard({ document, deleteDocument, currentUser }) 
           <span className="card-title">{document.title}</span>
           <p>{document.content}</p><br />
           <p>Access Type: &nbsp; <span>{(document.access).toUpperCase()}</span></p><br />
-          <span>
-              Published:
-              {(document.createdAt) ? document.createdAt.split('T')[0] : ''}
-          </span>
+          <div>
+              Published Date :
+            <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
+            <p> Author:
+                {document.Owner.firstName} {document.Owner.lastName}</p>
+          </div>
         </div>
         {currentUser.UserId === document.OwnerId &&
           <div className="card-action">
