@@ -26,6 +26,7 @@ class LandingPage extends React.Component {
                   <Link className="btn btn-large create-list-link hero-btn" to="/signup">
                     Get Started
                   </Link>
+                  <p>Already a user? <a href="/login">Login</a></p>
                 </div>
               </div>
             </div>
