@@ -35,8 +35,7 @@ class UserRow extends React.Component {
         <td>{user.email}</td>
         <td>{auth.user.RoleId !== user.RoleId ? <EditUserRole
             value={parseInt(this.state.user.RoleId, 10)}
-            onChange={this.onChange} /> :
-          <span>{user.Role.title}</span>
+            onChange={this.onChange} /> : <span>{user.Role.title}</span>
           }
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>

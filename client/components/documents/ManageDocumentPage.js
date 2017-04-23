@@ -78,7 +78,7 @@ class ManageDocumentPage extends React.Component {
 }
 
 ManageDocumentPage.propTypes = {
-  document: React.PropTypes.object,
+  document: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired,
 };
 
