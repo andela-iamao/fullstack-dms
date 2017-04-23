@@ -15,7 +15,10 @@ export default {
     const RoleId = req.decoded.RoleId;
     Document.create({ title, content, access, OwnerId, RoleId })
       .then((document) => {
-        res.status(201).send(document);
+        Document.findById(document.id,
+         { include: [{ model: User, as: 'Owner' }] })
+         .then(documentFetched =>
+           res.status(201).send(documentFetched));
       })
       .catch((err) => {
         res.status(400).send(err.errors);

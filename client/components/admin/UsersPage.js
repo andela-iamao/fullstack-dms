@@ -12,7 +12,7 @@ class UsersPage extends React.Component {
   render() {
     return (
       <div>
-        <h3>Users List</h3>
+        <h3>Registered Users</h3>
         <UsersList
           users={this.props.users}
           deleteUser={this.props.deleteUser}

@@ -39,7 +39,7 @@ class DocumentsPage extends React.Component {
       ? documentSearchResult : this.props.documents;
     return (
       <div>
-        <h1>Documents List</h1>
+        <h1>Available Documents</h1>
         <div className="row">
           <div className="col s7 push-s4">
             <Search onChange={this.handleSearch} />

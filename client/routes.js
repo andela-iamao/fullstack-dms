@@ -7,6 +7,7 @@ import SignupPage from './components/signup/SignupPage';
 import LoginPage from './components/login/LoginPage';
 import ManageDocumentPage from './components/documents/ManageDocumentPage';
 import UsersPage from './components/admin/UsersPage';
+import DocumentDetailsPage from './components/documents/DocumentDetailsPage';
 
 export default (
   <Route path="/" component={App}>
@@ -16,5 +17,6 @@ export default (
     <Route path="document" component={ManageDocumentPage} />
     <Route path="document/:id" component={ManageDocumentPage} />
     <Route path="users" component={UsersPage} />
+    <Route path="document-details/:id" component={DocumentDetailsPage} />
   </Route>
 );
