@@ -20,7 +20,6 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
               {document.Owner.firstName} {document.Owner.lastName}</p>
           </div>
         </div>
-
         <div className="card-action">
           <Link to="/">back to documents</Link>
           {currentUser.UserId === document.OwnerId && <div>
