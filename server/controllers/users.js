@@ -54,7 +54,7 @@ export default {
             roleId
           }).then((user) => {
             const token = jwt.sign({
-              UserId: user.id,
+              userId: user.id,
               roleId: user.roleId
             }, config.jwtSecret, { expiresIn: 86400 });
             user = permittedAttributes(user);
@@ -178,7 +178,7 @@ export default {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
           const token = jwt.sign({
-            UserId: user.id,
+            userId: user.id,
             roleId: user.roleId
           }, config.jwtSecret, { expiresIn: 86400 });
 

@@ -11,7 +11,7 @@ export default {
    */
   create(req, res) {
     const { title, content, access } = req.body;
-    const OwnerId = req.decoded.UserId;
+    const OwnerId = req.decoded.userId;
     Document.create({ title, content, access, OwnerId })
       .then((document) => {
         Document.findById(document.id,
@@ -36,7 +36,7 @@ export default {
       where: {
         $or: [
           { access: 'public' },
-          { OwnerId: req.decoded.UserId },
+          { OwnerId: req.decoded.userId },
         ]
       },
       include: [{ model: User, as: 'Owner' }],
@@ -66,7 +66,7 @@ export default {
         }
 
         if ((document.access === 'public') ||
-          (document.OwnerId === req.decoded.UserId)) {
+          (document.OwnerId === req.decoded.userId)) {
           return res.send(document);
         }
 
@@ -152,7 +152,7 @@ export default {
       where: {
         $and: [{ $or: [
           { access: 'public' },
-          { OwnerId: req.decoded.UserId },
+          { OwnerId: req.decoded.userId },
         ],
         }],
       },

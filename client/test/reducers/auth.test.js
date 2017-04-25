@@ -10,7 +10,7 @@ describe('Auth Reducer', () => {
       user: {},
     };
 
-    const user = { UserId: '1', roleId: '2' };
+    const user = { userId: '1', roleId: '2' };
 
     const action = actions.setCurrentUser(user);
     // act

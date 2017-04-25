@@ -21,7 +21,7 @@ export default {
   permitOwner(req, res, next) {
     Document.findById(req.params.id)
       .then((document) => {
-        if (document.OwnerId === req.decoded.UserId) {
+        if (document.OwnerId === req.decoded.userId) {
           next();
         } else {
           return res.status(401).send({

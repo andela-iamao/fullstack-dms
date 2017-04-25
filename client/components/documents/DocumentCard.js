@@ -22,7 +22,7 @@ export default function DocumentCard({ document, deleteDocument, currentUser }) 
               <i className="material-icons">details</i>
             </Link>
           </Button>
-          {currentUser.UserId === document.OwnerId &&
+          {currentUser.userId === document.OwnerId &&
             <div>
               <Button waves="light" className="btn-floating blue darken-4 right rightButton">
                 <Link to={`/document/${document.id}`}><i className="material-icons">mode_edit</i>

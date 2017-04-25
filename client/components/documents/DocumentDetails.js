@@ -22,7 +22,7 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
         </div>
         <div className="card-action">
           <Link to="/">back to documents</Link>
-          {currentUser.UserId === document.OwnerId && <div>
+          {currentUser.userId === document.OwnerId && <div>
             <Button waves="light" className="btn-floating blue darken-4 right">
               <Link to={`/document/${document.id}`}>
                 <i className="material-icons">mode_edit</i>
