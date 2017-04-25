@@ -5,7 +5,7 @@ import DocumentCard from '../../components/documents/DocumentCard';
 
 function setup() {
   const props = {
-    document: { title: '', content: '', access: '', Owner: {} },
+    document: { title: '', content: '', access: '', owner: {} },
     deleteDocument: () => {},
     currentUser: {}
   };

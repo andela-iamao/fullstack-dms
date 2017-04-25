@@ -13,7 +13,7 @@ export default function DocumentCard({ document, deleteDocument, currentUser }) 
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.Owner.firstName} {document.Owner.lastName}</p>
+                {document.owner.firstName} {document.owner.lastName}</p>
           </div>
         </div>
         <div className="card-action">

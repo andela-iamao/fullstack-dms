@@ -15,7 +15,7 @@ export default {
     Document.create({ title, content, access, ownerId })
       .then((document) => {
         Document.findById(document.id,
-         { include: [{ model: User, as: 'Owner' }] })
+         { include: [{ model: User, as: 'owner' }] })
          .then(documentFetched =>
            res.status(201).send(documentFetched));
       })
@@ -39,7 +39,15 @@ export default {
           { ownerId: req.decoded.userId },
         ]
       },
-      include: [{ model: User, as: 'Owner' }],
+      include: [{
+        model: User,
+        as: 'owner',
+        attributes: [
+          'username',
+          'firstName',
+          'lastName',
+          'email']
+      }],
       limit: req.query.limit || null,
       offset: req.query.offset || null,
       order: [['createdAt', 'DESC']]
@@ -156,7 +164,7 @@ export default {
         ],
         }],
       },
-      include: [{ model: User, as: 'Owner' }],
+      include: [{ model: User, as: 'owner' }],
       limit: req.query.limit || null,
       offset: req.query.offset || null,
       order: [['createdAt', 'DESC']]
