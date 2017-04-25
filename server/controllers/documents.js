@@ -72,7 +72,7 @@ export default {
 
         User.findById(document.OwnerId)
           .then((owner) => {
-            if (owner.RoleId === req.decoded.RoleId) {
+            if (owner.roleId === req.decoded.roleId) {
               return res.send(document);
             }
 

@@ -20,7 +20,7 @@ class NavigationBar extends React.Component {
             <li><Link to="/">
               {isAuthenticated ?
                 <span>Documents</span> : <span>Home</span>}</Link></li>
-            {user.RoleId === 1
+            {user.roleId === 1
                 && <li><Link to="/users"><span>Users</span></Link></li>}
             <li>
               {!isAuthenticated

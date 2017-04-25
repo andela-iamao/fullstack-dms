@@ -8,7 +8,7 @@ const EditUserRole = ({ value, onChange }) => {
        style={{ display: 'block' }}
         value={value}
         onChange={onChange}
-        name="RoleId"
+        name="roleId"
         id="access"
       >
         <option value="1">admin</option>

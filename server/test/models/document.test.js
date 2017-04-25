@@ -16,12 +16,12 @@ describe('Document model', () => {
   before(() =>
     Role.create(helper.adminRole)
       .then((role) => {
-        userParams.RoleId = role.id;
+        userParams.roleId = role.id;
         return User.create(userParams);
       })
       .then((owner) => {
         documentParams.OwnerId = owner.id;
-        documentParams.RoleId = owner.RoleId;
+        documentParams.roleId = owner.roleId;
       })
   );
 

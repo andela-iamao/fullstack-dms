@@ -11,7 +11,7 @@ module.exports = {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: bcrypt.hashSync('awa321', bcrypt.genSaltSync(8)),
-        RoleId: 1,
+        roleId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
@@ -21,7 +21,7 @@ module.exports = {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: bcrypt.hashSync('awa123', bcrypt.genSaltSync(8)),
-        RoleId: 2,
+        roleId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }

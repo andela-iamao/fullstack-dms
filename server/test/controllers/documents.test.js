@@ -27,8 +27,8 @@ describe('Document API', () => {
     }).then((newRoles) => {
       adminRole = newRoles[0];
       regularRole = newRoles[1];
-      userParams.RoleId = regularRole.id;
-      ownerParams.RoleId = adminRole.id;
+      userParams.roleId = regularRole.id;
+      ownerParams.roleId = adminRole.id;
 
       request.post('/users')
         .send(userParams)
@@ -198,7 +198,7 @@ describe('Document API', () => {
 
       it('should return document for owner', (done) => {
         const sameRoleUserParams = helper.thirdUser;
-        sameRoleUserParams.RoleId = adminRole.id;
+        sameRoleUserParams.roleId = adminRole.id;
 
         request.post('/users')
           .send(sameRoleUserParams)

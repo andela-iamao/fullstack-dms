@@ -21,7 +21,7 @@ describe('User API', () => {
   before(() =>
     Role.create(roleParams)
       .then((role) => {
-        userParams.RoleId = role.id;
+        userParams.roleId = role.id;
       }));
 
   after(() => User.sequelize.sync({ force: true }));

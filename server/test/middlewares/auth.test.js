@@ -16,7 +16,7 @@ describe('Authorisation middleware', () => {
   before(() =>
     Role.create(roleParams)
       .then((role) => {
-        params.RoleId = role.id;
+        params.roleId = role.id;
         return User.create(params);
       })
       .then(() => {

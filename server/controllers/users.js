@@ -11,7 +11,7 @@ const permittedAttributes = (user) => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    RoleId: user.RoleId,
+    roleId: user.roleId,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt
   };
@@ -29,7 +29,7 @@ export default {
    */
   create(req, res) {
     const { username, firstName, lastName, email, password } = req.body;
-    const RoleId = req.body.RoleId && req.body.RoleId < 3 ? req.body.RoleId : 2;
+    const roleId = req.body.roleId && req.body.roleId < 3 ? req.body.roleId : 2;
     User.findOne(
       { where: {
         $or: [{ username }, { email }]
@@ -51,11 +51,11 @@ export default {
             lastName,
             email,
             password,
-            RoleId
+            roleId
           }).then((user) => {
             const token = jwt.sign({
               UserId: user.id,
-              RoleId: user.RoleId
+              roleId: user.roleId
             }, config.jwtSecret, { expiresIn: 86400 });
             user = permittedAttributes(user);
             res.status(201).send({ token, expiresIn: 86400, user });
@@ -82,7 +82,7 @@ export default {
         'firstName',
         'lastName',
         'email',
-        'RoleId',
+        'roleId',
         'createdAt',
         'updatedAt'
       ],
@@ -179,7 +179,7 @@ export default {
         if (bcrypt.compareSync(password, user.password)) {
           const token = jwt.sign({
             UserId: user.id,
-            RoleId: user.RoleId
+            roleId: user.roleId
           }, config.jwtSecret, { expiresIn: 86400 });
 
           res.send({ token, expiresIn: 86400 });

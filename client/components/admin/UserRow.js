@@ -33,13 +33,13 @@ class UserRow extends React.Component {
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
-        <td>{auth.user.RoleId !== user.RoleId ? <EditUserRole
-            value={parseInt(this.state.user.RoleId, 10)}
+        <td>{auth.user.roleId !== user.roleId ? <EditUserRole
+            value={parseInt(this.state.user.roleId, 10)}
             onChange={this.onChange} /> : <span>{user.Role.title}</span>
           }
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>
-        <td>{auth.user.RoleId !== user.RoleId &&
+        <td>{auth.user.roleId !== user.roleId &&
           <a href="" onClick={() => deleteUser(user.id)}>Delete</a>}</td>
       </tr>
     );

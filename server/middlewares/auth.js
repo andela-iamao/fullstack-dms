@@ -35,7 +35,7 @@ export default {
       });
   },
   permitAdmin(req, res, next) {
-    Role.findById(req.decoded.RoleId)
+    Role.findById(req.decoded.roleId)
       .then((role) => {
         if (role.title === 'admin') {
           next();

@@ -81,7 +81,7 @@ module.exports = {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
-        RoleId: 2
+        roleId: 2
       });
     }
 
