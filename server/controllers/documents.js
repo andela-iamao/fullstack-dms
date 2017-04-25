@@ -12,8 +12,7 @@ export default {
   create(req, res) {
     const { title, content, access } = req.body;
     const OwnerId = req.decoded.UserId;
-    const RoleId = req.decoded.RoleId;
-    Document.create({ title, content, access, OwnerId, RoleId })
+    Document.create({ title, content, access, OwnerId })
       .then((document) => {
         Document.findById(document.id,
          { include: [{ model: User, as: 'Owner' }] })

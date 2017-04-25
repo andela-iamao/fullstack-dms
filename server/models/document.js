@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     OwnerId: DataTypes.INTEGER,
-    RoleId: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate(models) {

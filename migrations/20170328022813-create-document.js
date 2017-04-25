@@ -24,15 +24,6 @@ module.exports = {
           as: 'OwnerId'
         }
       },
-      RoleId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Roles',
-          key: 'id',
-          as: 'RoleId'
-        }
-      },
       access: {
         defaultValue: 'public',
         type: Sequelize.STRING

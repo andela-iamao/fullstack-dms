@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config';
-import { Role } from '../models';
+import { Role, User, Document } from '../models';
 
 export default {
   verifyToken(req, res, next) {
@@ -18,6 +18,22 @@ export default {
     });
   },
 
+  permitOwner(req, res, next) {
+    Document.findById(req.params.id)
+      .then((document) => {
+        if (document.OwnerId === req.decoded.UserId) {
+          next();
+        } else {
+          return res.status(401).send({
+            message: 'You don\t have the rights to perform this operation'
+          });
+        }
+      }).catch(err => {
+        return res.status(404).send({
+          message: `Document with ${req.params.id} not found`
+        });
+      });
+  },
   permitAdmin(req, res, next) {
     Role.findById(req.decoded.RoleId)
       .then((role) => {

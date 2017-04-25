@@ -231,6 +231,25 @@ describe('Document API', () => {
           .expect(400, done);
       });
     });
+    describe('Edit document POST: /documents/:id', () => {
+      before(() => {
+        privateDocumentParams.OwnerId = owner.id;
+        return Document.create(privateDocumentParams)
+          .then((newPrivateDocument) => {
+            privateDocument = newPrivateDocument;
+          });
+      });
+      it('should return unauthorised if not owner', (done) => {
+        const newAttributes = { title: 'Edited title', content: 'new content' };
+        request.put(`/documents/${privateDocument.id}`)
+          .set({ Authorization: token })
+          .send(newAttributes)
+          .end((err, res) => {
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+    });
   });
 
   describe('CONTEXT: With multiple documents', () => {
