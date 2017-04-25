@@ -9,8 +9,13 @@ const expect = chai.expect;
 
 const userParams = helper.firstUser;
 const roleParams = helper.adminRole;
+const userParamsArray = helper.userArray();
+
 
 let user, token;
+
+const compareDates = (dateA, dateB) =>
+  new Date(dateA).getTime() <= new Date(dateB).getTime();
 
 describe('User API', () => {
   before(() =>
@@ -41,20 +46,6 @@ describe('User API', () => {
           .end((err, res) => {
             expect(res.status).to.equal(401);
             done();
-          });
-      });
-
-      it('should return unauthorised if user is not an admin', (done) => {
-        Role.create({ title: 'regular' })
-          .then((role) => {
-            helper.secondUser.RoleId = role.id;
-            request.post('/users')
-              .send(helper.secondUser)
-              .end((err, res) => {
-                request.get('/users')
-                  .set({ Authorization: res.body.token })
-                  .expect(403, done);
-              });
           });
       });
 
@@ -197,6 +188,58 @@ describe('User API', () => {
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body.token).to.not.exist;
+            done();
+          });
+      });
+    });
+  });
+
+  describe('CONTEXT: With multiple users', () => {
+    before(() =>
+    Role.create(helper.regularRole)
+      .then((role) => {
+        User.bulkCreate(userParamsArray);
+      }));
+
+    describe('User Pagination', () => {
+      it('uses query params "limit" to limit the result', (done) => {
+        request.get('/users?limit=5')
+          .set({ Authorization: token })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(5);
+            done();
+          });
+      });
+
+      it('is returned in order of their signed up dates', (done) => {
+        request.get('/users?limit=5')
+          .set({ Authorization: token })
+          .end((err, res) => {
+            const users = res.body;
+            let flag = true;
+
+            for (let i = 0; i < users.length - 1; i += 1) {
+              flag = compareDates(users[i].createdAt, users[i + 1].createdAt);
+              if (!flag) break;
+            }
+
+            expect(flag).to.be.true;
+            done();
+          });
+      });
+    });
+
+    describe('Document search', () => {
+      it('searches and returns the correct documents', (done) => {
+        const query = userParamsArray[4].username;
+        const matcher = new RegExp(query);
+
+        request.get(`/search/users?q=${query}`)
+          .set({ Authorization: token })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(matcher.test(res.body[0].username)).to.be.true;
             done();
           });
       });
