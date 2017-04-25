@@ -89,7 +89,10 @@ export default {
       include: [{
         model: Role,
         as: 'Role',
-      }]
+      }],
+      limit: req.query.limit || null,
+      offset: req.query.offset || null,
+      order: [['createdAt', 'DESC']]
     }).then((users) => {
       res.send(users);
     });

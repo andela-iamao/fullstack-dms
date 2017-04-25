@@ -69,5 +69,22 @@ module.exports = {
     }
 
     return documentAttributes;
+  },
+
+  userArray() {
+    const userAttributes = [];
+
+    for (let i = 0; i <= 10; i += 1) {
+      userAttributes.push({
+        username: faker.internet.userName(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        RoleId: 2
+      });
+    }
+
+    return userAttributes;
   }
 };
