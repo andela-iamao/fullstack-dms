@@ -35,7 +35,7 @@ describe('Document API', () => {
         .end((err, res) => {
           user = res.body.user;
           token = res.body.token;
-          documentParams.OwnerId = user.id;
+          documentParams.ownerId = user.id;
           done();
         });
     });
@@ -135,7 +135,7 @@ describe('Document API', () => {
 
     describe('Get all GET: /users/:id/documents', () => {
       it('should return all user documents', (done) => {
-        request.get(`/users/${document.OwnerId}/documents`)
+        request.get(`/users/${document.ownerId}/documents`)
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -160,7 +160,7 @@ describe('Document API', () => {
 
     describe('Get Private document GET: /documents/:id', () => {
       before(() => {
-        privateDocumentParams.OwnerId = owner.id;
+        privateDocumentParams.ownerId = owner.id;
         return Document.create(privateDocumentParams)
           .then((newPrivateDocument) => {
             privateDocument = newPrivateDocument;
@@ -182,7 +182,7 @@ describe('Document API', () => {
 
     describe('Get role document GET: /documents/:id', () => {
       before(() => {
-        roleDocumentParams.OwnerId = owner.id;
+        roleDocumentParams.ownerId = owner.id;
 
         return Document.create(roleDocumentParams)
           .then((newRoleDocument) => {
@@ -233,7 +233,7 @@ describe('Document API', () => {
     });
     describe('Edit document POST: /documents/:id', () => {
       before(() => {
-        privateDocumentParams.OwnerId = owner.id;
+        privateDocumentParams.ownerId = owner.id;
         return Document.create(privateDocumentParams)
           .then((newPrivateDocument) => {
             privateDocument = newPrivateDocument;

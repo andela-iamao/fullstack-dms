@@ -20,7 +20,7 @@ describe('Document model', () => {
         return User.create(userParams);
       })
       .then((owner) => {
-        documentParams.OwnerId = owner.id;
+        documentParams.ownerId = owner.id;
         documentParams.roleId = owner.roleId;
       })
   );

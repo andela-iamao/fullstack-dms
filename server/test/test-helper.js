@@ -64,7 +64,7 @@ module.exports = {
       documentAttributes.push({
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
-        OwnerId: 1
+        ownerId: 1
       });
     }
 

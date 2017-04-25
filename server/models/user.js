@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'roleId'
         });
 
-        User.hasMany(models.Document, { foreignKey: 'OwnerId' });
+        User.hasMany(models.Document, { foreignKey: 'ownerId' });
       }
     },
     instanceMethods: {
