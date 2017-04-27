@@ -24,6 +24,9 @@ module.exports = {
           as: 'ownerId'
         }
       },
+      ownerRoleId: {
+        type: Sequelize.INTEGER
+      },
       access: {
         defaultValue: 'public',
         type: Sequelize.STRING
