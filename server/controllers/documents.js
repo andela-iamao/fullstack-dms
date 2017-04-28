@@ -182,8 +182,8 @@ export default {
         }],
       },
       include: [{ model: User, as: 'owner' }],
-      limit: req.query.limit || null,
-      offset: req.query.offset || null,
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
       order: [['createdAt', 'DESC']]
     };
 

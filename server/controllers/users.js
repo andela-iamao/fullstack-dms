@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import jwt from 'jsonwebtoken';
 import { User, Role } from '../models';
 import config from '../config';
+import helper from '../helpers/helper';
 
 const permittedAttributes = (user) => {
   const attributes = {
@@ -75,7 +76,7 @@ export default {
    * @returns {void} no returns
    */
   list(req, res) {
-    User.findAll({
+    const query = {
       attributes: [
         'id',
         'username',
@@ -90,11 +91,23 @@ export default {
         model: Role,
         as: 'Role',
       }],
-      limit: req.query.limit || null,
-      offset: req.query.offset || null,
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
       order: [['createdAt', 'DESC']]
-    }).then((users) => {
-      res.send(users);
+    };
+    User.findAndCountAll(query).then((users) => {
+      const condition = {
+        count: users.count,
+        limit: query.limit,
+        offset: query.offset
+      };
+      delete users.count;
+      const pagination = helper.pagination(condition);
+      res.status(200)
+        .send({
+          pagination,
+          rows: users.rows
+        });
     });
   },
 
@@ -215,7 +228,7 @@ export default {
    * @returns {void} no returns
    */
   search(req, res) {
-    User.findAll({
+    const query = {
       where: {
         $or: [{
           username: {
@@ -230,22 +243,31 @@ export default {
             $iLike: `%${req.query.q}%`
           }
         },
-        {
-          email: {
-            $iLike: `%${req.query.q}%`
-          }
-        }]
-      }
-    }).then((users) => {
-      if (!users) {
-        return res.status(404)
-            .send({ message: 'No user found' });
-      }
-      const results = users.map(user => permittedAttributes(user));
+          {
+            email: {
+              $iLike: `%${req.query.q}%`
+            }
+          }],
+      },
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+    User.findAndCountAll(query).then((users) => {
+      const results = users.rows.map(user => permittedAttributes(user));
+      const condition = {
+        count: users.count,
+        limit: query.limit,
+        offset: query.offset
+      };
+      delete users.count;
+      const pagination = helper.pagination(condition);
+      res.status(200)
+        .send({
+          pagination,
+          rows: results
+        });
       res.status(200).send(results);
-    })
-      .catch((err) => {
-        res.status(400).send(err);
-      });
+    });
   }
 };
