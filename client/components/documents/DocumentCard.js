@@ -17,23 +17,15 @@ export default function DocumentCard({ document, deleteDocument, currentUser }) 
           </div>
         </div>
         <div className="card-action">
-          <Button waves="light" className="btn-floating blue darken-4 right rightButton">
-            <Link to={`/document-details/${document.id}`}>
-              <i className="material-icons">details</i>
-            </Link>
-          </Button>
+          <Link to={`/document-details/${document.id}`}>
+              Details
+          </Link>
           {currentUser.userId === document.ownerId &&
-            <div>
-              <Button waves="light" className="btn-floating blue darken-4 right rightButton">
-                <Link to={`/document/${document.id}`}><i className="material-icons">mode_edit</i>
-                </Link>
-              </Button>
-              <Button
-                waves="light"
-                onClick={() => deleteDocument(document.id)}
-                className="btn-floating red darken-2 right center rightButton"
-                ><i className="material-icons">delete</i>
-              </Button>
+            <div className="right">
+              <Link to={`/document/${document.id}`}>Edit</Link>
+              <Link to="/" onClick={() => deleteDocument(document.id)}>
+                Delete
+              </Link>
             </div>}</div>
       </div>
     </div>
