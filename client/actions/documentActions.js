@@ -7,9 +7,9 @@ export function setDocuments(documents) {
     documents,
   };
 }
-export function setDocumentPagination(pagination) {
+export function setPagination(pagination) {
   return {
-    type: types.SET_DOCUMENTPAGINATION,
+    type: types.SET_PAGINATION,
     pagination
   };
 }
@@ -65,12 +65,11 @@ export function saveDocument(data) {
  */
 export function fetchDocuments(offset) {
   const pageOffset = offset || 0;
-  console.log(offset);
   return (dispatch) => {
     return axios.get(`/documents?offset=${pageOffset}`)
       .then(res => {
         dispatch(setDocuments(res.data.rows));
-        dispatch(setDocumentPagination(res.data.pagination));
+        dispatch(setPagination(res.data.pagination));
       });
   };
 }

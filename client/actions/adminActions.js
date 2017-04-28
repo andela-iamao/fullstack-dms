@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SET_USERS, USER_FETCHED, USER_UPDATED, USER_DELETED } from './types';
+import { setPagination } from './documentActions';
 
 export function setUsers(users) {
   return {
@@ -36,8 +37,10 @@ export function userDeleted(userId) {
 export function fetchUsers() {
   return (dispatch) => {
     return axios.get('/users')
-      .then(res => res.data)
-      .then(data => dispatch(setUsers(data)));
+      .then(res => {
+        dispatch(setUsers(res.data.rows));
+        dispatch(setPagination(res.data.pagination));
+      });
   };
 }
 
@@ -73,8 +76,7 @@ export function updateUser(user) {
 export function deleteUser(id) {
   return (dispatch) => {
     return axios.delete(`/users/${id}`)
-      .then(res => res.data)
-      .then(data => dispatch(userDeleted(id)));
+      .then(res => dispatch(userDeleted(id)));
   };
 }
 
