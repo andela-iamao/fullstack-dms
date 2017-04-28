@@ -1,7 +1,18 @@
 import { User, Document } from '../models';
+import helper from '../helpers/helper';
+
+const ownerParams =
+     [{ model: User,
+        as: 'owner',
+        attributes: [
+          'username',
+          'firstName',
+          'lastName',
+          'email'
+        ]
+      }];
 
 export default {
-
   /**
    * Create a document
    * Route: POST: /documents
@@ -15,7 +26,7 @@ export default {
     Document.create({ title, content, access, ownerId })
       .then((document) => {
         Document.findById(document.id,
-         { include: [{ model: User, as: 'owner' }] })
+         { include: ownerParams })
          .then(documentFetched =>
            res.status(201).send(documentFetched));
       })
@@ -39,22 +50,25 @@ export default {
           { ownerId: req.decoded.userId },
         ]
       },
-      include: [{
-        model: User,
-        as: 'owner',
-        attributes: [
-          'username',
-          'firstName',
-          'lastName',
-          'email']
-      }],
-      limit: req.query.limit || null,
-      offset: req.query.offset || null,
+      include: ownerParams,
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
       order: [['createdAt', 'DESC']]
     };
 
-    Document.findAll(query).then((documents) => {
-      res.send(documents);
+    Document.findAndCountAll(query).then((documents) => {
+      const condition = {
+        count: documents.count,
+        limit: query.limit,
+        offset: query.offset
+      };
+      delete documents.count;
+      const pagination = helper.pagination(condition);
+      res.status(200)
+        .send({
+          pagination,
+          rows: documents.rows
+        });
     });
   },
 
@@ -66,7 +80,7 @@ export default {
    * @returns {void|Response} response object or void
    */
   retrieve(req, res) {
-    Document.findById(req.params.id)
+    Document.findById(req.params.id, { include: ownerParams })
       .then((document) => {
         if (!document) {
           return res.status(404)
@@ -79,14 +93,14 @@ export default {
         }
 
         User.findById(document.ownerId)
-          .then((owner) => {
-            if (owner.roleId === req.decoded.roleId) {
-              return res.send(document);
-            }
+            .then((owner) => {
+              if (owner.roleId === req.decoded.roleId) {
+                return res.send(document);
+              }
 
-            res.status(403)
-              .send({ message: 'You cannot access this document.' });
-          });
+              res.status(403)
+                .send({ message: 'You cannot access this document.' });
+            });
       });
   },
 
@@ -107,7 +121,10 @@ export default {
 
         document.update(req.body)
           .then((updatedDocument) => {
-            res.send(updatedDocument);
+            Document.findById(updatedDocument.id,
+              { include: ownerParams })
+              .then(doc =>
+                res.status(201).send(doc));
           }).catch((err) => {
             res.status(400).send(err);
           });
@@ -176,11 +193,19 @@ export default {
       ] });
     }
 
-    Document.findAll(query)
-      .then((documents) => {
-        res.send(documents);
-      }).catch((err) => {
-        res.status(400).send(err);
-      });
+    Document.findAndCountAll(query).then((documents) => {
+      const condition = {
+        count: documents.count,
+        limit: query.limit,
+        offset: query.offset
+      };
+      delete documents.count;
+      const pagination = helper.pagination(condition);
+      res.status(200)
+        .send({
+          pagination,
+          rows: documents.rows
+        });
+    });
   }
 };

@@ -19,7 +19,7 @@ const EditUserRole = ({ value, onChange }) => {
 };
 
 EditUserRole.propTypes = {
-  value: React.PropTypes.string.isRequired,
+  value: React.PropTypes.number.isRequired,
   onChange: React.PropTypes.func.isRequired,
 };
 

@@ -66,7 +66,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(Array.isArray(res.body)).to.be.true;
+            expect(Array.isArray(res.body.rows)).to.be.true;
             expect(res.body.length).to.not.equal(0);
             done();
           });
