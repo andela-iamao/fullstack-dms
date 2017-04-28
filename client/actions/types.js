@@ -6,6 +6,7 @@ export const USER_FETCHED = 'USER_FETCHED';
 export const USER_UPDATED = 'USER_UPDATED';
 export const USER_DELETED = 'USER_DELETED';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const SET_USER_ID = 'SET_USER_ID';
 
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
 export const ADD_DOCUMENT = 'ADD_DOCUMENT';

@@ -59,11 +59,12 @@ export function fetchUser(id) {
 /**
  * Dispatch action to update a user
  * @param {any} user
+ * @param {any} userId
  * @returns {Object} function
  */
-export function updateUser(user) {
+export function updateUser(user, userId) {
   return (dispatch) => {
-    return axios.put(`/users/${user.id}`, user)
+    return axios.put(`/users/${userId}`, user)
       .then(res => dispatch(userUpdated(res.data)));
   };
 }

@@ -4,6 +4,7 @@ import documents from './documents';
 import admin from './admin';
 import search from './search';
 import paginate from './paginate';
+import user from './profile';
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   admin,
   search,
   paginate,
+  user
 });

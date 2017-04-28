@@ -19,13 +19,16 @@ class NavigationBar extends React.Component {
           <ul className="right hide-on-med-and-down" id="mobile-demo">
             <li><Link to="/">
               {isAuthenticated ?
-                <span>Documents</span> : <span>Home</span>}</Link></li>
+                <span>Documents</span> : <span>Home</span>}</Link>
+            </li>
             {user.roleId === 1
                 && <li><Link to="/users"><span>Users</span></Link></li>}
             <li>
               {!isAuthenticated
                 && <Link id="login" to="/login">Login</Link>}
             </li>
+            {isAuthenticated && <li><Link to="/editprofile">Profile</Link>
+            </li>}
             <li>
               {isAuthenticated
                 ? <a href="" onClick={this.logout.bind(this)}>Logout</a>
