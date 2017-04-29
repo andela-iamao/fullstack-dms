@@ -12,7 +12,7 @@ const ownerParams =
         ]
       }];
 
-export default {
+const Documents = {
   /**
    * Create a document
    * Route: POST: /documents
@@ -209,3 +209,5 @@ export default {
     });
   }
 };
+
+export default Documents;

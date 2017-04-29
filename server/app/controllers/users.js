@@ -19,7 +19,7 @@ const permittedAttributes = (user) => {
   return attributes;
 };
 
-export default {
+const Users = {
 
   /**
    * Create a user
@@ -271,3 +271,5 @@ export default {
     });
   }
 };
+
+export default Users;

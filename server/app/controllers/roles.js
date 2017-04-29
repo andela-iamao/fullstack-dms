@@ -1,6 +1,6 @@
 import { Role } from '../models';
 
-export default {
+const Roles = {
 
   /**
    * Create a role
@@ -93,3 +93,5 @@ export default {
       });
   },
 };
+
+export default Roles;
