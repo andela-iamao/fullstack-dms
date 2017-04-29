@@ -3,9 +3,11 @@ import * as types from './types';
 
 /**
  * Dispatch action to fetch users
+ * @param {number} offset
  * @returns {Array} users
  */
-export function fetchUsers() {
+export function fetchUsers(offset) {
+  const pageOffset = offset || 0;
   return (dispatch) => {
     return axios.get('/users')
       .then(res => {
