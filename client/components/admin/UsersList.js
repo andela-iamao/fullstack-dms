@@ -8,7 +8,6 @@ export default function UsersList({ users, deleteUser, auth }) {
     <table className="striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>UserName</th>
           <th>First Name</th>
           <th>Last Name</th>

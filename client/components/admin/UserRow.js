@@ -28,7 +28,6 @@ class UserRow extends React.Component {
     const { user, deleteUser, auth } = this.props;
     return (
       <tr>
-        <td>{user.id}</td>
         <td>{user.username}</td>
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
