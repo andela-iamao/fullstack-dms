@@ -54,8 +54,8 @@ describe('User API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(Array.isArray(res.body)).to.be.true;
-            expect(res.body.length).to.equal(1);
+            expect(Array.isArray(res.body.rows)).to.be.true;
+            expect(res.body.rows.length).to.equal(1);
             done();
           });
       });
@@ -207,7 +207,7 @@ describe('User API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(res.body.length).to.equal(5);
+            expect(res.body.rows.length).to.equal(5);
             done();
           });
       });
@@ -239,7 +239,7 @@ describe('User API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(matcher.test(res.body[0].username)).to.be.true;
+            expect(matcher.test(res.body.rows[0].username)).to.be.true;
             done();
           });
       });

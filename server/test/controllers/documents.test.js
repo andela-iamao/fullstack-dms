@@ -99,7 +99,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .send(newAttributes)
           .end((err, res) => {
-            expect(res.status).to.equal(200);
+            expect(res.status).to.equal(201);
             expect(res.body.title).to.equal(newAttributes.title);
             expect(res.body.content).to.equal(newAttributes.content);
             done();
@@ -261,7 +261,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(res.body.length).to.equal(5);
+            expect(res.body.rows.length).to.equal(5);
             done();
           });
       });
@@ -293,7 +293,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(matcher.test(res.body[0].title)).to.be.true;
+            expect(matcher.test(res.body.rows[0].title)).to.be.true;
             done();
           });
       });
@@ -303,7 +303,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(res.body.length).to.equal(5);
+            expect(res.body.rows.length).to.equal(5);
             done();
           });
       });
