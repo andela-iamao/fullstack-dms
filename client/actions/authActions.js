@@ -4,12 +4,6 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 import * as types from './types';
 import { setDocuments } from './documentActions';
 
-export function setCurrentUser(user) {
-  return {
-    type: types.SET_CURRENT_USER,
-    user,
-  };
-}
 
 /**
  * Dispatch action to logout a user
@@ -19,8 +13,14 @@ export function logout() {
   return (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthorizationToken(false);
-    dispatch(setCurrentUser({}));
-    dispatch(setDocuments([]));
+    dispatch({
+      type: types.SET_CURRENT_USER,
+      user: {}
+    });
+    dispatch({
+      type: types.SET_DOCUMENTS,
+      documents: [],
+    });
   };
 }
 
@@ -36,6 +36,9 @@ export function login(data) {
         const token = res.data.token;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
-        dispatch(setCurrentUser(jwt.decode(token)));
+        dispatch({
+          type: types.SET_CURRENT_USER,
+          user: jwt.decode(token),
+        });
       });
 }

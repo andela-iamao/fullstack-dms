@@ -1,14 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER } from './types';
-
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    user,
-  };
-}
+import * as types from './types';
 
 /**
  * Dispatch action to sign up a user
@@ -22,7 +15,10 @@ export function userSignupRequest(userData) {
         const token = res.data.token;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
-        dispatch(setCurrentUser(jwt.decode(token)));
+        dispatch({
+          type: types.SET_CURRENT_USER,
+          user: jwt.decode(token)
+        });
       });
   };
 }
