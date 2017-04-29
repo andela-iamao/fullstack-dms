@@ -1,6 +1,6 @@
 import expect from 'expect';
 import users from '../../reducers/admin';
-import * as actions from '../../actions/adminActions';
+import * as actions from '../../actions/userActions';
 import * as types from '../../actions/types';
 
 describe('Admin Reducer', () => {

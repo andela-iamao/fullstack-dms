@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import UsersList from './UsersList';
-import { fetchUsers, deleteUser } from '../../actions/adminActions';
+import { fetchUsers, deleteUser } from '../../actions/userActions';
 
 class UsersPage extends React.Component {
   componentDidMount() {
@@ -32,7 +32,7 @@ UsersPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    users: state.admin,
+    users: state.users,
     auth: state.auth,
   };
 }

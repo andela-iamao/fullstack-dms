@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EditUserRole from './EditUserRole';
-import * as adminActions from '../../actions/adminActions';
+import * as userActions from '../../actions/userActions';
 
 class UserRow extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ UserRow.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(adminActions, dispatch),
+    actions: bindActionCreators(userActions, dispatch),
   };
 }
 

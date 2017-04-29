@@ -6,7 +6,7 @@ import LandingPage from './components/LandingPage';
 import SignupPage from './components/signup/SignupPage';
 import LoginPage from './components/login/LoginPage';
 import ManageDocumentPage from './components/documents/ManageDocumentPage';
-import UsersPage from './components/admin/UsersPage';
+import UsersPage from './components/users/UsersPage';
 import DocumentDetailsPage from './components/documents/DocumentDetailsPage';
 import ProfilePage from './components/profile/ProfilePage';
 
