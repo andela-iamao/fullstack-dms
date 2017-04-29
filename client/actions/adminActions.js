@@ -1,34 +1,5 @@
 import axios from 'axios';
-import { SET_USERS, USER_FETCHED, USER_UPDATED, USER_DELETED } from './types';
-import { setPagination } from './documentActions';
-
-export function setUsers(users) {
-  return {
-    type: SET_USERS,
-    users,
-  };
-}
-
-export function userFetched(user) {
-  return {
-    type: USER_FETCHED,
-    user,
-  };
-}
-
-export function userUpdated(user) {
-  return {
-    type: USER_UPDATED,
-    user,
-  };
-}
-
-export function userDeleted(userId) {
-  return {
-    type: USER_DELETED,
-    userId,
-  };
-}
+import * as types from './types';
 
 /**
  * Dispatch action to fetch users
@@ -38,8 +9,14 @@ export function fetchUsers() {
   return (dispatch) => {
     return axios.get('/users')
       .then(res => {
-        dispatch(setUsers(res.data.rows));
-        dispatch(setPagination(res.data.pagination));
+        dispatch({
+          type: types.SET_USERS,
+          users: res.data.rows,
+        });
+        dispatch({
+          type: types.SET_PAGINATION,
+          pagination: res.data.pagination
+        });
       });
   };
 }
@@ -52,7 +29,10 @@ export function fetchUsers() {
 export function fetchUser(id) {
   return (dispatch) => {
     return axios.get(`/users/${id}`)
-      .then(res => dispatch(userFetched(res.data)));
+      .then(res => dispatch({
+        type: types.USER_FETCHED,
+        user: res.data,
+      }));
   };
 }
 
@@ -65,7 +45,10 @@ export function fetchUser(id) {
 export function updateUser(user, userId) {
   return (dispatch) => {
     return axios.put(`/users/${userId}`, user)
-      .then(res => dispatch(userUpdated(res.data)));
+      .then(res => dispatch({
+        type: types.USER_UPDATED,
+        user: res.data,
+      }));
   };
 }
 
@@ -77,7 +60,10 @@ export function updateUser(user, userId) {
 export function deleteUser(id) {
   return (dispatch) => {
     return axios.delete(`/users/${id}`)
-      .then(res => dispatch(userDeleted(id)));
+      .then(res => dispatch({
+        type: types.USER_DELETED,
+        userId: id,
+      }));
   };
 }
 

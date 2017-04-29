@@ -1,6 +1,7 @@
 import expect from 'expect';
 import users from '../../reducers/admin';
 import * as actions from '../../actions/adminActions';
+import * as types from '../../actions/types';
 
 describe('Admin Reducer', () => {
   it('should update user when passed USER_UPDATED', () => {
@@ -12,7 +13,7 @@ describe('Admin Reducer', () => {
     ];
 
     const user = { id: '2', username: 'awa' };
-    const action = actions.userUpdated(user);
+    const action = { type: types.USER_UPDATED, user };
 
     // act
     const newState = users(initialState, action);
@@ -34,7 +35,7 @@ describe('Admin Reducer', () => {
     ];
 
     const user = { id: '4', username: 'awa' };
-    const action = actions.userFetched(user);
+    const action = { type: types.USER_FETCHED, user };
 
     // act
     const newState = users(initialState, action);
@@ -49,7 +50,7 @@ describe('Admin Reducer', () => {
       { id: '3', username: 'userC' }
     ];
 
-    const action = actions.userDeleted('2');
+    const action = { type: types.USER_DELETED, userId: '2' };
     // act
     const newState = users(initialState, action);
 
@@ -64,7 +65,7 @@ describe('Admin Reducer', () => {
       { id: '3', username: 'C' }
     ];
 
-    const action = actions.setUsers(usersToSet);
+    const action = { type: types.SET_USERS, users: usersToSet };
     // act
     const newState = users(initialState, action);
 

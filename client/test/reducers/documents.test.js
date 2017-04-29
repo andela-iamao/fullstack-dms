@@ -1,6 +1,7 @@
 import expect from 'expect';
 import documents from '../../reducers/documents';
 import * as actions from '../../actions/documentActions';
+import * as types from '../../actions/types';
 
 describe('Document Reducer', () => {
   it('should add document when passed ADD_DOCUMENT', () => {
@@ -12,7 +13,7 @@ describe('Document Reducer', () => {
 
     const newDocument = { title: 'C' };
 
-    const action = actions.addDocument(newDocument);
+    const action = { type: types.ADD_DOCUMENT, document: newDocument };
 
     // act
     const newState = documents(initialState, action);
@@ -33,7 +34,7 @@ describe('Document Reducer', () => {
     ];
 
     const document = { id: '2', title: 'New Title' };
-    const action = actions.documentUpdated(document);
+    const action = { type: types.DOCUMENT_UPDATED, document };
 
     // act
     const newState = documents(initialState, action);
@@ -55,7 +56,7 @@ describe('Document Reducer', () => {
     ];
 
     const document = { id: '4', title: 'Document Fetched' };
-    const action = actions.documentFetched(document);
+    const action = { type: types.DOCUMENT_FETCHED, document };
 
     // act
     const newState = documents(initialState, action);
@@ -70,7 +71,7 @@ describe('Document Reducer', () => {
       { id: '3', title: 'C' }
     ];
 
-    const action = actions.documentDeleted('2');
+    const action = { type: types.DOCUMENT_DELETED, documentId: '2' };
     // act
     const newState = documents(initialState, action);
 
@@ -85,7 +86,7 @@ describe('Document Reducer', () => {
       { id: '3', title: 'C' }
     ];
 
-    const action = actions.setDocuments(documentsToSet);
+    const action = { type: types.SET_DOCUMENTS, documents: documentsToSet };
     // act
     const newState = documents(initialState, action);
 

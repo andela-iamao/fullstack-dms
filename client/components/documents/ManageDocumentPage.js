@@ -42,15 +42,30 @@ class ManageDocumentPage extends React.Component {
     this.setState({ saving: false });
   }
 
+  isValid() {
+    const data = {
+      title: this.state.document.title,
+      content: this.state.document.content,
+      access: this.state.document.access
+    };
+    const { errors, isValid } = validateInput(data);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+
   saveDocument(event) {
     event.preventDefault();
-    this.setState({ saving: true });
-    if (this.state.document.id) {
-      this.props.actions.updateDocument(this.state.document)
-        .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
-    } else {
-      this.props.actions.saveDocument(this.state.document)
-      .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
+    if (this.isValid()) {
+      this.setState({ saving: true, errors: {} });
+      if (this.state.document.id) {
+        this.props.actions.updateDocument(this.state.document)
+            .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
+      } else {
+        this.props.actions.saveDocument(this.state.document)
+          .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
+      }
     }
   }
 
