@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== 'test') {
   process.exit(1);
 }
-const faker = require('faker');
+import faker from 'faker';
 
 module.exports = {
   adminRole: {

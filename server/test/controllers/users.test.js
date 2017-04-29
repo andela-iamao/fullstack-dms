@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import chai from 'chai';
 import app from '../../index';
-import { Role, User } from '../../models';
+import { Role, User } from '../../app/models';
 import helper from '../test-helper';
 
 const request = supertest.agent(app);

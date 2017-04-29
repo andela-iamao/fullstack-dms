@@ -1,14 +1,13 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint no-underscore-dangle: 0 */
-
 import httpMocks from 'node-mocks-http';
 import events from 'events';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import supertest from 'supertest';
 import app from '../../index';
-import Auth from '../../middlewares/auth';
-import { Role } from '../../models';
+import Auth from '../../app/middlewares/auth';
+import { Role } from '../../app/models';
 import helper from '../test-helper';
 
 const request = supertest.agent(app);
