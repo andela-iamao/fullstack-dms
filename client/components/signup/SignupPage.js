@@ -41,7 +41,11 @@ class SignupPage extends React.Component {
         () => {
           this.context.router.push('/');
         },
-        ({ data }) => this.setState({ errors: data })
+        ({ data }) => {
+          const errors = {};
+          errors.form = data.message;
+          this.setState({ errors });
+        }
       );
     }
   }
