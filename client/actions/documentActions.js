@@ -52,7 +52,7 @@ export function fetchDocuments(offset) {
 export function fetchDocument(id) {
   return (dispatch) => {
     return axios.get(`/documents/${id}`)
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: types.DOCUMENT_FETCHED,
           document: res.data,

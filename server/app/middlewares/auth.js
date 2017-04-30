@@ -28,7 +28,7 @@ export default {
             message: 'You don\t have the rights to perform this operation'
           });
         }
-      }).catch(err => {
+      }).catch((err) => {
         return res.status(404).send({
           message: `Document with ${req.params.id} not found`
         });

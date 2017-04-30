@@ -10,7 +10,7 @@ export function fetchUsers(offset) {
   const pageOffset = offset || 0;
   return (dispatch) => {
     return axios.get('/users')
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: types.SET_USERS,
           users: res.data.rows,

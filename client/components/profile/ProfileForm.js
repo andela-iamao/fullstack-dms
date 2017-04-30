@@ -51,7 +51,7 @@ class ProfileForm extends Component {
               s={6}
               name="firstName"
               value={this.state.firstName}
-              onChange={(event) => this.onChange(event)}
+              onChange={event => this.onChange(event)}
               required
             />
             <Input
@@ -59,7 +59,7 @@ class ProfileForm extends Component {
               s={6}
               name="lastName"
               value={this.state.lastName}
-              onChange={(event) => this.onChange(event)}
+              onChange={event => this.onChange(event)}
               required
             />
             <Input
@@ -67,7 +67,7 @@ class ProfileForm extends Component {
               s={6}
               name="username"
               value={this.state.username}
-              onChange={(event) => this.onChange(event)}
+              onChange={event => this.onChange(event)}
               required
             />
             <Input
@@ -75,7 +75,7 @@ class ProfileForm extends Component {
               s={6}
               name="email"
               value={this.state.email}
-              onChange={(event) => this.onChange(event)}
+              onChange={event => this.onChange(event)}
               required
             />
             <Input

@@ -2,15 +2,16 @@ import { User, Document } from '../models';
 import Helper from '../helpers';
 
 const ownerParams =
-     [{ model: User,
-        as: 'owner',
-        attributes: [
-          'username',
-          'firstName',
-          'lastName',
-          'email'
-        ]
-      }];
+  [{
+    model: User,
+    as: 'owner',
+    attributes: [
+      'username',
+      'firstName',
+      'lastName',
+      'email'
+    ]
+  }];
 
 const Documents = {
   /**

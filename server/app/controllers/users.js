@@ -181,12 +181,11 @@ const Users = {
           lastName: {
             $iLike: `%${req.query.q}%`
           }
-        },
-          {
-            email: {
-              $iLike: `%${req.query.q}%`
-            }
-          }],
+        }, {
+          email: {
+            $iLike: `%${req.query.q}%`
+          }
+        }],
       },
       limit: req.query.limit || 10,
       offset: req.query.offset || 0,

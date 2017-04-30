@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import { Pagination } from 'react-materialize';
 import DocumentsList from './DocumentList';
 import { fetchDocuments, deleteDocument } from '../../actions/documentActions';
 import { searchDocuments } from '../../actions/searchActions';
 import Search from '../common/Search';
-import { Pagination } from 'react-materialize';
 
 class DocumentsPage extends React.Component {
   constructor() {

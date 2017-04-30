@@ -45,7 +45,7 @@ UsersPage.propTypes = {
   fetchUsers: React.PropTypes.func.isRequired,
   deleteUser: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object.isRequired,
-  metadata: React.PropTypes.object
+  metadata: React.PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

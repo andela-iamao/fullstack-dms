@@ -1,7 +1,8 @@
+import faker from 'faker';
+
 if (process.env.NODE_ENV !== 'test') {
   process.exit(1);
 }
-import faker from 'faker';
 
 module.exports = {
   adminRole: {

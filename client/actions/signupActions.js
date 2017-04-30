@@ -8,7 +8,7 @@ import * as types from './types';
  * @param {any} userData
  * @returns {Object} function
  */
-export function userSignupRequest(userData) {
+export default function userSignupRequest(userData) {
   return (dispatch) => {
     return axios.post('/users', userData)
       .then((res) => {
