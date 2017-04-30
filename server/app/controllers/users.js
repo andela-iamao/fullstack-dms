@@ -3,21 +3,8 @@ import isEmpty from 'lodash/isEmpty';
 import jwt from 'jsonwebtoken';
 import { User, Role } from '../models';
 import config from '../../config/config';
-import helper from '../helpers/helper';
-
-const permittedAttributes = (user) => {
-  const attributes = {
-    id: user.id,
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    roleId: user.roleId,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt
-  };
-  return attributes;
-};
+import Helper from '../helpers';
+import UsersHelper from '../helpers/UsersHelper';
 
 const Users = {
 
@@ -29,43 +16,14 @@ const Users = {
    * @returns {Response|void} response object or void
    */
   create(req, res) {
-    const { username, firstName, lastName, email, password } = req.body;
-    const roleId = req.body.roleId && req.body.roleId < 3 ? req.body.roleId : 2;
-    User.findOne(
-      { where: {
-        $or: [{ username }, { email }]
-      } })
-      .then((existingUser) => {
-        const errors = {};
-        if (existingUser) {
-          if (existingUser.username === username) {
-            errors.username = 'There is user with such username';
-          }
-          if (existingUser.email === email) {
-            errors.email = 'There is user with such email';
-          }
-          res.status(409).send(errors);
-        } else {
-          User.create({
-            username,
-            firstName,
-            lastName,
-            email,
-            password,
-            roleId
-          }).then((user) => {
-            const token = jwt.sign({
-              userId: user.id,
-              roleId: user.roleId
-            }, config.jwtSecret, { expiresIn: 86400 });
-            user = permittedAttributes(user);
-            res.status(201).send({ token, expiresIn: 86400, user });
-          })
-          .catch((err) => {
-            res.status(400).send({ error: err });
-          });
-        }
-      });
+    User.create(req.userInput).then((user) => {
+      const token = UsersHelper.getToken(user);
+      user = UsersHelper.permittedAttributes(user);
+      res.status(201).send({ token, expiresIn: 86400, user });
+    })
+    .catch((err) => {
+      res.status(400).send({ error: err });
+    });
   },
 
   /**
@@ -77,16 +35,7 @@ const Users = {
    */
   list(req, res) {
     const query = {
-      attributes: [
-        'id',
-        'username',
-        'firstName',
-        'lastName',
-        'email',
-        'roleId',
-        'createdAt',
-        'updatedAt'
-      ],
+      attributes: UsersHelper.getUserAttribute(),
       include: [{
         model: Role,
         as: 'Role',
@@ -102,7 +51,7 @@ const Users = {
         offset: query.offset
       };
       delete users.count;
-      const pagination = helper.pagination(condition);
+      const pagination = Helper.pagination(condition);
       res.status(200)
         .send({
           pagination,
@@ -125,7 +74,7 @@ const Users = {
           return res.status(404)
             .send({ message: `User with id: ${req.params.id} not found` });
         }
-        user = permittedAttributes(user);
+        user = UsersHelper.permittedAttributes(user);
         res.send(user);
       });
   },
@@ -146,7 +95,7 @@ const Users = {
         }
         user.update(req.body)
           .then((updatedUser) => {
-            updatedUser = permittedAttributes(updatedUser);
+            updatedUser = UsersHelper.permittedAttributes(updatedUser);
             res.send(updatedUser);
           });
       });
@@ -187,25 +136,15 @@ const Users = {
       }
     })
     .then((user) => {
-      const errors = {};
-      if (user) {
-        if (bcrypt.compareSync(password, user.password)) {
-          const token = jwt.sign({
-            userId: user.id,
-            roleId: user.roleId
-          }, config.jwtSecret, { expiresIn: 86400 });
-
-          res.send({ token, expiresIn: 86400 });
-        } else {
-          errors.form = 'Invalid Credentials';
-          res.status(401)
-            .send(errors);
-        }
-      } else {
-        errors.form = 'Invalid Credentials';
-        res.status(401)
-            .send(errors);
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = UsersHelper.getToken(user);
+        user = UsersHelper.permittedAttributes(user);
+        res.status(201).send({ token, expiresIn: 86400, user });
       }
+      res.status(401)
+        .send({
+          message: 'Please enter a valid username/email or password to log in'
+        });
     });
   },
 
@@ -254,14 +193,14 @@ const Users = {
       order: [['createdAt', 'DESC']]
     };
     User.findAndCountAll(query).then((users) => {
-      const results = users.rows.map(user => permittedAttributes(user));
+      const results = users.rows.map(user => UsersHelper.permittedAttributes(user));
       const condition = {
         count: users.count,
         limit: query.limit,
         offset: query.offset
       };
       delete users.count;
-      const pagination = helper.pagination(condition);
+      const pagination = Helper.pagination(condition);
       res.status(200)
         .send({
           pagination,

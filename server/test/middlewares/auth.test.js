@@ -112,4 +112,47 @@ describe('Auth Middleware', () => {
       done();
     });
   });
+
+  describe('validateUserInput', () => {
+    it('should not continue when email is null', () => {
+      const res = responseEvent();
+      req = httpMocks.createRequest({
+        method: 'POST',
+        url: '/api/users',
+        body: {
+          firstName: 'andela',
+        }
+      });
+      const middlewareStub = {
+        callback: () => { }
+      };
+      sinon.spy(middlewareStub, 'callback');
+      res.on('end', () => {
+        expect(res._getData().message).to.equal('Enter a valid email');
+      });
+      Auth.validateUserInput(req, res, middlewareStub.callback);
+    });
+
+    it('should continue when all the fields are complete', (done) => {
+      const res = responseEvent();
+      req = httpMocks.createRequest({
+        method: 'POST',
+        url: '/api/users',
+        body: {
+          username: 'andela',
+          firstName: 'andela',
+          lastName: 'andela',
+          email: 'andela@mail.com',
+          password: 'password'
+        }
+      });
+      const middlewareStub = {
+        callback: () => { }
+      };
+      sinon.spy(middlewareStub, 'callback');
+      Auth.validateUserInput(req, res, middlewareStub.callback);
+      expect(middlewareStub.callback).to.have.been.called;
+      done();
+    });
+  });
 });

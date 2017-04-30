@@ -12,14 +12,14 @@ export default (app) => {
   app.delete('/roles/:id', auth.verifyToken, auth.permitAdmin, Roles.destroy);
 
   // Users API Endpoints
-  app.post('/users', Users.create);
+  app.post('/users', auth.validateUserInput, Users.create);
   app.get('/users', auth.verifyToken, Users.list);
   app.get('/users/:id', auth.verifyToken, Users.retrieve);
   app.put('/users/:id', auth.verifyToken, Users.update);
   app.delete('/users/:id', auth.verifyToken, auth.permitAdmin, Users.destroy);
   app.get('/users/:id/documents', auth.verifyToken, Documents.userDocuments);
   app.get('/search/users', auth.verifyToken, Users.search);
-  app.post('/users/login', Users.login);
+  app.post('/users/login', auth.validateLoginInput, Users.login);
   app.post('/users/logout', Users.logout);
 
   // Documents API Endpoints

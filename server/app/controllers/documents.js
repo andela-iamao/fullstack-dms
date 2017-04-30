@@ -1,5 +1,5 @@
 import { User, Document } from '../models';
-import helper from '../helpers/helper';
+import Helper from '../helpers';
 
 const ownerParams =
      [{ model: User,
@@ -63,7 +63,7 @@ const Documents = {
         offset: query.offset
       };
       delete documents.count;
-      const pagination = helper.pagination(condition);
+      const pagination = Helper.pagination(condition);
       res.status(200)
         .send({
           pagination,
@@ -200,7 +200,7 @@ const Documents = {
         offset: query.offset
       };
       delete documents.count;
-      const pagination = helper.pagination(condition);
+      const pagination = Helper.pagination(condition);
       res.status(200)
         .send({
           pagination,
