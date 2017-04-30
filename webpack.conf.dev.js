@@ -33,8 +33,8 @@ export default {
         loaders: ['react-hot', 'babel']
       },
       {
-        test: /\.css$/,
-        loaders: ['css-loader']
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
