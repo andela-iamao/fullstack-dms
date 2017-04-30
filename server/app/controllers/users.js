@@ -20,9 +20,6 @@ const Users = {
       const token = UsersHelper.getToken(user);
       user = UsersHelper.permittedAttributes(user);
       res.status(201).send({ token, expiresIn: 86400, user });
-    })
-    .catch((err) => {
-      res.status(400).send({ error: err });
     });
   },
 
@@ -140,11 +137,12 @@ const Users = {
         const token = UsersHelper.getToken(user);
         user = UsersHelper.permittedAttributes(user);
         res.status(201).send({ token, expiresIn: 86400, user });
-      }
-      res.status(401)
+      } else {
+        res.status(401)
         .send({
           message: 'Please enter a valid username/email or password to log in'
         });
+      }
     });
   },
 

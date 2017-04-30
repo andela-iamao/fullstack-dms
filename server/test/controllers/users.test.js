@@ -196,10 +196,11 @@ describe('User API', () => {
 
   describe('CONTEXT: With multiple users', () => {
     before(() =>
-    Role.create(helper.regularRole)
-      .then((role) => {
-        User.bulkCreate(userParamsArray);
-      }));
+      Role.create(helper.regularRole)
+        .then((role) => {
+          User.bulkCreate(userParamsArray);
+        })
+    );
 
     describe('User Pagination', () => {
       it('uses query params "limit" to limit the result', (done) => {
@@ -230,8 +231,8 @@ describe('User API', () => {
       });
     });
 
-    describe('Document search', () => {
-      it('searches and returns the correct documents', (done) => {
+    describe('User search', () => {
+      it('searches and returns the correct users', (done) => {
         const query = userParamsArray[4].username;
         const matcher = new RegExp(query);
 
