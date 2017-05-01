@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { SEARCH_RESULTS } from './types';
-import { setPagination } from './documentActions';
+import * as types from './types';
 
 export function documentsSearched(documentSearchResult) {
   return {
-    type: SEARCH_RESULTS,
+    type: types.SEARCH_RESULTS,
     documentSearchResult,
   };
 }
@@ -19,7 +18,10 @@ export function searchDocuments(queryString) {
     return axios.get(`/search/documents?q=${queryString}`)
       .then((res) => {
         dispatch(documentsSearched(res.data.rows));
-        dispatch(setPagination(res.data.pagination));
+        dispatch({
+          type: types.SET_PAGINATION,
+          pagination: res.data.pagination
+        });
       });
   };
 }
