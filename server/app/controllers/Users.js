@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import isEmpty from 'lodash/isEmpty';
 import jwt from 'jsonwebtoken';
-import { User, Role } from '../models';
+import { User, Role, ExpiredToken } from '../models';
 import config from '../../config/config';
 import Helper from '../helpers';
 import UsersHelper from '../helpers/UsersHelper';
@@ -154,7 +154,10 @@ const Users = {
    * @returns {Response|void} response object or void
    */
   logout(req, res) {
-    res.send({ message: 'Logout successful.' });
+    ExpiredToken.create({ token: req.headers.authorization })
+      .then(() => {
+        res.status(204).send({ message: 'Logout successful.' });
+      });
   },
 
   /**
