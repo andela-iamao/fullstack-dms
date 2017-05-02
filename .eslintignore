@@ -3,3 +3,4 @@ testSetup.js
 nightwatch.config.js
 docs
 dist
+client/styles

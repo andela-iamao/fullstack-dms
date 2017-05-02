@@ -31,6 +31,9 @@ class ManageDocumentPage extends React.Component {
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
+    if (event.target.id === 'content') {
+      document.content = event.target.getContent();
+    }
     document[field] = event.target.value;
     return this.setState({ document });
   }
