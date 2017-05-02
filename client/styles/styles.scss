@@ -21,22 +21,24 @@ body {
   margin: 0;
 }
 
-
 /* Landing Page */
 
 #hero-title {
   line-height: 1.5em;
   margin-top: 10%;
 }
+
 .hero-btn {
   margin: 10px;
 }
+
 #hero {
   background-position: center center;
   background-size: cover;
   /*background-image: url("../images/coffee.jpg");*/
   height: 100vh;
 }
+
 h2 {
   font-size: 2.92rem;
 }
@@ -46,15 +48,16 @@ h2 {
 }
 
 .card {
+  background-color: #20b2aa;
   height: 350px;
-  background-color: lightseagreen;
 }
 
-.qBox{
+.qBox {
   box-shadow: 10px 10px 30px #333;
 }
+
 nav {
-  background-color: lightseagreen;
+  background-color: #20b2aa;
 }
 
 .rightButton {
