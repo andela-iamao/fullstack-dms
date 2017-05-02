@@ -148,7 +148,7 @@ describe('User API', () => {
     describe('Logout POST: /users/logout', () => {
       it('logs out successfully', (done) => {
         request.post('/users/logout')
-          .expect(200, done);
+          .expect(204, done);
       });
     });
   });
