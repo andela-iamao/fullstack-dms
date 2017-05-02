@@ -1,7 +1,8 @@
+import faker from 'faker';
+
 if (process.env.NODE_ENV !== 'test') {
   process.exit(1);
 }
-const faker = require('faker');
 
 module.exports = {
   adminRole: {
@@ -64,7 +65,7 @@ module.exports = {
       documentAttributes.push({
         title: faker.company.catchPhrase(),
         content: faker.lorem.paragraph(),
-        OwnerId: 1
+        ownerId: 1
       });
     }
 
@@ -81,7 +82,7 @@ module.exports = {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
-        RoleId: 2
+        roleId: 2
       });
     }
 

@@ -17,25 +17,17 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
             <p>{(document.createdAt) ?
               document.createdAt.split('T')[0] : ''}</p>
             <p>Author:
-              {document.Owner.firstName} {document.Owner.lastName}</p>
+              {document.owner.firstName} {document.owner.lastName}</p>
           </div>
         </div>
         <div className="card-action">
-          <Link to="/">back to documents</Link>
-          {currentUser.UserId === document.OwnerId && <div>
-            <Button waves="light" className="btn-floating blue darken-4 right">
-              <Link to={`/document/${document.id}`}>
-                <i className="material-icons">mode_edit</i>
-              </Link>
-            </Button>
-            <Button
-              waves="light"
-              onClick={() => deleteDocument(document.id)}
-              className="btn-floating red darken-2 right"
-            >
-              <i className="material-icons">delete</i>
-            </Button>
-          </div>}
+          <Link to="/">back</Link>
+          {currentUser.userId === document.ownerId &&
+            <div className="right">
+              <Link to={`/document/${document.id}`}>Edit</Link>
+              <Link onClick={() => deleteDocument(document.id)}> Delete </Link>
+            </div>
+          }
         </div>
       </div>
     </div>

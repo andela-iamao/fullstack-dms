@@ -1,9 +1,6 @@
-const expect = require('chai').expect;
-const Role = require('../../models').Role;
-const User = require('../../models').User;
-const Document = require('../../models').Document;
-
-const helper = require('../test-helper');
+import { expect } from 'chai';
+import { Role, User, Document } from '../../app/models';
+import helper from '../test-helper';
 
 const documentParams = helper.publicDocument;
 const userParams = helper.firstUser;
@@ -16,12 +13,12 @@ describe('Document model', () => {
   before(() =>
     Role.create(helper.adminRole)
       .then((role) => {
-        userParams.RoleId = role.id;
+        userParams.roleId = role.id;
         return User.create(userParams);
       })
       .then((owner) => {
-        documentParams.OwnerId = owner.id;
-        documentParams.RoleId = owner.RoleId;
+        documentParams.ownerId = owner.id;
+        documentParams.roleId = owner.roleId;
       })
   );
 

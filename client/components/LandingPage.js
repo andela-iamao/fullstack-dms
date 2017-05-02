@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import '../styles/styles.css';
+import '../styles/styles.scss';
 import DocumentsPage from './documents/DocumentsPage';
 
 class LandingPage extends React.Component {
@@ -26,7 +26,7 @@ class LandingPage extends React.Component {
                   <Link className="btn btn-large create-list-link hero-btn" to="/signup">
                     Get Started
                   </Link>
-                  <p>Already a user? <a href=""><Link to="/login">Login</Link></a></p>
+                  <p>Already a user? <Link to="/login">Login</Link></p>
                 </div>
               </div>
             </div>

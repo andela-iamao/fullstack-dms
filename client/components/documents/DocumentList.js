@@ -1,11 +1,12 @@
 import React from 'react';
+import { Pagination } from 'react-materialize';
 import DocumentCard from './DocumentCard';
 
-export default function DocumentsList({ documents, deleteDocument, currentUser }) {
+export default function
+DocumentsList({ documents, deleteDocument, currentUser }) {
   const emptyMessage = (
     <p>No documents Found</p>
   );
-
   const documentsList = (
     <div>
       {documents.map(document => <DocumentCard
@@ -23,7 +24,7 @@ export default function DocumentsList({ documents, deleteDocument, currentUser }
 }
 
 DocumentsList.propTypes = {
-  documents: React.PropTypes.array.isRequired,
+  documents: React.PropTypes.array,
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };

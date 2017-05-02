@@ -1,6 +1,7 @@
 import expect from 'expect';
 import users from '../../reducers/auth';
 import * as actions from '../../actions/authActions';
+import * as types from '../../actions/types';
 
 describe('Auth Reducer', () => {
   it('should set user when passed SET_CURRENT_USER', () => {
@@ -10,9 +11,9 @@ describe('Auth Reducer', () => {
       user: {},
     };
 
-    const user = { UserId: '1', RoleId: '2' };
+    const user = { userId: '1', roleId: '2' };
 
-    const action = actions.setCurrentUser(user);
+    const action = { type: types.SET_CURRENT_USER, user };
     // act
     const newState = users(initialState, action);
 
@@ -28,7 +29,7 @@ describe('Auth Reducer', () => {
 
     const user = {};
 
-    const action = actions.setCurrentUser(user);
+    const action = { type: types.SET_CURRENT_USER, user };
     // act
     const newState = users(initialState, action);
 

@@ -8,9 +8,9 @@ import jwt from 'jsonwebtoken';
 import 'babel-polyfill';
 import routes from './routes';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-import { setCurrentUser } from './actions/authActions';
 import rootReducer from './reducers';
-import './styles/styles.css';
+import * as types from './actions/types';
+import './styles/styles.scss';
 
 const store = createStore(
    rootReducer,
@@ -22,7 +22,10 @@ const store = createStore(
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+  store.dispatch({
+    type: types.SET_CURRENT_USER,
+    user: jwt.decode(localStorage.jwtToken)
+  });
 }
 render(
   <Provider store={store}>

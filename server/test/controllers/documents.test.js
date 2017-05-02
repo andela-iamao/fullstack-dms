@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import chai from 'chai';
 import app from '../../index';
-import { Role, User, Document } from '../../models';
+import { Role, User, Document } from '../../app/models';
 import helper from '../test-helper';
 
 const request = supertest.agent(app);
@@ -27,15 +27,15 @@ describe('Document API', () => {
     }).then((newRoles) => {
       adminRole = newRoles[0];
       regularRole = newRoles[1];
-      userParams.RoleId = regularRole.id;
-      ownerParams.RoleId = adminRole.id;
+      userParams.roleId = regularRole.id;
+      ownerParams.roleId = adminRole.id;
 
       request.post('/users')
         .send(userParams)
         .end((err, res) => {
           user = res.body.user;
           token = res.body.token;
-          documentParams.OwnerId = user.id;
+          documentParams.ownerId = user.id;
           done();
         });
     });
@@ -66,7 +66,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(Array.isArray(res.body)).to.be.true;
+            expect(Array.isArray(res.body.rows)).to.be.true;
             expect(res.body.length).to.not.equal(0);
             done();
           });
@@ -99,7 +99,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .send(newAttributes)
           .end((err, res) => {
-            expect(res.status).to.equal(200);
+            expect(res.status).to.equal(201);
             expect(res.body.title).to.equal(newAttributes.title);
             expect(res.body.content).to.equal(newAttributes.content);
             done();
@@ -135,7 +135,7 @@ describe('Document API', () => {
 
     describe('Get all GET: /users/:id/documents', () => {
       it('should return all user documents', (done) => {
-        request.get(`/users/${document.OwnerId}/documents`)
+        request.get(`/users/${document.ownerId}/documents`)
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -160,7 +160,7 @@ describe('Document API', () => {
 
     describe('Get Private document GET: /documents/:id', () => {
       before(() => {
-        privateDocumentParams.OwnerId = owner.id;
+        privateDocumentParams.ownerId = owner.id;
         return Document.create(privateDocumentParams)
           .then((newPrivateDocument) => {
             privateDocument = newPrivateDocument;
@@ -182,7 +182,7 @@ describe('Document API', () => {
 
     describe('Get role document GET: /documents/:id', () => {
       before(() => {
-        roleDocumentParams.OwnerId = owner.id;
+        roleDocumentParams.ownerId = owner.id;
 
         return Document.create(roleDocumentParams)
           .then((newRoleDocument) => {
@@ -198,7 +198,7 @@ describe('Document API', () => {
 
       it('should return document for owner', (done) => {
         const sameRoleUserParams = helper.thirdUser;
-        sameRoleUserParams.RoleId = adminRole.id;
+        sameRoleUserParams.roleId = adminRole.id;
 
         request.post('/users')
           .send(sameRoleUserParams)
@@ -231,6 +231,25 @@ describe('Document API', () => {
           .expect(400, done);
       });
     });
+    describe('Edit document POST: /documents/:id', () => {
+      before(() => {
+        privateDocumentParams.ownerId = owner.id;
+        return Document.create(privateDocumentParams)
+          .then((newPrivateDocument) => {
+            privateDocument = newPrivateDocument;
+          });
+      });
+      it('should return unauthorised if not owner', (done) => {
+        const newAttributes = { title: 'Edited title', content: 'new content' };
+        request.put(`/documents/${privateDocument.id}`)
+          .set({ Authorization: token })
+          .send(newAttributes)
+          .end((err, res) => {
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+    });
   });
 
   describe('CONTEXT: With multiple documents', () => {
@@ -242,7 +261,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(res.body.length).to.equal(5);
+            expect(res.body.rows.length).to.equal(5);
             done();
           });
       });
@@ -274,7 +293,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(matcher.test(res.body[0].title)).to.be.true;
+            expect(matcher.test(res.body.rows[0].title)).to.be.true;
             done();
           });
       });
@@ -284,7 +303,7 @@ describe('Document API', () => {
           .set({ Authorization: token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
-            expect(res.body.length).to.equal(5);
+            expect(res.body.rows.length).to.equal(5);
             done();
           });
       });

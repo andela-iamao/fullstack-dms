@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
-const Role = require('../../models').Role;
-const helper = require('../test-helper');
+import { expect } from 'chai';
+import { Role } from '../../app/models';
+import helper from '../test-helper';
 
 const roleParams = helper.role;
 

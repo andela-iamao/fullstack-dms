@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import chai from 'chai';
 import app from '../../index';
-import { Role } from '../../models';
+import { Role } from '../../app/models';
 import helper from '../test-helper';
 
 const request = supertest.agent(app);
@@ -15,7 +15,7 @@ describe('Roles API', () => {
   before((done) => {
     Role.create(helper.adminRole)
       .then((newRole) => {
-        userParams.RoleId = newRole.id;
+        userParams.roleId = newRole.id;
         request.post('/users')
           .send(userParams)
           .end((err, res) => {
@@ -135,7 +135,7 @@ describe('Roles API', () => {
       it('fails if user is not an admin', (done) => {
         Role.create(helper.regularRole)
           .then((newRole) => {
-            helper.secondUser.RoleId = newRole.id;
+            helper.secondUser.roleId = newRole.id;
             request.post('/users')
               .send(helper.secondUser)
               .end((err, res) => {

@@ -7,6 +7,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
       <h5>Create/Update a Document</h5>
       <Row>
         <Input
+          label="Title"
           placeholder="Title"
           s={12}
           validate
@@ -17,6 +18,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           id="title"
         />
         <Input
+          label="Content"
           placeholder="Content"
           s={12}
           validate
@@ -34,7 +36,6 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
             value={document.access}
             onChange={onChange}
             name="access"
-            error={errors.access}
           >
             <option value="public" defaultValue>Public</option>
             <option value="private" >Private</option>
