@@ -22,7 +22,7 @@ export default function DocumentCard({ document, deleteDocument, currentUser }) 
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link to={`/document/${document.id}`}>Edit</Link>
+              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
               <Link to="/" onClick={() => deleteDocument(document.id)}>
                 Delete
               </Link>

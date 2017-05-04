@@ -2,7 +2,7 @@ import faker from 'faker';
 import config from './config';
 
 module.exports = {
-  'Create document': (browser) => {
+  'Edit document': (browser) => {
     browser
      .url(config.url)
      .click('#login')
@@ -12,13 +12,14 @@ module.exports = {
      .pause(5000)
      .assert.urlEquals('http://localhost:3000/')
      .waitForElementVisible('body')
-     .assert.elementPresent('.hero-btn')
-     .click('#createdocument')
+     .assert.elementPresent('.card')
+     .click('.card-action > .right > .edit')
      .pause(1000)
-     .assert.urlEquals('http://localhost:3000/document')
      .waitForElementVisible('body')
-     .setValue('#title', faker.lorem.word())
-     .setValue('#content', faker.lorem.words())
+     .clearValue('#title')
+     .clearValue('#content')
+     .setValue('#title', 'New Title')
+     .setValue('#content', 'New Content Here')
      .click('#access option[value="private"]')
      .click('Input[type="submit"]')
      .end();
