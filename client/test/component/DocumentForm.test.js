@@ -15,7 +15,7 @@ function setup(saving) {
   return shallow(<DocumentForm {...props} />);
 }
 
-describe('DocumentForm Test', () => {
+describe('DocumentForm', () => {
   it('renders form and h5', () => {
     const wrapper = setup(false);
     expect(wrapper.find('form').length).toBe(1);
