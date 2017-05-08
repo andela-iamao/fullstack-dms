@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import supertest from 'supertest';
 import app from '../../index';
-import Auth from '../../app/middlewares/auth';
+import Auth from '../../app/middlewares/Auth';
 import { Role } from '../../app/models';
 import helper from '../test-helper';
 
