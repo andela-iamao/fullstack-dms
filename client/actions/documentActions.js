@@ -27,8 +27,9 @@ export function saveDocument(data) {
  */
 export function fetchDocuments(offset) {
   const pageOffset = offset || 0;
+  const limit = 6;
   return (dispatch) => {
-    return axios.get(`/documents?offset=${pageOffset}`)
+    return axios.get(`/documents?offset=${pageOffset}&limit=${limit}`)
       .then((res) => {
         dispatch({
           type: types.SET_DOCUMENTS,

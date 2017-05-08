@@ -8,8 +8,9 @@ import * as types from './types';
  */
 export function fetchUsers(offset) {
   const pageOffset = offset || 0;
+  const limit = 5;
   return (dispatch) => {
-    return axios.get('/users')
+    return axios.get(`/users?offset=${pageOffset}&limit=${limit}`)
       .then((res) => {
         dispatch({
           type: types.SET_USERS,

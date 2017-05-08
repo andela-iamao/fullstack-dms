@@ -1,3 +1,4 @@
+/* eslint "react/no-danger": 0 */
 import React from 'react';
 import { Link } from 'react-router';
 import { Button } from 'react-materialize';
