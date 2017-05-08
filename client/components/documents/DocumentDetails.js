@@ -9,7 +9,8 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
       <div className="card qBox">
         <div className="card-content white-text">
           <span className="card-title">{document.title}</span>
-          <p>{document.content}</p><br />
+          <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
+          <br />
           <p>Access Type: &nbsp;
             <span>{(document.access).toUpperCase()}</span></p><br />
           <div>
@@ -25,7 +26,7 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link to={`/document/${document.id}`}>Edit</Link>
-              <Link onClick={() => deleteDocument(document.id)}> Delete </Link>
+              <Link to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
             </div>
           }
         </div>
