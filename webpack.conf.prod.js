@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: [
     'babel-polyfill',
-    path.join(__dirname, '/client/index.js')
+    path.join(__dirname, '/client/index.jsx')
   ],
   output: {
     path: './dist/client',
@@ -24,7 +24,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         include: [
           path.join(__dirname, 'client'),
           path.join(__dirname, 'server/shared')
@@ -38,7 +38,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extentions: ['', '.js']
+    extensions: ['', '.js', '.jsx']
   },
   node: {
     net: 'empty',

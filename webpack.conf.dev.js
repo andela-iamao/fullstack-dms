@@ -6,7 +6,7 @@ export default {
   entry: [
     'babel-polyfill',
     'webpack-hot-middleware/client',
-    path.join(__dirname, '/client/index.js')
+    path.join(__dirname, '/client/index.jsx')
   ],
   output: {
     path: '/',
@@ -25,7 +25,7 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         include: [
           path.join(__dirname, 'client'),
           path.join(__dirname, 'server/shared')
@@ -39,7 +39,7 @@ export default {
     ]
   },
   resolve: {
-    extentions: ['', '.js']
+    extensions: ['', '.js', '.jsx']
   },
   node: {
     net: 'empty',
