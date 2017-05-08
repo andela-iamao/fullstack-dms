@@ -37,7 +37,8 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
             onChange={onChange}
             name="access"
           >
-            <option value="public" defaultValue>Public</option>
+            <option defaultValue>Select Access</option>
+            <option value="public">Public</option>
             <option value="private" >Private</option>
             <option value="role" >Role</option>
           </select>
@@ -56,7 +57,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
 };
 
 DocumentForm.propTypes = {
-  document: React.PropTypes.object.isRequired,
+  document: React.PropTypes.object,
   onSave: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,

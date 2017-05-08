@@ -39,7 +39,7 @@ class UserRow extends React.Component {
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>
         <td>{auth.user.userId !== user.id &&
-          <a href="" onClick={() => deleteUser(user.id)}>Delete</a>}</td>
+          <Link to="/users" onClick={() => deleteUser(user.id)}>Delete</Link>}</td>
       </tr>
     );
   }
